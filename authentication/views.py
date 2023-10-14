@@ -6,6 +6,19 @@ from allauth.account.models import EmailAddress
 import convention.settings.prod as settings
 from urllib.parse import urlparse, parse_qs
 
+def registration(request):
+
+    print(settings.BASE_URL + 'authentication/connexion')
+
+    return redirect("https://auth.viarezo.fr/oauth/authorize/?" + "&" +
+                "redirect_uri="+ settings.BASE_URL + 'authentication/connexion/' + "&" +
+                "client_id=" + settings.OAUTH_CLIENT_ID + "&" +
+                "response_type=" + "code" + "&" +
+                "state=" + "MeLlamoLaplayaDeHoy" + "&" +
+                "grant_type=" + "authorization_code" + "&" +
+                "scope=" + "default")
+
+
 def connexion(request):
 
     url = request.get_full_path()
@@ -62,16 +75,3 @@ def connexion(request):
     login(request, user)
 
     return redirect(settings.LOGIN_REDIRECT_URL)
-
-
-def registration(request):
-
-    print(settings.BASE_URL + 'authentication/connexion')
-
-    return redirect("https://auth.viarezo.fr/oauth/authorize/?" + "&" +
-                "redirect_uri="+ settings.BASE_URL + 'authentication/connexion/' + "&" +
-                "client_id=" + settings.OAUTH_CLIENT_ID + "&" +
-                "response_type=" + "code" + "&" +
-                "state=" + "MeLlamoLaplayaDeHoy" + "&" +
-                "grant_type=" + "authorization_code" + "&" +
-                "scope=" + "default")
