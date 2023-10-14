@@ -60,7 +60,7 @@ MIDDLEWARE = [
     "allauth.account.middleware.AccountMiddleware"
 ]
 
-ROOT_URLCONF = "pybook.urls"
+ROOT_URLCONF = "convention.urls"
 
 TEMPLATES = [
     {
@@ -85,7 +85,7 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
-WSGI_APPLICATION = "pybook.wsgi.application"
+WSGI_APPLICATION = "convention.wsgi.application"
 
 
 # Database

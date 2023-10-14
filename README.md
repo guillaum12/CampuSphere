@@ -1,10 +1,7 @@
-# Pybook - Social Network 
+# Convention étudiante 
 
 ![Pytest](https://github.com/hatredholder/Social-Network/workflows/tests/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/hatredholder/Social-Network/badge.svg?branch=main)](https://coveralls.io/github/hatredholder/Social-Network?branch=main)
 
-:earth_americas: :earth_americas: :earth_americas:
-
-An open-source Social Network project called Pybook written in **Django**.
 
 ## Features
 
