@@ -5,11 +5,16 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
+# VR OAuth
+
+OAUTH_CLIENT_ID = "c4dd35ac7e11660836bec840591109a4ac2c9e09"
+OAUTH_CLIENT_SECRET = "3201f3bc6ea38b9bbbbe408b3c2e8f1d5b9de3e8"
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("APP_SECRET")
+SECRET_KEY = "MyVerySecretKey"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
