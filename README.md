@@ -1,39 +1,39 @@
 # Convention étudiante 
 
+## Comment lancer le site web en local ?
+
+1) Créer un environnement virtuel : `python -m venv env` puis `source env/scripts/activate`
+2) Installer les packages `pip install -r requirements.txt`
+3) Faire les migrations : `python manage.py makemigrations` puis `python manage.py migrate`
+4) Lancer le serveur en local grâce à : `python manage.py runserver`
+puis se rendre à http://127.0.0.1:8000/
+
+Lors de la production, pour gagner du temps, la commande `source mi.sh` permet de créer les migrations, les appliquer et lancer le serveur. (Bien penser à activer son environnement avant)
+
+
+## Prise en main du site
+
+Voici comment se former et comprendre le site : [Prise en main](documentation/Prise%20en%20main.md)
+
+
+## Deploiement 
+
+Voici comment déployer le site : [Mise en ligne](documentation/miseEnLigne/Deployement.md)
+
+
+## Contributeurs à contacter au besoin :
+
+ - Guillaume Machabert - guillaume.machabert@raidcs.com
+ - Augustin 
+ - Thibault
+ - Théo
+
+
+## Pour plus tard
+
 ![Pytest](https://github.com/hatredholder/Social-Network/workflows/tests/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/hatredholder/Social-Network/badge.svg?branch=main)](https://coveralls.io/github/hatredholder/Social-Network?branch=main)
 
 
-## Features
-
-- Authentication
-- Adding as a Friend
-- Post Feed
-- Profile Pages
-- Messaging between Users
-- Like and Comment on Posts
-- Notifications on Friend Requests
-- Search Users
-
-## Preview
-
-![image](https://user-images.githubusercontent.com/86254474/201476598-c993186c-8f29-465c-b9e4-0cab2abe5530.png)
-
-## Instructions
-
-Clone this repository, cd into it
-
-```
-git clone https://github.com/hatredholder/Social-Network.git
-cd Social-Network
-```    
-
-Start a new **Virtualenv**, activate it, install Python module requirements on it
-
-```
-virtualenv myenv
-source myenv/bin/activate
-pip install -r requirements/base.txt
-```  
 Create a **PostgreSQL** database
 
 ```

@@ -1,0 +1,4 @@
+command = 'home/ubuntu/Convention/env/bin/gunicorn'
+pythonpath = '/home/ubuntu/Convention'
+bind = 'localhost:8000'
+workers = 3
