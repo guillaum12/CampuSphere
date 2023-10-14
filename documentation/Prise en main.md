@@ -20,14 +20,8 @@ Pour faire des requêtes SQL précises, voici : [Advanced models](https://master
 
 ## Architecture du code
 
-Le code est découpé en 6 applications Django :
+... TO DO ...
 
-- `InscriptionsRaid` contient la base du site : le template de base, le pied de page et les barres de navigation, mais aussi les settings globaux.
-- ``authentication`` gère la connexion au site, l'inscription et la possibilité de retrouver son nom de passe
-- ``concurrents`` gère la plupart des formulaires pour récupérer les informations lors des inscriptions
-- `equipes` gère la création et l'intégration d'une équipe
-- `entreprises` recolte les informations à propos des entreprises
-- `staff` gère la partie auquelle seul le staff à accès, et permet de récolter les informations envoyées par les concurrents, mais aussi de valider leurs certificats
 
 Chaque application contient :
 
@@ -80,32 +74,6 @@ et tout fonctionnait à nouveau !
 Bootstrap ne permet pas de gérer les designs des formulaires : et c'est là que Crispy rentre en jeu !
 Il gère l'agencement des formulaires et leur style.
 
-
-## API Lydia
-
-Une API permet d'intéragir avec un serveur, ici celui de Lydia. 
-
-On l'utilise de deux manières. Pour demander à Lydia :
-
-- de créer une fenêtre de paiement de x€ grâce un token qui identifie le compte Lydia du Raid ()
-- pour demander au serveur si le paiement a bien été validé
-
-Plus de détails dans ce ancien [rapport de passation](Lydia/Doc%20Lydia.docx)
-
-
-Pour tester l'API, nous utilisons des tokens de test. Ils nous ont été fournis par Lydia lorsque nous les avons contacter, ainsi que la [documentation](https://homologation.lydia-app.com/doc/api/). Ils sont très réactifs
-
-
-Les tokens Lydia de test et de production sont directement dans le fichier "settings.py" de InscriptionsRaid.
-
-Pour tester les paiements, vous pouvez utiliser les fausses cartes de crédit suivantes :
-
-- 4970109000000007
-- 5137340014122340
-
-avec un CCV de 123 et une date d'expiration dans le futur.
-
-Voici également un numéro de mobile associé à un utilisateur Lydia, en homologation : +33621491838
 
 ## VS Code
 
