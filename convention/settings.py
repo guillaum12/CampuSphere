@@ -18,12 +18,12 @@ SECRET_KEY = "MyVerySecretKey"
 
 
 # Si en local, on utilise les settings dev.
-django_env = os.environ.get("DJANGO_ENV", "development")
+django_env = os.environ.get("DJANGO_ENV")
 
-if django_env == "production":
-    BASE_URL = "https://convention.cs-campus.fr/"
-else:
+if django_env == "development":
     BASE_URL = "http://127.0.0.1:8000/"
+else:
+    BASE_URL = "https://convention.cs-campus.fr/"
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
