@@ -3,12 +3,10 @@ import requests
 from django.contrib.auth import get_user_model, login
 from allauth.account.models import EmailAddress
 
-import convention.settings.prod as settings
+import convention.settings.dev as settings
 from urllib.parse import urlparse, parse_qs
 
 def registration(request):
-
-    print(settings.BASE_URL + 'authentication/connexion')
 
     return redirect("https://auth.viarezo.fr/oauth/authorize/?" + "&" +
                 "redirect_uri="+ settings.BASE_URL + 'authentication/connexion/' + "&" +
@@ -72,6 +70,6 @@ def connexion(request):
     #email = user_data['email']
     #EmailAddress.objects.create(user=user, email=email, primary=True, verified=True)
     
-    login(request, user)
+    login(request, user, backend='allauth.account.auth_backends.AuthenticationBackend')
 
     return redirect(settings.LOGIN_REDIRECT_URL)

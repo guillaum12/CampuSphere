@@ -4,7 +4,6 @@ debug = True
 
 BASE_URL = "https://convention.cs-campus.fr/"
 
-ALLOWED_HOSTS = [
+ALLOWED_HOSTS += [
     BASE_URL,
-    "localhost"
 ]
