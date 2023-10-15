@@ -132,6 +132,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# CSRF tokens
+
+CSRF_TRUSTED_ORIGINS = ['https://*.convention.cs-campus.fr']
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
