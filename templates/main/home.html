@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}
     Home
 {% endblock title %}
@@ -10,4 +11,19 @@
     <div class='content'>
         <p>Utilisez le bouton "Login" pour vous connecter ou vous inscrire.</p>
     </div>
+    <br>
+    <div class="content">
+        <h3>Sur la plateforme, on compte déjà :
+            <ul>
+                <li>{{nombre_utilisateur}} utilisateurs.</li>
+                <li>{{nombre_post}} posts</li>
+                <li>{{nombre_like}} likes</li>
+            </ul>
+
+            <img width="200px" src={% static "img/centralesupelec.jpeg" %} alt="CentraleSupélec">
+
+        </h3>
+
+    </div>
+
 {% endblock content %}

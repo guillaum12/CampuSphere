@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
-
+from posts.models import Post, Like
+from django.contrib.auth.models import User
 
 def home_view(request):
     """
@@ -7,4 +8,13 @@ def home_view(request):
     """
     if request.user.is_authenticated:
         return redirect("posts/")
-    return render(request, "main/home.html")
+    
+
+
+    context = {
+        "nombre_utilisateur":len(User.objects.all()),
+        "nombre_post":len(Post.objects.all()),
+        "nombre_like":len(Like.objects.all()),
+    }
+    
+    return render(request, "main/home.html", context=context)

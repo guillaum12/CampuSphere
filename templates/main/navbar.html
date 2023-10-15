@@ -63,7 +63,7 @@
                     <img src={{ profile_pic.url }} class='ui avatar image'>&nbsp;
                     {{ request.user }}
                 </a>
-                <a href="{% url 'account_logout' %}" class="ui item">Logout</a>
+                <a href="{% url 'account_logout' %}" class="ui item">Déconnexion</a>
             {% else %}
                 <a href="{{ login }}" class="ui item">Login</a>
                 <a href="{% url 'registration' %}" class="ui item">VR</a>
