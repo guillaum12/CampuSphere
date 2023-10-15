@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # VR OAuth
@@ -16,10 +16,20 @@ OAUTH_CLIENT_SECRET = "3201f3bc6ea38b9bbbbe408b3c2e8f1d5b9de3e8"
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "MyVerySecretKey"
 
+
+# Si en local, on utilise les settings dev.
+django_env = os.environ.get("DJANGO_ENV", "development")
+
+if django_env == "production":
+    BASE_URL = "https://convention.cs-campus.fr/"
+else:
+    BASE_URL = "http://127.0.0.1:8000/"
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", BASE_URL]
 
 
 # Application definition
@@ -99,7 +109,7 @@ WSGI_APPLICATION = "convention.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'database.db',
+        'NAME': BASE_DIR /'database.sqlite3',
     }
 }
 

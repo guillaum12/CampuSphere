@@ -6,4 +6,4 @@ __pycache__
 media/avatars
 media/posts
 env
-database.db
+database.sqlite3

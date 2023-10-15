@@ -3,7 +3,7 @@ import requests
 from django.contrib.auth import get_user_model, login
 from allauth.account.models import EmailAddress
 
-import convention.settings.dev as settings
+import convention.settings as settings
 from urllib.parse import urlparse, parse_qs
 
 def registration(request):
