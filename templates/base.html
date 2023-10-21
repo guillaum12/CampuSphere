@@ -16,7 +16,10 @@
               Custom
               JS
               -->
+        <link rel="icon" href="{% static 'img/logo.png' %}">
+
         <script type="text/javascript" src={% static 'main.js' %} defer></script>
+        {% block extrahead %}{% endblock extrahead %}
         <!-- Semantic UI -->
         <link rel="stylesheet"
               type='text/css'

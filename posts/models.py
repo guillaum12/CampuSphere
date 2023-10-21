@@ -22,8 +22,9 @@ class Post(models.Model):
     """
     This model is used to show results in main.html
     """
+    title = models.TextField(verbose_name="Propostion")
+    content = models.TextField(verbose_name="Détails")
 
-    content = models.TextField()
     image = models.ImageField(
         blank=True,
         upload_to="posts",
@@ -69,6 +70,8 @@ class Like(models.Model):
     """
     This model is used to leave likes on Posts
     """
+
+    puissance = models.IntegerField()
 
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

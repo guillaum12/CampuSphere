@@ -39,7 +39,7 @@ def get_post_id_and_post_obj(request):
     return post_id, post_obj
 
 
-def like_unlike_post(profile, post_id, post_obj):
+def like_unlike_post(profile, post_id, post_obj, puissance=5):
 
     # Add / remove target profile
     # from liked field in post_obj
@@ -52,7 +52,7 @@ def like_unlike_post(profile, post_id, post_obj):
         like_added = True
 
     # Get Like object if post already liked, create Like object if not
-    like, created = Like.objects.get_or_create(profile=profile, post_id=post_id)
+    like, created = Like.objects.get_or_create(profile=profile, post_id=post_id, puissance=puissance)
 
     # If Like object wasnt created
     # by get_or_create function - delete

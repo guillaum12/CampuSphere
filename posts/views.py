@@ -32,8 +32,8 @@ def post_comment_create_and_list_view(request):
     
     profile = get_request_user_profile(request.user)
 
-    p_form = PostCreateModelForm()
-    c_form = CommentCreateModelForm()
+    post_form = PostCreateModelForm()
+    create_form = CommentCreateModelForm()
 
     if add_post_if_submitted(request, profile):
         return redirect_back(request)
@@ -44,8 +44,8 @@ def post_comment_create_and_list_view(request):
     context = {
         "qs": qs,
         "profile": profile,
-        "p_form": p_form,
-        "c_form": c_form,
+        "p_form": post_form,
+        "c_form": create_form,
     }
 
     return render(request, "posts/main.html", context)

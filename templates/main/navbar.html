@@ -7,21 +7,27 @@
 {% url 'profiles:sent-invites-view' as path_to_invites %}
 {% url 'profiles:all-profiles-view' as path_to_all_profiles %}
 {% url 'profiles:messenger-list-view' as path_to_messenger %}
+{% load static %}
+
 <div class="navbar ui inverted menu nav mb-5">
     <div class="ui container">
         <a href="{{ path_to_home }}"
            class="{% if request.path == path_to_home %}active{% endif %} item">
             <h3>Convention étudiante</h3>
+
         </a>
         {% if request.user.is_authenticated %}
             <a href="{{ path_to_posts }}"
-               class="{% if request.path == path_to_posts %}active{% endif %} item">Board</a>
+               class="{% if request.path == path_to_posts %}active{% endif %} item">Propositions</a>
         {% endif %}
+        <!--
         {% if request.user.is_authenticated %}
             <a href="{{ path_to_messenger }}"
                class="{% if request.path == path_to_messenger %}active{% endif %} item">Messenger</a>
         {% endif %}
+        -->
         <div class="right menu">
+            <!--
             {% if request.user.is_authenticated %}
                 <div class="item">
                     <div class="ui floating dropdown icon button teal">
@@ -44,7 +50,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Search -->
                 <div class="item">
                     <form action="{% url 'profiles:search-profiles-view' %}" method="GET">
                         <div class="ui action left icon input">
@@ -57,6 +62,7 @@
                         </div>
                     </form>
                 </div>
+            -->
                 <!-- Search end -->
                 <a href="{{ path_to_my_profile }}"
                    class="{% if request.path == path_to_my_profile %}active{% endif %} item">

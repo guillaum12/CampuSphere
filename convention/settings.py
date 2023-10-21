@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+
+    # SCSS
+    'sass_processor',
 ]
 
 SITE_ID = 1
@@ -153,6 +156,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = "static/"
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'sass_processor.finders.CssFinder',
+)
 
 STATICFILES_DIRS = [
     BASE_DIR / STATIC_URL,
