@@ -7,3 +7,5 @@ media/avatars
 media/posts
 env
 database.sqlite3
+
+mi.sh
