@@ -5,10 +5,11 @@ from .models import Comment, Post
 
 class PostCreateModelForm(forms.ModelForm):
     content = forms.CharField(widget=forms.Textarea(attrs={"rows": 2}))
+    title = forms.CharField(widget=forms.Textarea(attrs={"rows": 1}))
 
     class Meta:
         model = Post
-        fields = ("content", "image")
+        fields = ("title", "content", "theme", "image")
 
 
 class PostUpdateModelForm(forms.ModelForm):

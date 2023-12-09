@@ -9,12 +9,13 @@ from django.views.generic import DeleteView, UpdateView
 from profiles.views_utils import get_request_user_profile, redirect_back
 
 from .forms import CommentCreateModelForm, PostCreateModelForm, PostUpdateModelForm
-from .models import Comment, Post
+from .models import Comment, Post, Like
 from .views_utils import (
     add_comment_if_submitted,
     add_post_if_submitted,
     get_post_id_and_post_obj,
     like_unlike_post,
+    power_post,
 )
 
 
@@ -41,6 +42,43 @@ def post_comment_create_and_list_view(request):
     if add_comment_if_submitted(request, profile):
         return redirect_back(request)
 
+    if request.user.is_staff:
+        is_staff = True
+    else:
+        is_staff = False
+
+    context = {
+        "qs": qs,
+        "profile": profile,
+        "p_form": p_form,
+        "c_form": c_form,
+        "is_staff":is_staff,
+    }
+
+    return render(request, "posts/main.html", context)
+
+@login_required
+def favorite_post(request):
+    """
+    Shows favorite posts of user
+    View url: /posts/favorite
+    """
+
+    profile = get_request_user_profile(request.user)
+
+    like_objects = Like.objects.filter(profile=profile).order_by("-created")
+
+    qs = [like_object.post for like_object in like_objects]
+    
+    p_form = PostCreateModelForm()
+    c_form = CommentCreateModelForm()
+
+    if add_post_if_submitted(request, profile):
+        return redirect_back(request)
+
+    if add_comment_if_submitted(request, profile):
+        return redirect_back(request)
+
     context = {
         "qs": qs,
         "profile": profile,
@@ -49,6 +87,8 @@ def post_comment_create_and_list_view(request):
     }
 
     return render(request, "posts/main.html", context)
+
+
 
 
 @login_required
@@ -69,6 +109,25 @@ def switch_like(request):
     )
 
 
+@login_required
+def power(request):
+    """
+    Adpat power of a post.
+    View url: /posts/power/
+    """
+    if request.method == "POST":
+        post_id, post_obj = get_post_id_and_post_obj(request)
+        profile = get_request_user_profile(request.user)
+        power_amount = request.POST.get('power_amount')
+        power_added = power_post(profile, post_id, post_obj, power_amount)
+
+        total_power = "12" #post_obj.get_all_power
+
+    # Return JSON response for AJAX script in power.js
+    return JsonResponse(
+        {"total_power": total_power, "power_added": power_added},
+    )
+
 # Class-based views
 
 
@@ -84,9 +143,8 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 
     def form_valid(self, *args, **kwargs):
         post = self.get_object()
-
-        # If post's author user doesnt equal request's user
-        if post.author.user != self.request.user:
+        # If post's author user doesnt equal request's user or user is not staff.
+        if (post.author.user != self.request.user) and not(self.request.user.is_staff):
             messages.add_message(
                 self.request,
                 messages.ERROR,

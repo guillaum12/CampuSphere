@@ -1,0 +1,14 @@
+.progress-bar-container {
+    width: 100%; /* Ajustez la largeur de la barre de progression selon vos besoins */
+    height: 20px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background: grey; /* Dégradé de rouge à vert */
+    transition: width 0.5s ease; /* Animation de transition de largeur */
+  }
+  

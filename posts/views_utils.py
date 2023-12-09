@@ -1,5 +1,5 @@
 from .forms import CommentCreateModelForm, PostCreateModelForm
-from .models import Like, Post
+from .models import Like, Post, Power
 
 
 def add_post_if_submitted(request, profile):
@@ -65,3 +65,24 @@ def like_unlike_post(profile, post_id, post_obj):
 
     # like_added is used for the like.js script
     return like_added
+
+def power_post(profile, post_id, post_obj, power_amount):
+    
+    # Add / remove target profile
+    # and create power_added variable
+    if profile in post_obj.powered.all():
+        # post_obj.powered.remove(profile)
+        power_added = False
+    else:
+        post_obj.powered.add(profile)
+        power_added = True
+
+    # Get Power object if post already powered, create Power object if not
+    power, created = Power.objects.get_or_create(profile=profile, post_id=post_id)
+
+    power.power = power_amount
+    power.save()
+    post_obj.save()
+
+    # power_added is used for the power.js script
+    return power_added

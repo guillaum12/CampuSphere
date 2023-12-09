@@ -1,196 +1,85 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'posts/feedback.css' %}">
+<link rel="stylesheet" href="{% static 'posts/progress_bar.css' %}">
+{% endblock extrahead %}
+
 {% block title %}
     Board
 {% endblock title %}
 {% block content %}
-    {% for message in messages %}
-        {% if message.tags == 'error' %}
-            <div class="ui red message">
-                <div class="header">Error</div>
-                <p>{{ message }}</p>
-            </div>
-        {% else %}
-            <div class="ui green message">
-                <div class="header">Success</div>
-                <p>{{ message }}</p>
-            </div>
-        {% endif %}
-    {% endfor %}
+    {% include 'messages.html' %}
+
+    
     <div class="ui grid">
-        <div class="eleven wide column">
+        <div class="column">
+            {% include 'posts/new_post.html' with p_form=p_form  %}
             {% for post in qs %}
                 <div class="ui fluid card">
                     <div class="content">
+                        <!-- Update and delete -->
                         <div class="right floated meta">
                             <div class="ui grid">
                                 <div class="row">
-                                    {% if request.user == post.author.user %}
-                                        <a href="{% url 'posts:post-update' post.pk %}">
-                                            <button class="ui button bwhite-lg ">Update</button>
+                                    {% if request.user == post.author.user or is_staff == True %}
+                                    <div class="column">
+                                        <a class="ui bwhite-lg" href="{% url 'posts:post-update' post.pk %}">
+                                            <i class="edit large grey outline icon"></i> <!-- Pen icon -->
                                         </a>
-                                        <a href="{% url 'posts:post-delete' post.pk %}">
-                                            <button class="ui button bwhite-lg ">Delete</button>
+                                    </div>
+                                    <div class="column">
+                                        <a class="ui bwhite-lg" href="{% url 'posts:post-delete' post.pk %}">
+                                            <i class="trash large grey alternate outline icon"></i> <!-- Bin icon -->
                                         </a>
+                                    </div>
                                     {% endif %}
+
+                                    <div class="column">
+                                        {% include 'posts/like.html' with post=post profile=profile %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <img class="ui avatar image" src={{ post.author.avatar.url }}>
                         <span style="color:gray">
-                            <a style="color:black" href="{{ post.author.get_absolute_url }}">{{ post.author.user }}</a>  {{ post.created|timesince }} ago
+                            <a style="color:black" href="{{ post.author.get_absolute_url }}">Utilisateur <!-- #{{ post.author.user.id }} --> </a>  {{ post.created|timesince }} ago
                         </span>
+                        <span class="badge rounded-pill text-bg-success">{{post.theme}}</span>
+                        <h2 class="m-2">{{ post.title }}</h2>
                     </div>
+
+                    {% if post.image %}
                     <div class="ui fluid image">
-                        {% if post.image %}<img src={{ post.image.url }}>{% endif %}
+                        <img src={{ post.image.url }}>
                     </div>
-
-
-                    <div class="test">
-
-                        <div class="feedback">
-                            <label class="angry">
-                                <input type="radio" value="1" name="feedback" />
-                                <div>
-                                    <svg class="eye left">
-                                        <use xlink:href="#eye">
-                                    </svg>
-                                    <svg class="eye right">
-                                        <use xlink:href="#eye">
-                                    </svg>
-                                    <svg class="mouth">
-                                        <use xlink:href="#mouth">
-                                    </svg>
-                                </div>
-                            </label>
-                            <label class="sad">
-                                <input type="radio" value="2" name="feedback" />
-                                <div>
-                                    <svg class="eye left">
-                                        <use xlink:href="#eye">
-                                    </svg>
-                                    <svg class="eye right">
-                                        <use xlink:href="#eye">
-                                    </svg>
-                                    <svg class="mouth">
-                                        <use xlink:href="#mouth">
-                                    </svg>
-                                </div>
-                            </label>
-                            <label class="ok">
-                                <input type="radio" value="3" name="feedback" />
-                                <div></div>
-                            </label>
-                            <label class="good">
-                                <input type="radio" value="4" name="feedback" checked />
-                                <div>
-                                    <svg class="eye left">
-                                        <use xlink:href="#eye">
-                                    </svg>
-                                    <svg class="eye right">
-                                        <use xlink:href="#eye">
-                                    </svg>
-                                    <svg class="mouth">
-                                        <use xlink:href="#mouth">
-                                    </svg>
-                                </div>
-                            </label>
-                            <label class="happy">
-                                <input type="radio" value="5" name="feedback" />
-                                <div>
-                                    <svg class="eye left">
-                                        <use xlink:href="#eye">
-                                    </svg>
-                                    <svg class="eye right">
-                                        <use xlink:href="#eye">
-                                    </svg>
-                                </div>
-                            </label>
-                        </div>
-                                
-                        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-                            <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 4" id="eye">
-                                <path d="M1,1 C1.83333333,2.16666667 2.66666667,2.75 3.5,2.75 C4.33333333,2.75 5.16666667,2.16666667 6,1"></path>
-                            </symbol>
-                            <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 7" id="mouth">
-                                <path d="M1,5.5 C3.66666667,2.5 6.33333333,1 9,1 C11.6666667,1 14.3333333,2.5 17,5.5"></path>
-                            </symbol>
-                        </svg>
-                        
-
-
-
-                    </div>
+                    {% endif %}
+                    
+                    
                     <div class="content">
+
                         <p>{{ post.content }}</p>
-                        <div style="display: flex; justify-content: right;">
-                            <div class="cmt_btn {{ post.id }} ui button mb-5">
-                                <i class="comment icon"></i>
-                                <p style="display: inline-block;">{{ post.num_comments }}</p>
+
+                        <br><br>
+                        {% include 'posts/feedback.html' with post_id=post.id user_post_power=post|user_post_power:user %}
+                        <br>
+                        {% if post|user_post_power:user %}
+                            {% include 'posts/progress_bar.html' with post=post %}
+                        {% endif %}
+                            <br>
+                            
+                            <div style="display: flex; justify-content: right;">
+                                
                             </div>
-                            <form action="{% url 'posts:switch-like-view' %}"
-                                  method="POST"
-                                  class='like-form'
-                                  id='{{ post.id }}'>
-                                {% csrf_token %}
-                                <input type="hidden" name="post_id" value={{ post.id }}>
-                                {% if profile not in post.liked.all %}
-                                    <button type="submit" class="ui button black like-btn{{ post.id }}">
-                                        <i class="heart icon"></i>
-                                        <p style="display: inline-block;" class="like-count{{ post.id }}">{{ post.liked.all.count }}</p>
-                                    </button>
-                                {% else %}
-                                    <button type="submit" class="ui button negative like-btn{{ post.id }}">
-                                        <i class="heart icon"></i>
-                                        <p style="display: inline-block;" class="like-count{{ post.id }}">{{ post.liked.all.count }}</p>
-                                    </button>
-                                {% endif %}
-                            </form>
                         </div>
+                        {% include 'posts/comment.html' with post=post c_form=c_form %}
+                        
                     </div>
-                    <div class="extra content">
-                        <div class="comment-box">
-                            {% if post.comment_set.all %}
-                                {% for c in post.comment_set.all %}
-                                    <div class="ui segment mb-5">
-                                        <img class="ui avatar image" src={{ c.profile.avatar.url }}>
-                                        <span style="color:gray">
-                                            <a style="color:black" href="{{ c.profile.get_absolute_url }}">{{ c.profile }}</a> {{ c.created|timesince }} ago
-                                        </span>
-                                        <div style="color:black" class='mt-5'>{{ c.content }}</div>
-                                        <br>
-                                        {% if c.profile.user == request.user %}
-                                            <form method="POST" action="{% url 'posts:comment-delete' c.pk %}">
-                                                {% csrf_token %}
-                                                <button type="submit" class="delete-cmt-btn">Delete</button>
-                                            </form>
-                                        {% endif %}
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                        <form action="" method="POST"class='form{{ post.id }} ui fluid form'>
-                            {% csrf_token %}
-                            <input type="hidden" name="post_id" value={{ post.id }}>
-                            {{ c_form.as_p }}
-                            <button type="submit"
-                                    name="submit_c_form"
-                                    class="ui primary button mt-5 w-full">Send</button>
-                        </form>
-                    </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
-        </div>
-        <div class="five wide column">
-            <div class="ui segment">
-                <form action="" method="POST" class='ui form' enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ p_form.as_p }}
-                    <button type='submit'
-                            name="submit_p_form"
-                            class="ui positive button w-full mt-5">Send</button>
-                </form>
-            </div>
-        </div>
+                
     </div>
 {% endblock content %}
 {% block scripts %}
