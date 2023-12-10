@@ -5,8 +5,9 @@ id='{{ post.id }}'>
 
     {% csrf_token %}
     <input type="hidden" name="post_id" value={{ post.id }}>
-    <button type="submit">
-        <i class="star large
+    <button type="submit" style="border: none; background: none; padding: 0;">
+        <!-- Cet id est utilisé dans like.js -->
+        <i id='like_icon_{{ post.id }}' class="star large
         {% if profile not in post.liked.all %}black{% else %}yellow{% endif %}
         icon"></i>
         <!--

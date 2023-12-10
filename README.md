@@ -85,37 +85,3 @@ flake8
 Frontend: CSS, Semantic UI.
 
 Backend: Django, JavaScript and AJAX.
-
-Database: PostgreSQL.
-
-Tests: Pytest, Pytest-Django.
-
-## To Do/To Add
-
-- [x] Update comment delete button;
-
-- [x] Add comments form to profile detail view;
-
-- [x] Change messenger url from pk to slug;
-
-- [x] Add 100% coverage tests;
-
-- [x] Add followers count to profile detail;
-
-- [x] Move to a local database instead of a online server;
-
-- [x] Make navbar sticky;
-
-- [x] Refactor all code (add comments everywhere they're needed, make sure all code is formatted by PEP8);
-
-- [x] Add delete comment functionality; 
-
-- [x] Add messenger/chat functionality;
-
-- [x] Add search bar functionality;
-
-- [x] Add follow user functionality;
-
-- [x] Hide posts of people that user doesn't follow/didn't add as a friend;
-
-- [x] Add a welcome page for non-authorized users;

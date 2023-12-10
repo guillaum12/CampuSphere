@@ -29,7 +29,7 @@ class Choice(models.Model):
     def __str__(self):
         return self.theme_name
 
-#Choice.objects.get_or_create(theme_name='aucun')
+Choice.objects.get_or_create(theme_name='aucun')
 
 class Post(models.Model):
     """

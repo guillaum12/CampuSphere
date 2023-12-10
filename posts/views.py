@@ -42,17 +42,11 @@ def post_comment_create_and_list_view(request):
     if add_comment_if_submitted(request, profile):
         return redirect_back(request)
 
-    if request.user.is_staff:
-        is_staff = True
-    else:
-        is_staff = False
-
     context = {
         "qs": qs,
         "profile": profile,
         "p_form": p_form,
         "c_form": c_form,
-        "is_staff":is_staff,
     }
 
     return render(request, "posts/main.html", context)
@@ -88,8 +82,20 @@ def favorite_post(request):
 
     return render(request, "posts/main.html", context)
 
+@login_required
+def show_post(request, pk):
+    """
+    Shows a post by pk.
+    View url: /posts/<pk>/show/
+    """
 
+    context = {
+        "post": Post.objects.get(pk=pk),
+        "profile": get_request_user_profile(request.user),
+        "c_form": CommentCreateModelForm(),
+    }
 
+    return render(request, "posts/show_post.html", context)
 
 @login_required
 def switch_like(request):
@@ -105,7 +111,7 @@ def switch_like(request):
 
     # Return JSON response for AJAX script in like.js
     return JsonResponse(
-        {"total_likes": post_obj.liked.count(), "like_added": like_added},
+        {'status': 'success', "like_added": like_added},
     )
 
 

@@ -4,8 +4,8 @@ from .models import Comment, Post
 
 
 class PostCreateModelForm(forms.ModelForm):
-    content = forms.CharField(widget=forms.Textarea(attrs={"rows": 2}))
     title = forms.CharField(widget=forms.Textarea(attrs={"rows": 1}))
+    content = forms.CharField(widget=forms.Textarea(attrs={"rows": 2}))
 
     class Meta:
         model = Post
@@ -13,11 +13,12 @@ class PostCreateModelForm(forms.ModelForm):
 
 
 class PostUpdateModelForm(forms.ModelForm):
+    title = forms.CharField(widget=forms.Textarea(attrs={"rows": 1}))
     content = forms.CharField(widget=forms.Textarea(attrs={"rows": 2}))
 
     class Meta:
         model = Post
-        fields = ("content",)
+        fields = ("title", "content", "theme")
 
 
 class CommentCreateModelForm(forms.ModelForm):
