@@ -65,7 +65,7 @@ class Post(models.Model):
         return self.comment_set.all().count()
     
     @property
-    def nombre_votant(self):
+    def voter_number(self):
         all_power_objects = Power.objects.filter(post = self)
         return len(all_power_objects)
 

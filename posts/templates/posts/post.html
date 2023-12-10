@@ -31,8 +31,8 @@
             <a style="color:black" href="{{ post.author.get_absolute_url }}">Utilisateur <!-- #{{ post.author.user.id }} --> </a>  {{ post.created|timesince }} ago
         </span>
         <span class="badge rounded-pill text-bg-success">{{post.theme}}</span>
-        <h2 class="m-2">{{ post.title }}</h2>
-    </div>
+                <h2 class="m-2"><a href="/posts/{{post.id}}/show/" style="color:black;">{{ post.title }}</a></h2>
+            </div>
 
     {% if post.image %}
     <div class="ui fluid image">
@@ -46,14 +46,12 @@
         <br><br>
         {% include 'posts/feedback.html' with post_id=post.id user_post_power=post|user_post_power:user %}
         <br>
-        {% if post|user_post_power:user %}
+        
+        <div id="progress_zone_{{post.id}}" style="display:none;">
             {% include 'posts/progress_bar.html' with post=post %}
-        {% endif %}
+        </div>
         <br>
         
-        <div style="display: flex; justify-content: right;">
-            
-        </div>
     </div>
     {% include 'posts/comment.html' with post=post c_form=c_form %}
     

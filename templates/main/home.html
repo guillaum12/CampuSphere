@@ -4,27 +4,25 @@
     Home
 {% endblock title %}
 {% block content %}
-    <div class="welcome">
-        <h1>Bienvenue</h1>
-    </div>
-    <br>
-    <div class='content'>
-        <h3>Cette plateforme a pour vocation de faire émarger les bonnes idées des étudiants, 
-            puis de mettre en avant les plus pertinentes </h3>
-    </div>
-    <br>
-    <div class="content">
-        <h4>Sur la plateforme, on compte déjà :
+
+    <div class="text-center">
+        <h2 style="font-weight: lighter;">Connectez-vous pour voter et proposer des idées pour le campus.</h2>
+        <br>
+            <!--
             <ul>
                 <li>{{nombre_utilisateur}} utilisateurs.</li>
-                <li>{{nombre_post}} posts</li>
-                <li>{{nombre_like}} likes</li>
+                <li>{{nombre_post}} idées</li>
             </ul>
+            -->
+
+            <a class="nav-link ui item" href="{% url 'registration' %}">
+                <button class="btn btn-outline-primary m-3 row">
+                    <img style="width:30px" class="mr-3" src="{% static "img/viarezo.png" %}">
+                    Connexion avec Viarézo
+                </button>
+            </a>
 
             <img width="200px" src={% static "img/centralesupelec.jpeg" %} alt="CentraleSupélec">
-
-        </h4>
-
     </div>
 
 {% endblock content %}

@@ -1,3 +1,5 @@
+{% load custom_filters %}
+
 <div class="test">
     <div class="feedback">
         <label class="angry">
@@ -77,9 +79,22 @@
 </div>
 
 
-
+    
 <script>
+    function showProgressBar(postId) {
+        var progressBar = document.getElementById('progress_zone_' + postId);
+        if (progressBar) {
+            progressBar.style.display = 'block';
+        }
+    }
+
     $(document).ready(function () {
+        /* If user has already voted, show progress bar */
+        {% if post|user_post_power:user %}
+            showProgressBar({{post_id}});
+        {% endif %}
+
+
         $('input[name="feedback{{post_id}}"]').click(function () {
             var post_power = $('input[name="feedback{{post_id}}"]:checked').val();
             console.log(post_power); 
@@ -93,7 +108,20 @@
             'power_amount':post_power,
         },
         success: function(response) {
-          console.log("good")
+            showProgressBar({{post_id}});
+
+            // update progress number
+            var progress_number = document.getElementById('post_progress_{{post.id}}');
+            progress_number.innerHTML = response['post_progress']; 
+
+            // Update voter number
+            var voter_number = document.getElementById('voter_number_{{post.id}}');
+            voter_number.innerHTML = response['voter_number'];
+
+            // Update progress bar style
+            var progressBar = document.getElementById('progress_bar_{{post.id}}');
+            progressBar.style.width = response['post_progress'] + '%';
+            progressBar.style.background = response['post_color'];
         },
         error: function(response) {
             console.log('error', response)
@@ -101,4 +129,7 @@
         });
     });
     })
+
+    
+
 </script>       

@@ -1,8 +1,9 @@
 <div class="progress-bar-container">
-  <div class="progress-bar" style="width: {{ post.progress }}%;
+  <div class="progress-bar" id="progress_bar_{{post.id}}" style="width: {{ post.progress }}%;
     background: {{post.get_color_progress}}">
     </div>
 </div>
 <div>
-  <br> <p>{{post.progress}}% avec {{post.nombre_votant}} avis.</p>
+  <br> <p><span id='post_progress_{{post.id}}'>{{post.progress}}</span>% 
+    avec <span id="voter_number_{{post.id}}">{{post.voter_number}}</span> avis.</p>
 </div>

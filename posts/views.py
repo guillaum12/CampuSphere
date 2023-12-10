@@ -127,12 +127,15 @@ def power(request):
         power_amount = request.POST.get('power_amount')
         power_added = power_post(profile, post_id, post_obj, power_amount)
 
-        total_power = "12" #post_obj.get_all_power
 
-    # Return JSON response for AJAX script in power.js
-    return JsonResponse(
-        {"total_power": total_power, "power_added": power_added},
-    )
+        # Return JSON response for AJAX script in power.js
+        return JsonResponse(
+            {"post_progress": post_obj.progress, 
+             "voter_number" : post_obj.voter_number, 
+             "power_added": power_added,
+             "post_color": post_obj.get_color_progress,
+             },
+        )
 
 # Class-based views
 

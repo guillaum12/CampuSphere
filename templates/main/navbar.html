@@ -1,3 +1,4 @@
+{% load static %}
 {% url 'home-view' as path_to_home %}
 {% url 'account_login' as login %}
 {% url 'posts:main-post-view' as path_to_posts %}
@@ -83,8 +84,17 @@
 
                 <a href="{% url 'account_logout' %}" class="ui item">Déconnexion</a>
             {% else %}
-                <a href="{{ login }}" class="ui item">Login</a>
-                <a href="{% url 'registration' %}" class="ui item">VR</a>
+                <li class="nav-item">
+                    <a href="auth/signup/" class="ui item">S'inscrire</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ login }}" class="ui item">Se connecter</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link ui item" href="{% url 'registration' %}"><img style="width:30px" class="mr-3" src="{% static "img/viarezo.png" %}"> Connexion avec Viarézo</a>
+                </li>
+
             {% endif %}
         </div>
     </div>
