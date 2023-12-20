@@ -1,6 +1,16 @@
 from .forms import CommentCreateModelForm, PostCreateModelForm
-from .models import Like, Post, Power
+from .models import Like, Post, Power, Report
 
+
+def find_post_to_show(sort):
+
+    if sort in {"created", "report_number"}:
+        post_to_show = Post.objects.all().order_by("-" + sort)
+
+    else:
+        post_to_show = Post.objects.all().order_by("-created")
+
+    return post_to_show
 
 def add_post_if_submitted(request, profile):
     if "submit_p_form" in request.POST:
@@ -65,6 +75,33 @@ def like_unlike_post(profile, post_id, post_obj):
 
     # like_added is used for the like.js script
     return like_added
+
+def report_unreport_post(profile, post_id, post_obj):
+    # Add / remove target profile
+    # from reported field in post_obj
+    # and create report_added variable
+    if profile in post_obj.reported.all():
+        post_obj.reported.remove(profile)
+        report_added = False
+    else:
+        post_obj.reported.add(profile)
+        report_added = True
+
+    # Get report object if post already reported, create Report object if not
+    report, created = Report.objects.get_or_create(profile=profile, post_id=post_id)
+
+    # If report object wasnt created
+    # by get_or_create function - delete
+    if not created:
+        report.delete()
+    # Else - save report object
+    else:
+        report.save()
+        post_obj.save()
+
+    # report_added is used for the report.js script
+    return report_added
+
 
 def power_post(profile, post_id, post_obj, power_amount):
     

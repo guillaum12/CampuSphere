@@ -2,8 +2,8 @@
 
 ## Comment lancer le site web en local ?
 
-1) Créer un environnement virtuel : `python -m venv env` puis `source env/scripts/activate`
-2) Installer les packages `pip install -r requirements.txt`
+1) Créer un environnement virtuel : `python -m venv env` puis `source env/scripts/activate` (remplacer 'scripts' par 'bin' sous Mac ou Linux)
+2) Installer les packages `pip install -r requirements/base.txt`
 3) Faire les migrations : `python manage.py makemigrations` puis `python manage.py migrate`
 4) Lancer le serveur en local grâce à : `python manage.py runserver`
 puis se rendre à http://127.0.0.1:8000/

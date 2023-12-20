@@ -1,3 +1,5 @@
+from gettext import find
+from math import log
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -16,6 +18,8 @@ from .views_utils import (
     get_post_id_and_post_obj,
     like_unlike_post,
     power_post,
+    find_post_to_show,
+    report_unreport_post,
 )
 
 
@@ -23,13 +27,14 @@ from .views_utils import (
 
 
 @login_required
-def post_comment_create_and_list_view(request):
+def post_comment_create_and_list_view(request, sort):
     """
     Shows request's user friends.
     View url: /posts/
     """
     #qs = Post.objects.get_related_posts(user=request.user)
-    qs = Post.objects.all().order_by("-created")
+
+    post_to_show = find_post_to_show(sort)
     
     profile = get_request_user_profile(request.user)
 
@@ -43,7 +48,7 @@ def post_comment_create_and_list_view(request):
         return redirect_back(request)
 
     context = {
-        "qs": qs,
+        "post_to_show": post_to_show,
         "profile": profile,
         "p_form": p_form,
         "c_form": c_form,
@@ -108,10 +113,29 @@ def switch_like(request):
         profile = get_request_user_profile(request.user)
 
         like_added = like_unlike_post(profile, post_id, post_obj)
-
+    else:
+        like_added = False
     # Return JSON response for AJAX script in like.js
     return JsonResponse(
         {'status': 'success', "like_added": like_added},
+    )
+
+@login_required
+def switch_report(request):
+    """
+    Adds/removes report to a post.
+    View url: /posts/report/
+    """
+    if request.method == "POST":
+        post_id, post_obj = get_post_id_and_post_obj(request)
+        profile = get_request_user_profile(request.user)
+
+        report_added = report_unreport_post(profile, post_id, post_obj)
+    else:
+        report_added = False
+    # Return JSON response for AJAX script in report.js
+    return JsonResponse(
+        {'status': 'success', "report_added": report_added},
     )
 
 
@@ -137,8 +161,26 @@ def power(request):
              },
         )
 
-# Class-based views
+@login_required
+def report(request):
+    """
+    Report a post.
+    View url: /posts/report/
+    """
+    if request.method == "POST":
+        post_id, post_obj = get_post_id_and_post_obj(request)
+        profile = get_request_user_profile(request.user)
 
+        post_obj.report_number += 1
+        post_obj.save()
+
+        # Return JSON response for AJAX script in report.js
+        return JsonResponse(
+            {"report_number": post_obj.report_number},
+        )
+
+
+# Class-based views
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     """

@@ -45,7 +45,6 @@ def connexion(request):
                                     headers={"Authorization":"Bearer "
                                              +access_token}).json()
 
-
     username = user_infos['login']
 
     User = get_user_model()

@@ -3,8 +3,8 @@
 {% load custom_filters %}
 
 {% block extrahead %}
-<link rel="stylesheet" href="{% static 'posts/feedback.css' %}">
-<link rel="stylesheet" href="{% static 'posts/progress_bar.css' %}">
+<link rel="stylesheet" href="{% static 'posts/css/feedback.css' %}">
+<link rel="stylesheet" href="{% static 'posts/css/progress_bar.css' %}">
 {% endblock extrahead %}
 
 {% block title %}
@@ -17,7 +17,7 @@
     <div class="ui grid">
         <div class="column">
             {% include 'posts/new_post.html' with p_form=p_form  %}
-            {% for post in qs %}
+            {% for post in post_to_show %}
                 {% include 'posts/post.html' with post=post is_staff=is_staff request=request c_form=c_form %}
             {% endfor %}
         </div>
@@ -27,6 +27,7 @@
 
 {% block scripts %}
     {% load static %}
-    <script src="{% static 'comments.js' %}"></script>
-    <script src="{% static 'like.js' %}"></script>
+    <script src="{% static 'posts/js/comments.js' %}"></script>
+    <script src="{% static 'posts/js/like.js' %}"></script>
+    <script src="{% static 'posts/js/report.js' %}"></script>
 {% endblock scripts %}

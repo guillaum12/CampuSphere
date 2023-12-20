@@ -29,7 +29,7 @@ class Choice(models.Model):
     def __str__(self):
         return self.theme_name
 
-Choice.objects.get_or_create(theme_name='aucun')
+# Choice.objects.get_or_create(theme_name='aucun')
 
 class Post(models.Model):
     """
@@ -48,11 +48,16 @@ class Post(models.Model):
     )
     liked = models.ManyToManyField(Profile, blank=True, related_name="likes")
     powered = models.ManyToManyField(Profile, blank=True, related_name="powers")
+    reported = models.ManyToManyField(Profile, blank=True, related_name="reports")
 
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="posts")
 
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+    
+    @property
+    def report_number(self):
+        return self.reported.all().count()
 
     objects = PostManager()
 
@@ -143,6 +148,19 @@ class Like(models.Model):
     def __str__(self):
         return f"{self.profile} liked {self.post}"
     
+class Report(models.Model):
+    """
+    This model is used to leave likes on Posts
+    """
+
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.profile} reported {self.post}"
 
 class Power(models.Model):
     """

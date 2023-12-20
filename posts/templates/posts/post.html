@@ -7,7 +7,7 @@
         <div class="right floated meta">
             <div class="ui grid">
                 <div class="row">
-                    {% if request.user == post.author.user or request.user.is_staff == 1 %}
+                    {% if request.user == post.author.user or request.user.is_staff %}
                     <div class="column">
                         <a class="ui bwhite-lg" href="{% url 'posts:post-update' post.pk %}">
                             <i class="edit large grey outline icon"></i> <!-- Pen icon -->
@@ -18,7 +18,12 @@
                             <i class="trash large grey alternate outline icon"></i> <!-- Bin icon -->
                         </a>
                     </div>
+                    
                     {% endif %}
+
+                    <div class="column">
+                        {% include 'posts/report.html' with post=post profile=profile %}
+                    </div>
 
                     <div class="column">
                         {% include 'posts/like.html' with post=post profile=profile %}
@@ -28,7 +33,9 @@
         </div>
         <img class="ui avatar image" src={{ post.author.avatar.url }}>
         <span style="color:gray">
-            <a style="color:black" href="{{ post.author.get_absolute_url }}">Utilisateur <!-- #{{ post.author.user.id }} --> </a>  {{ post.created|timesince }} ago
+            {% include 'posts/identity.html' with post=post request=request  %}
+
+                {{ post.created|timesince }} ago
         </span>
         <span class="badge rounded-pill text-bg-success">{{post.theme}}</span>
                 <h2 class="m-2"><a href="/posts/{{post.id}}/show/" style="color:black;">{{ post.title }}</a></h2>

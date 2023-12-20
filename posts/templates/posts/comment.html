@@ -15,7 +15,12 @@
                 <div class="ui segment mb-5">
                     <img class="ui avatar image" src={{ c.profile.avatar.url }}>
                     <span style="color:gray">
-                        <a style="color:black" href="{{ c.profile.get_absolute_url }}">Utilisateur</a> {{ c.created|timesince }} ago
+                        {% if c.profile == post.author %}
+                            <strong>Auteur</strong>
+                        {% else %}
+                        {% include 'posts/identity.html' with post=post request=request  %}
+                        {% endif %}
+                        {{ c.created|timesince }} ago
                     </span>
                     <div style="color:black" class='mt-5'>{{ c.content }}</div>
                     <br>
