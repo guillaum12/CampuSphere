@@ -128,26 +128,6 @@ class Post(models.Model):
         ordering = ("-created",)
 
 
-class Comment(models.Model):
-    """
-    This model is used in Posts for comments
-    """
-
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    content = models.TextField(max_length=300)
-
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
-    
-    #We can add a comment in response to another comment
-    in_response_to = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"{self.profile} - {self.content}"
-    
-
-
 class Like(models.Model):
     """
     This model is used to leave likes on Posts

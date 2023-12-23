@@ -11,7 +11,7 @@ from django.views.generic import DeleteView, UpdateView
 from profiles.views_utils import get_request_user_profile, redirect_back
 
 from .forms import CommentCreateModelForm, PostCreateModelForm, PostUpdateModelForm
-from .models import Comment, Post, Like
+from .models import Post, Like
 from .views_utils import (
     add_comment_if_submitted,
     add_post_if_submitted,
@@ -201,36 +201,6 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         )
         return HttpResponseRedirect(self.success_url)
 
-
-class CommentDeleteView(LoginRequiredMixin, DeleteView):
-    """
-    Deletes a comment by pk.
-    View url: /posts/comments/<pk>/delete/
-    (This view is indentical to PostDeleteView)
-    """
-
-    model = Comment
-
-    def form_valid(self, *args, **kwargs):
-        comment = self.get_object()
-
-        if comment.profile.user != self.request.user:
-            messages.add_message(
-                self.request,
-                messages.ERROR,
-                "You aren't allowed to delete this comment",
-            )
-            return redirect_back(self.request)
-
-        # Delete the comment
-        self.object.delete()
-
-        messages.add_message(
-            self.request,
-            messages.SUCCESS,
-            "Comment deleted successfully!",
-        )
-        return redirect_back(self.request)
 
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
