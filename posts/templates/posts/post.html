@@ -13,9 +13,14 @@
 
                 {{ post.created|timesince }} ago
         </span>
-        <span class="badge rounded-pill text-bg-success">{{post.theme}}</span>
-                <h2 class="m-2"><a href="/posts/{{post.id}}/show/" style="color:black;">{{ post.title }}</a></h2>
-            </div>
+        {% if post.theme %}
+        <span class="badge rounded-pill"
+        style="background-color: {{post.theme.color}};">
+        {{post.theme}}
+        </span>
+        {% endif %}
+        <h2 class="m-2"><a href="/posts/{{post.id}}/show/" style="color:black;">{{ post.title }}</a></h2>
+        </div>
 
     {% if post.image %}
     <div class="ui fluid image">
@@ -24,8 +29,7 @@
     {% endif %}
     
     <div class="content">
-        <p>{{ post.content }}</p>
-
+        <p>{{ post.content|safe }}</p>
         <br><br>
         {% include 'posts/feedback.html' with post_id=post.id user_post_power=post|user_post_power:user %}
         <br>

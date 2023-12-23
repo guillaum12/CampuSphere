@@ -1,7 +1,6 @@
 from email.policy import default
 from django.core.validators import FileExtensionValidator
 from django.db import models
-from django.db.models import Sum
 
 from profiles.models import Profile
 from profiles.views_utils import get_request_user_profile
@@ -9,6 +8,18 @@ from profiles.views_utils import get_request_user_profile
 from .models_utils import get_related_posts_queryset
 import colorsys
 
+class Choice(models.Model):
+    """
+    Model to store dynamic Choice for themes
+    """
+    theme_name = models.CharField(max_length=30, unique=True)
+    color = models.CharField(max_length=7, default='#000000')
+    parent_categorie = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.theme_name
+
+# Choice.objects.get_or_create(theme_name='aucun')
 
 class PostManager(models.Manager):
     def get_related_posts(self, user):
@@ -19,18 +30,22 @@ class PostManager(models.Manager):
         related_posts = get_related_posts_queryset(profile, friends, following)
 
         return related_posts
+    
+    def order_by_report_number(self):
+        return self.get_queryset().annotate(report_count=models.Count('reported')).order_by('-report_count')
+    
+    def order_by_progress(self):
+        all_posts = Post.objects.filter(is_post=True)
+        return sorted(all_posts, key=lambda post: post.progress, reverse=True)
+    
+    def get_all_favorite_posts(self, user):
+        profile = get_request_user_profile(user)
+        like_objects = Like.objects.filter(profile=profile)
+        return [like_object.post for like_object in like_objects]
 
-
-class Choice(models.Model):
-    """
-    Model to store dynamic choices for themes
-    """
-    theme_name = models.CharField(max_length=30, unique=True)
-
-    def __str__(self):
-        return self.theme_name
-
-# Choice.objects.get_or_create(theme_name='aucun')
+    def order_by_voter_number(self):
+        all_posts = Post.objects.filter(is_post=True)
+        return sorted(all_posts, key=lambda post: post.voter_number, reverse=True)
 
 class Post(models.Model):
     """
@@ -105,7 +120,7 @@ class Post(models.Model):
         if not self.get_max_power:
             return 0
 
-        return (self.get_all_power/self.get_max_power)*100
+        return round((self.get_all_power/self.get_max_power)*100, 1)
     
     @property
     def get_color_progress(self):

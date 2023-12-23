@@ -10,7 +10,7 @@ from django.views.generic import DeleteView, UpdateView
 
 from profiles.views_utils import get_request_user_profile, redirect_back
 
-from .forms import CommentCreateModelForm, PostCreateModelForm, PostUpdateModelForm
+from .forms import CommentCreateModelForm, PostCreateModelForm, PostUpdateModelForm, PostFilterForm
 from .models import Post, Like
 from .views_utils import (
     add_comment_if_submitted,
@@ -34,9 +34,9 @@ def post_comment_create_and_list_view(request):
     """
     #qs = Post.objects.get_related_posts(user=request.user)
 
-    sort = "created"
+    filter_form = PostFilterForm(request.GET)
 
-    post_to_show = find_post_to_show(sort)
+    post_to_show = find_post_to_show(request.user, filter_form)
     
     profile = get_request_user_profile(request.user)
 
@@ -54,6 +54,7 @@ def post_comment_create_and_list_view(request):
         "profile": profile,
         "p_form": p_form,
         "c_form": c_form,
+        "filter_form":filter_form,
     }
 
     return render(request, "posts/main.html", context)

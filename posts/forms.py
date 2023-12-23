@@ -1,11 +1,29 @@
+from sre_parse import CATEGORIES
+from unicodedata import category
 from django import forms
+from .models import Choice, Post
+from ckeditor.fields import RichTextField
+from ckeditor.widgets import CKEditorWidget
 
-from .models import Post
+class PostFilterForm(forms.Form):
+    FILTER_CHOICES = [
+        ('recent', 'Most recent'),
+        ('favorite', 'Favorite'),
+        ('votedpercentage', 'Best voted percentage'),
+        ('many', 'Most rated'),
+        #('reported', 'Most Reported'),
+    ]
 
+    filter_option = forms.ChoiceField(choices=FILTER_CHOICES, required=False)
+    THEMES = Choice.objects.all().values_list('theme_name', 'theme_name')
+    THEMES = list(THEMES)
+    THEMES.append(('-', '---------'))
+    THEMES.reverse()
+    themes = forms.ChoiceField(choices=THEMES, required=False)
 
 class PostCreateModelForm(forms.ModelForm):
     title = forms.CharField(widget=forms.Textarea(attrs={"rows": 1}))
-    content = forms.CharField(widget=forms.Textarea(attrs={"rows": 2}))
+    content = forms.CharField(widget=CKEditorWidget())
 
     class Meta:
         model = Post
@@ -30,3 +48,4 @@ class CommentCreateModelForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ("content",)
+

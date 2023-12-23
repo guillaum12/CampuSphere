@@ -19,11 +19,6 @@
             <a href="{% url 'posts:main-post-view' %}"
                class="{% if request.path == path_to_posts %}active{% endif %} item">Accueil</a>
 
-            <a href="{{ path_to_favorite_post }}"
-               class="{% if request.path == path_to_favorite_post %}active{% endif %} item">Posts favoris</a>
-            {% if request.user.is_staff %}
-                <a href="{% url 'posts:main-post-view' %}">Signalement</a>
-            {% endif %}
         {% endif %}
 
         <li class="nav-item">

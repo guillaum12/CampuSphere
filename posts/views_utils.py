@@ -1,16 +1,36 @@
+from urllib import request
 from .forms import CommentCreateModelForm, PostCreateModelForm
-from .models import Like, Post, Power, Report
+from .models import Like, Post, Power, Report, Choice
 
 
-def find_post_to_show(sort):
+def find_post_to_show(user, filter_form):
 
-    if sort in {"created", "report_number"}:
-        post_to_show = Post.objects.filter(is_post=True).order_by("-" + sort)
+    post_to_show = Post.objects.filter(is_post=True).order_by('-created')
 
-    else:
-        post_to_show = Post.objects.filter(is_post=True).order_by("-created")
+    if filter_form.is_valid():
+        filter_option = filter_form.cleaned_data.get('filter_option')
 
-    return post_to_show
+        if user.is_staff and filter_option == 'reported':
+            post_to_show = Post.objects.order_by_report_number()
+        
+        elif filter_option == 'votedpercentage':
+            post_to_show = Post.objects.order_by_progress()
+        
+        elif filter_option == 'many':
+            post_to_show = Post.objects.order_by_voter_number()
+
+        elif filter_option == 'favorite':
+            post_to_show = Post.objects.get_all_favorite_posts(user=user)
+        
+        theme = filter_form.cleaned_data.get('themes')
+
+        if theme in '- ':
+            return post_to_show
+        
+        theme_obj = Choice.objects.get(theme_name=theme)
+        post_to_show_by_theme = [post for post in post_to_show if post.theme == theme_obj]
+
+        return post_to_show_by_theme
 
 def add_post_if_submitted(request, profile):
     if "submit_p_form" in request.POST:

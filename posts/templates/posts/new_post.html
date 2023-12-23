@@ -9,7 +9,9 @@
         <div class="ui segment">
             <form action="" method="POST" class='ui form' enctype="multipart/form-data">
                 {% csrf_token %}
+                {{p_form.media}}
                 {{ p_form.as_p }}
+
                 <button type='submit'
                         name="submit_p_form"
                         class="ui positive button w-full mt-5">Send</button>
