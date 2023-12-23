@@ -27,12 +27,14 @@ from .views_utils import (
 
 
 @login_required
-def post_comment_create_and_list_view(request, sort):
+def post_comment_create_and_list_view(request):
     """
     Shows request's user friends.
     View url: /posts/
     """
     #qs = Post.objects.get_related_posts(user=request.user)
+
+    sort = "created"
 
     post_to_show = find_post_to_show(sort)
     
@@ -117,7 +119,7 @@ def switch_like(request):
         like_added = False
     # Return JSON response for AJAX script in like.js
     return JsonResponse(
-        {'status': 'success', "like_added": like_added},
+        {"like_added": like_added},
     )
 
 @login_required
@@ -131,12 +133,15 @@ def switch_report(request):
         profile = get_request_user_profile(request.user)
 
         report_added = report_unreport_post(profile, post_id, post_obj)
+
+        # Return JSON response for AJAX script in report.js
+        return JsonResponse(
+            {'status': 'success', "report_added": report_added, "report_number": post_obj.report_number},
+        )
+    
     else:
         report_added = False
-    # Return JSON response for AJAX script in report.js
-    return JsonResponse(
-        {'status': 'success', "report_added": report_added},
-    )
+        return JsonResponse({'error' :'error'})
 
 
 @login_required
@@ -159,24 +164,6 @@ def power(request):
              "power_added": power_added,
              "post_color": post_obj.get_color_progress,
              },
-        )
-
-@login_required
-def report(request):
-    """
-    Report a post.
-    View url: /posts/report/
-    """
-    if request.method == "POST":
-        post_id, post_obj = get_post_id_and_post_obj(request)
-        profile = get_request_user_profile(request.user)
-
-        post_obj.report_number += 1
-        post_obj.save()
-
-        # Return JSON response for AJAX script in report.js
-        return JsonResponse(
-            {"report_number": post_obj.report_number},
         )
 
 

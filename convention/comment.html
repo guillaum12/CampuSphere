@@ -8,41 +8,41 @@
 <div class="collapse" id="collapse_comment_{{post.id}}">
     <div class="card card-body">
 
-        <div class="extra content">
-            <div class="comment-box">
-                <!-- Form to comment a post -->
-            {% include 'posts/comment_form.html' with c_form=c_form post=post%}
-            <!-- Comments -->
-            {% if post.comments %}
-            {% for comment in post.comments %}
+    {% if post.comment_set.all %}
+<div class="extra content">
+        <div class="comment-box">
+            {% for c in post.comment_set.all %}
                 <div class="ui segment mb-5">
                     <!--
                     <img class="ui avatar image" src={{ c.profile.avatar.url }}>
                     -->
                     <span style="color:gray">
-                        {% if comment.profile == post.author %}
+                        {% if c.profile == post.author %}
                             <strong>Auteur</strong>
                         {% else %}
                         {% include 'posts/identity.html' with post=post request=request  %}
                         {% endif %}
-                        {{ comment.created|timesince }} ago
-
-                        <div class="right floated meta">
-                            {% include 'posts/post_control.html' with request=request post=comment %}
-                        </div>
-
+                        {{ c.created|timesince }} ago
                     </span>
-                    <div style="color:black" class='mt-5'>{{ comment.content }}</div>
+                    <div style="color:black" class='mt-5'>{{ c.content }}</div>
                     <br>
-                    <!-- To show comments to a comment -->
-                    {% include 'posts/comment.html' with c_form=c_form post=comment%}
+                    {% if c.profile.user == request.user %}
+                        <form method="POST" action="{% url 'posts:comment-delete' c.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-cmt-btn">Delete</button>
+                        </form>
+                    {% endif %}
+                    <!-- Form to comment a comment -->
+                    {% include 'posts/comment_form.html' with c_form=c_form post=post%}
                     
                 </div>
-                {% endfor %}
-                {% endif %}
+            {% endfor %}
         </div>
     </div>
+    {% endif %}
 
     </div>
 
+    <!-- Form to comment a post -->
+    {% include 'posts/comment_form.html' with c_form=c_form post=post%}
 </div>

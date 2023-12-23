@@ -40,12 +40,12 @@ def test_post_model_str_method(create_empty_profile):
 
 
 @pytest.mark.django_db
-def test_post_model_num_comments_method(create_test_post):
+def test_post_model_number_comments_method(create_test_post):
     """
     Test if the post model str num comments is working as intended
     """
     post = create_test_post
-    assert post.num_comments() == 0
+    assert post.number_comments() == 0
 
 
 @pytest.mark.django_db

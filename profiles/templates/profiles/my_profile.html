@@ -93,7 +93,7 @@
                             <div style="display: flex; justify-content: right;">
                                 <div class="cmt_btn {{ post.id }} ui button mb-5">
                                     <i class="comment icon"></i>
-                                    <p style="display: inline-block;">{{ post.num_comments }}</p>
+                                    <p style="display: inline-block;">{{ post.number_comments }}</p>
                                 </div>
                                 <form action="{% url 'posts:switch-like-view' %}"
                                       method="POST"

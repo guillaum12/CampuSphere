@@ -1,3 +1,4 @@
+from email.policy import default
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.db.models import Sum
@@ -38,9 +39,9 @@ class Post(models.Model):
 
     title = models.TextField(blank=True)
     content = models.TextField(blank=True)
-    #default_theme = Choice.objects.get(theme_name='aucun')
+    is_post = models.BooleanField(default=True)
 
-    theme = models.ForeignKey(Choice, on_delete=models.CASCADE)
+    theme = models.ForeignKey(Choice, on_delete=models.CASCADE, null=True, blank=True)
     image = models.ImageField(
         blank=True,
         upload_to="posts",
@@ -55,6 +56,17 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     
+    # A comment is now seen as a response to a post
+    in_response_to = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
+
+    @property 
+    def comments(self):
+        return Post.objects.filter(in_response_to=self).order_by('-created')
+
+    @property 
+    def number_comments(self):
+        return len(Post.objects.filter(in_response_to=self))
+
     @property
     def report_number(self):
         return self.reported.all().count()
@@ -66,8 +78,6 @@ class Post(models.Model):
             return f"{self.author} - {str(self.content)[:50].strip()}.."
         return f"{self.author} - {str(self.content)}"
 
-    def num_comments(self):
-        return self.comment_set.all().count()
     
     @property
     def voter_number(self):
@@ -129,9 +139,13 @@ class Comment(models.Model):
 
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+    
+    #We can add a comment in response to another comment
+    in_response_to = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.profile} - {self.content}"
+    
 
 
 class Like(models.Model):
