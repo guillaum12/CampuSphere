@@ -17,6 +17,9 @@ class Choice(models.Model):
     parent_categorie = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
+        if self.parent_categorie:
+            return f"{self.parent_categorie} / {self.theme_name}"
+        
         return self.theme_name
 
 # Choice.objects.get_or_create(theme_name='aucun')
@@ -56,7 +59,7 @@ class Post(models.Model):
     content = models.TextField(blank=True)
     is_post = models.BooleanField(default=True)
 
-    theme = models.ForeignKey(Choice, on_delete=models.CASCADE, null=True, blank=True)
+    theme = models.ForeignKey(Choice, on_delete=models.SET_NULL, null=True, blank=True)
     image = models.ImageField(
         blank=True,
         upload_to="posts",

@@ -20,6 +20,8 @@ class PostFilterForm(forms.Form):
     THEMES.append(('-', '---------'))
     THEMES.reverse()
     themes = forms.ChoiceField(choices=THEMES, required=False)
+    
+    new_posts = forms.BooleanField(required=False, label='New Posts')
 
 class PostCreateModelForm(forms.ModelForm):
     title = forms.CharField(widget=forms.Textarea(attrs={"rows": 1}))
@@ -30,13 +32,6 @@ class PostCreateModelForm(forms.ModelForm):
         fields = ("title", "content", "theme", "image")
 
 
-class PostUpdateModelForm(forms.ModelForm):
-    title = forms.CharField(widget=forms.Textarea(attrs={"rows": 1}))
-    content = forms.CharField(widget=forms.Textarea(attrs={"rows": 2}))
-
-    class Meta:
-        model = Post
-        fields = ("title", "content", "theme")
 
 
 class CommentCreateModelForm(forms.ModelForm):

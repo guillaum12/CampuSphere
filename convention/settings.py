@@ -187,9 +187,7 @@ CKEDITOR_CONFIGS = {
             {'name': 'basicstyles',
              'items': ['Bold', 'Italic', 'Underline']},
             {'name': 'paragraph',
-             'items': ['NumberedList', 'BulletedList']},
-            {'name': 'insert',
-             'items': ['Link', 'Image']},
+             'items': ['NumberedList', 'BulletedList', 'Link']},
             {'name': 'styles', 'items': ['Format', 'TextColor']},
             {'name': 'tools', 'items': ['Maximize']},
         
@@ -204,7 +202,6 @@ CKEDITOR_CONFIGS = {
         # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
-            'uploadimage', # the upload image feature
             # your extra plugins here
             'div',
             'autolink',

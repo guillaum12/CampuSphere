@@ -10,7 +10,7 @@ from django.views.generic import DeleteView, UpdateView
 
 from profiles.views_utils import get_request_user_profile, redirect_back
 
-from .forms import CommentCreateModelForm, PostCreateModelForm, PostUpdateModelForm, PostFilterForm
+from .forms import CommentCreateModelForm, PostCreateModelForm, PostFilterForm
 from .models import Post, Like
 from .views_utils import (
     add_comment_if_submitted,
@@ -37,11 +37,8 @@ def post_comment_create_and_list_view(request):
     filter_form = PostFilterForm(request.GET)
 
     post_to_show = find_post_to_show(request.user, filter_form)
-    
-    profile = get_request_user_profile(request.user)
 
-    p_form = PostCreateModelForm()
-    c_form = CommentCreateModelForm()
+    profile = get_request_user_profile(request.user)
 
     if add_post_if_submitted(request, profile):
         return redirect_back(request)
@@ -52,8 +49,8 @@ def post_comment_create_and_list_view(request):
     context = {
         "post_to_show": post_to_show,
         "profile": profile,
-        "p_form": p_form,
-        "c_form": c_form,
+        "p_form": PostCreateModelForm(),
+        "c_form": CommentCreateModelForm(),
         "filter_form":filter_form,
     }
 
@@ -212,7 +209,7 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     """
 
     model = Post
-    form_class = PostUpdateModelForm
+    form_class = PostCreateModelForm
     template_name = "posts/update.html"
     success_url = reverse_lazy("posts:main-post-view")
 

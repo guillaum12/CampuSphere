@@ -1,17 +1,15 @@
 <form action="" method="POST" class='form{{ post.id }} ui fluid form'>
     {% csrf_token %}
+    <!-- To know the response to which post it is -->
     <input type="hidden" name="post_id" value={{ post.id }}>
     <div class="row">
         <div class="col-11">
             {{ c_form.as_p }}
         </div>
-        <!-- To know the response to which post it is -->
-        <input type="hidden" name="post_id" value={{ post.id }}>
-
         <div class="col-1">
             <button type="submit"
             name="submit_c_form"
-            class="ui primary button mt-5 w-full">Send</button>
+            class="ui primary button">Send</button>
         </div>
     </div>
 </form>

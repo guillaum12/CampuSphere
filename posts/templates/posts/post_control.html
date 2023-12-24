@@ -18,6 +18,12 @@
             {% include 'posts/report.html' with post=post profile=profile %}
         </div>
 
+        {% if request.user.is_staff %}
+        <div class="column">
+        <p>{{post.report_number}}</p>
+        </div>
+        {% endif %}
+
         <div class="column">
             {% include 'posts/like.html' with post=post profile=profile %}
         </div>

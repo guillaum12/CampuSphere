@@ -9,17 +9,25 @@
 {% url 'profiles:sent-invites-view' as path_to_invites %}
 {% url 'profiles:all-profiles-view' as path_to_all_profiles %}
 {% url 'profiles:messenger-list-view' as path_to_messenger %}
-<div class="navbar ui inverted menu nav mb-5 navbar-expand-lg">
-    <div class="ui container">
+<nav class="navbar ui inverted menu navbar-expand-sm">
         <a href="{{ path_to_home }}"
            class="{% if request.path == path_to_home %}active{% endif %} item">
-            <h3>Convention étudiante</h3>
+            <h3>CampuSphère</h3>
         </a>
+
+        <button class="navbar-toggler" style="color: white;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bars white icon"></i>
+        </button>
+        <!--
         {% if request.user.is_authenticated %}
             <a href="{% url 'posts:main-post-view' %}"
                class="{% if request.path == path_to_posts %}active{% endif %} item">Accueil</a>
 
         {% endif %}
+        -->
+
+        <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav text-center mr-auto">
 
         <li class="nav-item">
             <a class="nav-link text-muted" href="mailto:guillaume.machabert@student-cs.fr">Vos retours</a>
@@ -31,7 +39,6 @@
                class="{% if request.path == path_to_messenger %}active{% endif %} item">Messenger</a>
         {% endif %}
         -->
-        <div class="right menu">
             {% if request.user.is_authenticated %}
 
                 <!--
@@ -78,21 +85,27 @@
                     {{ request.user }}
                 </a>
                 -->                
-
-                <a href="{% url 'account_logout' %}" class="ui item">Déconnexion</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account_logout' %}">Déconnexion</a>
+                </li>
             {% else %}
                 <li class="nav-item">
-                    <a href="auth/signup/" class="ui item">S'inscrire</a>
+                    <a href="auth/signup/" class="nav-link">S'inscrire</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ login }}" class="ui item">Se connecter</a>
+                    <a href="{{ login }}" class="nav-link">Se connecter</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link ui item" href="{% url 'registration' %}"><img style="width:30px" class="mr-3" src="{% static "img/viarezo.png" %}"> Connexion avec Viarézo</a>
+                    <img style="width:30px" class="mr-3" src="{% static "img/viarezo.png" %}">
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'registration' %}"><!--<img style="width:30px" class="mr-3" src="{% static "img/viarezo.png" %}"> -->  Connexion avec Viarézo</a>
                 </li>
 
             {% endif %}
-        </div>
-    </div>
+
+</ul>
 </div>
+</nav>

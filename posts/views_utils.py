@@ -1,13 +1,19 @@
 from urllib import request
 from .forms import CommentCreateModelForm, PostCreateModelForm
 from .models import Like, Post, Power, Report, Choice
+from profiles.views_utils import get_request_user_profile
 
+def filter_by_new_posts(post_to_show, user):
+    profile = get_request_user_profile(user)
+    return [post for post in post_to_show if profile not in post.powered.all()	]
 
 def find_post_to_show(user, filter_form):
 
     post_to_show = Post.objects.filter(is_post=True).order_by('-created')
 
     if filter_form.is_valid():
+        # Filter by quality
+
         filter_option = filter_form.cleaned_data.get('filter_option')
 
         if user.is_staff and filter_option == 'reported':
@@ -22,6 +28,13 @@ def find_post_to_show(user, filter_form):
         elif filter_option == 'favorite':
             post_to_show = Post.objects.get_all_favorite_posts(user=user)
         
+        # Filter by new posts
+        new_posts = filter_form.cleaned_data.get('new_posts')
+
+        if new_posts:
+            post_to_show = filter_by_new_posts(post_to_show, user)
+
+        # Filter by theme
         theme = filter_form.cleaned_data.get('themes')
 
         if theme in '- ':

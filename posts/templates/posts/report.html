@@ -10,10 +10,6 @@ id='{{ post.id }}'>
         <i id='report_icon_{{ post.id }}' class="exclamation triangle large 
         {% if profile not in post.reported.all %}grey{% else %}red{% endif %}
         alternate outline icon">
-            {% if request.user.is_staff %}
-            {{post.report_number}}
-            {% endif %}
-        
         </i>         
     </button>
   

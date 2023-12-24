@@ -2,18 +2,9 @@ body {
     background: #F8F8F8 !important
 }
 
-.nav {
-    border-radius: 0px !important;
-    padding: 10px 0 10px 0 !important;
-    background-color: black !important;
-}
-
-.mb-7 {
-    margin-bottom: 7px !important;
-}
-
-.mt-5 {
-    margin-top: 5px !important;
+.nav-link {
+    color: #ffffff !important;
+    text-decoration: none !important;
 }
 
 .mymodal {
@@ -22,21 +13,9 @@ body {
     font-size: 20px !important;
 }
 
-.mb-5 {
-    margin-bottom: 5px !important;
-}
 
 .w-big {
     width: 200px !important;
-}
-
-.bwhite-lg {
-    background-color: transparent !important;
-}
-
-.bwhite-sm {
-    background-color: transparent !important;
-    width: 10px !important;
 }
 
 .post-content{
@@ -48,24 +27,3 @@ body {
     width: 550px;
 }
 
-.navbar {
-    position: fixed; 
-    top: 0px; 
-    z-index: 9;
-    width: 100%;
-    padding: 20px 0;
-}
-
-.mt-100 {
-    margin-top:100px;
-}
-
-.delete-cmt-btn {
-    background: none!important;
-    border: none;
-    padding: 0!important;
-    font-family: arial, sans-serif;
-    color: gray;
-    text-decoration: underline;
-    cursor: pointer; 
-}

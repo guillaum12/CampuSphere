@@ -1,5 +1,5 @@
 {% if request.user.is_staff %}
 <a href="https://linkcs.fr/user/{{ post.author }}" target="_blank">{{ post.author }}</a>
 {% else %}
-    Utilisateur <!-- #{{ post.author.user.id }} --> 
+    Etudiant <!-- #{{ post.author.user.id }} --> 
 {% endif %}
