@@ -3,7 +3,8 @@ from django.urls import path
 from .views import (
     PostDeleteView,
     PostUpdateView,
-    post_comment_create_and_list_view,
+    show_all_posts,
+    comment_view,
     switch_like,
     power,
     favorite_post,
@@ -14,9 +15,10 @@ from .views import (
 app_name = "posts"
 
 urlpatterns = [
-    path("", post_comment_create_and_list_view, name="main-post-view"),
+    path("", show_all_posts, name="main-post-view"),
     path("favorite/", favorite_post, name="favorite-post-view"),
     path("<pk>/show/", show_post, name="one-post-view"),
+    path("comment/", comment_view, name="comment-view"),
     path("like/", switch_like, name="switch-like-view"),
     path("power/", power, name="switch-power-view"),
     path("report/", switch_report, name="switch-report-view"),

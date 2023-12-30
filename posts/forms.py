@@ -1,5 +1,6 @@
 from sre_parse import CATEGORIES
 from unicodedata import category
+from zlib import MAX_WBITS
 from django import forms
 from .models import Choice, Post
 from ckeditor.fields import RichTextField
@@ -24,8 +25,8 @@ class PostFilterForm(forms.Form):
     new_posts = forms.BooleanField(required=False, label='New Posts')
 
 class PostCreateModelForm(forms.ModelForm):
-    title = forms.CharField(widget=forms.Textarea(attrs={"rows": 1}))
-    content = forms.CharField(widget=CKEditorWidget())
+    title = forms.CharField(max_length=150, widget=forms.Textarea(attrs={"rows": 1}))
+    content = forms.CharField(max_length=1000, widget=CKEditorWidget())
 
     class Meta:
         model = Post

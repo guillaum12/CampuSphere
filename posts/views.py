@@ -1,3 +1,4 @@
+from distutils.dist import command_re
 from gettext import find
 from math import log
 from django.contrib import messages
@@ -27,9 +28,9 @@ from .views_utils import (
 
 
 @login_required
-def post_comment_create_and_list_view(request):
+def show_all_posts(request):
     """
-    Shows request's user friends.
+    Shows all posts considering the filters.
     View url: /posts/
     """
     #qs = Post.objects.get_related_posts(user=request.user)
@@ -40,17 +41,23 @@ def post_comment_create_and_list_view(request):
 
     profile = get_request_user_profile(request.user)
 
-    if add_post_if_submitted(request, profile):
-        return redirect_back(request)
+    if not profile.is_banned:
+        if add_post_if_submitted(request, profile):
+            return redirect_back(request)
 
-    if add_comment_if_submitted(request, profile):
-        return redirect_back(request)
+        if add_comment_if_submitted(request, profile):
+            return redirect_back(request)
+    else:
+        messages.add_message(
+            request,
+            messages.ERROR,
+            "You are banned",
+        )
 
     context = {
         "post_to_show": post_to_show,
         "profile": profile,
         "p_form": PostCreateModelForm(),
-        "c_form": CommentCreateModelForm(),
         "filter_form":filter_form,
     }
 
@@ -70,7 +77,6 @@ def favorite_post(request):
     qs = [like_object.post for like_object in like_objects]
     
     p_form = PostCreateModelForm()
-    c_form = CommentCreateModelForm()
 
     if add_post_if_submitted(request, profile):
         return redirect_back(request)
@@ -82,7 +88,6 @@ def favorite_post(request):
         "qs": qs,
         "profile": profile,
         "p_form": p_form,
-        "c_form": c_form,
     }
 
     return render(request, "posts/main.html", context)
@@ -97,10 +102,28 @@ def show_post(request, pk):
     context = {
         "post": Post.objects.get(pk=pk),
         "profile": get_request_user_profile(request.user),
-        "c_form": CommentCreateModelForm(),
     }
 
     return render(request, "posts/show_post.html", context)
+
+# ________________________________ ASYNCRONOUS ACTIONS ________________________________ #
+
+@login_required
+def comment_view(request):
+    """
+    Adds a comment to a post.
+    View url: /posts/comment/
+    """
+    if request.method == "POST":
+        profile = get_request_user_profile(request.user)
+        comment_html = add_comment_if_submitted(request, profile)
+        
+        if comment_html:
+            return JsonResponse(
+                {"comment_html": comment_html},
+            )
+
+    return JsonResponse({'error' :'error'})
 
 @login_required
 def switch_like(request):

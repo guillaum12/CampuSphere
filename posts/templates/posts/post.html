@@ -5,11 +5,11 @@
     <div class="content">
         <!-- Update and delete -->
         <div class="right floated meta">
-            {% include 'posts/post_control.html' with request=request post=post %}
+            {% include 'posts/post_control.html' with user=request.user post=post %}
         </div>
         <img class="ui avatar image" src={{ post.author.avatar.url }}>
         <span style="color:gray">
-            {% include 'posts/identity.html' with post=post request=request  %}
+            {% include 'posts/identity.html' with profile=post.author request=request  %}
 
                 {{ post.created|timesince }} ago
         </span>
@@ -19,7 +19,7 @@
         {{post.theme}}
         </span>
         {% endif %}
-        <h2 class="m-2"><a href="/posts/{{post.id}}/show/" style="color:black;">{{ post.title }}</a></h2>
+        <h4 class="m-2"><a href="/posts/{{post.id}}/show/" style="color:black;">{{ post.title }}</a></h>
         </div>
 
     {% if post.image %}
@@ -29,7 +29,10 @@
     {% endif %}
     
     <div class="content">
-        <p>{{ post.content|safe }}</p>
+        
+        <div id="truncated-content-{{post.id}}">{{ post.content|safe|truncatewords_html:50 }}</div>
+        <div id="full-content-{{post.id}}" style="display: none;">{{ post.content|safe }}</div>
+        
         <br><br>
         {% include 'posts/feedback.html' with post_id=post.id user_post_power=post|user_post_power:user %}
         <br>
@@ -40,6 +43,25 @@
         <br>
         
     </div>
-    {% include 'posts/comment.html' with post=post c_form=c_form %}
+    {% include 'posts/comments.html' with post=post%}
     
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#truncated-content-{{post.id}}').on('click', function() {
+            // Hide the truncated content
+            $(this).hide();
+            // Show the full content
+            $('#full-content-{{post.id}}').show();
+        });
+
+        // Inverse of the above
+        $('#full-content-{{post.id}}').on('click', function() {
+            $(this).hide();
+            $('#truncated-content-{{post.id}}').show();
+        });
+    });
+</script>
+

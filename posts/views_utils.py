@@ -2,6 +2,7 @@ from urllib import request
 from .forms import CommentCreateModelForm, PostCreateModelForm
 from .models import Like, Post, Power, Report, Choice
 from profiles.views_utils import get_request_user_profile
+from django.template.loader import render_to_string
 
 def filter_by_new_posts(post_to_show, user):
     profile = get_request_user_profile(user)
@@ -62,27 +63,31 @@ def add_post_if_submitted(request, profile):
 
 
 def add_comment_if_submitted(request, profile):
-    if "submit_c_form" in request.POST:
-
+    if request.method == "POST":
         # Retrieve the post_id from the form data
         post_id = request.POST.get('post_id', None)
         parent_post = Post.objects.get(id=post_id)
 
-        c_form = CommentCreateModelForm(request.POST)
+        new_comment = Post()
+        new_comment.author = profile
+        new_comment.is_post = False
+        new_comment.content = request.POST.get('content')
 
-        if c_form.is_valid():
-            instance = c_form.save(commit=False)
-            instance.profile = profile
-            instance.post = Post.objects.get(id=request.POST.get("post_id"))
-            instance.author = profile
-            instance.is_post = False
-            instance.in_response_to = parent_post
-            instance.save()
+        new_comment.in_response_to = parent_post
 
-            c_form = CommentCreateModelForm()
+        new_comment.save()
 
-            return True
+        comment_id = new_comment.id
 
+        if comment_id:
+            comment_html = render_to_string(
+                "posts/single_comment.html",
+                {"comment": Post.objects.get(id=comment_id)},
+            )
+            return comment_html
+    
+    return None
+        
 
 def get_post_id_and_post_obj(request):
     post_id = request.POST.get("post_id")

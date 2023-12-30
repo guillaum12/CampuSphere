@@ -29,17 +29,20 @@
         <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav text-center mr-auto">
 
+        {% if request.user.is_authenticated %}
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'profiles:my-profile-view' %}">Mon profil</a>
+        </li>
+        
         <li class="nav-item">
             <a class="nav-link text-muted" href="mailto:guillaume.machabert@student-cs.fr">Vos retours</a>
         </li>
         
         <!--
-        {% if request.user.is_authenticated %}
             <a href="{{ path_to_messenger }}"
                class="{% if request.path == path_to_messenger %}active{% endif %} item">Messenger</a>
-        {% endif %}
         -->
-            {% if request.user.is_authenticated %}
 
                 <!--
                 <div class="item">
@@ -90,7 +93,7 @@
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a href="auth/signup/" class="nav-link">S'inscrire</a>
+                    <a href="/auth/signup/" class="nav-link">S'inscrire</a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ login }}" class="nav-link">Se connecter</a>

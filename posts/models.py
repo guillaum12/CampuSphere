@@ -55,8 +55,8 @@ class Post(models.Model):
     This model is used to show results in main.html
     """
 
-    title = models.TextField(blank=True)
-    content = models.TextField(blank=True)
+    title = models.TextField(max_length=100, blank=True)
+    content = models.TextField(max_length=1000,blank=True)
     is_post = models.BooleanField(default=True)
 
     theme = models.ForeignKey(Choice, on_delete=models.SET_NULL, null=True, blank=True)

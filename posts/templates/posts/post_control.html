@@ -1,6 +1,6 @@
 <div class="ui grid">
     <div class="row">
-        {% if request.user == post.author.user or request.user.is_staff %}
+        {% if user == post.author.user or user.is_staff %}
         <div class="column">
             <a class="ui bwhite-lg" href="{% url 'posts:post-update' post.pk %}">
                 <i class="edit large grey outline icon"></i> <!-- Pen icon -->
@@ -18,7 +18,7 @@
             {% include 'posts/report.html' with post=post profile=profile %}
         </div>
 
-        {% if request.user.is_staff %}
+        {% if user.is_staff %}
         <div class="column">
         <p>{{post.report_number}}</p>
         </div>

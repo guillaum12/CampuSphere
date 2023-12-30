@@ -27,7 +27,20 @@ from .views_utils import (
 
 
 # Function-based views
+@login_required
+def show_profile_view(request, id):
+    """
+    Shows profile by pk.
+    View url: /profiles/show_profile/<int:id>/
+    """
 
+    profile = get_object_or_404(Profile, id=id)
+
+    context = {
+        "profile": profile,
+    }
+
+    return render(request, "profiles/show_profile.html", context)
 
 @login_required
 def my_profile_view(request):
@@ -36,36 +49,20 @@ def my_profile_view(request):
     View url: /profiles/myprofile/
     """
     profile = get_request_user_profile(request.user)
+    return show_profile_view(request, profile.id)
 
-    form = get_profile_form_by_request_method(request, profile)
 
-    posts = profile.posts.all()
+@login_required
+def toggle_ban_view(request, profile_id):
+    """
+    Toggles profile user ban status.
+    View url: /profiles/toggle_ban/<int:profile_id>/
+    """
+    profile = Profile.objects.get(id=profile_id)
+    profile.is_banned = not profile.is_banned
+    profile.save()
 
-    c_form = CommentCreateModelForm()
-
-    if add_comment_if_submitted(request, profile):
-        return redirect_back(request)
-
-    if request.method == "POST" and form.is_valid():
-        form.save()
-
-        messages.add_message(
-            request,
-            messages.SUCCESS,
-            "Profile updated successfully!",
-        )
-
-        return redirect_back(request)
-
-    context = {
-        "profile": profile,
-        "form": form,
-        "posts": posts,
-        "c_form": c_form,
-    }
-
-    return render(request, "profiles/my_profile.html", context)
-
+    return redirect_back(request)
 
 @login_required
 def received_invites_view(request):

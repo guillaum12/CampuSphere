@@ -14,17 +14,21 @@ from .views import (
     search_profiles,
     send_invitation,
     sent_invites_view,
+    show_profile_view,
     switch_follow,
+    toggle_ban_view
 )
 
 app_name = "profiles"
 
 urlpatterns = [
     path("", ProfileListView.as_view(), name="all-profiles-view"),
+    path("show_profile/<int:id>/", show_profile_view, name="show-profile-view"),
+    path("my_profile/", my_profile_view, name="my-profile-view"),
+    path("toggle_ban/<int:profile_id>/", toggle_ban_view, name="toggle-ban-view"),
     path("users/<slug>/", ProfileDetailView.as_view(), name="profile-detail-view"),
     path("messenger/", MessengerListView.as_view(), name="messenger-list-view"),
     path("chat/<slug>/", ChatMessageView.as_view(), name="chat-message-view"),
-    path("myprofile/", my_profile_view, name="my-profile-view"),
     path("search/", search_profiles, name="search-profiles-view"),
     path("my_friends/", my_friends_view, name="my-friends-view"),
     path("received_invites/", received_invites_view, name="received-invites-view"),

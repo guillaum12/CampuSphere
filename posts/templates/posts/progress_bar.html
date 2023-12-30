@@ -1,3 +1,8 @@
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'posts/css/progress_bar.css' %}">
+{% endblock extrahead %}
+
 <div class="progress-bar-container">
   <div class="progress-bar" id="progress_bar_{{post.id}}" style="width: {{ post.progress }}%;
     background: {{post.get_color_progress}}">

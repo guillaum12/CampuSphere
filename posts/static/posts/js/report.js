@@ -28,4 +28,4 @@ $('.report-form').submit(function(e){
         }
     })
   })
-  
+

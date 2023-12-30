@@ -1,4 +1,9 @@
 {% load custom_filters %}
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'posts/css/feedback.css' %}">
+{% endblock extrahead %}
 
 <div class="test">
     <div class="feedback">

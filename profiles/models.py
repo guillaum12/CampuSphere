@@ -1,10 +1,11 @@
+from unicodedata import category
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.shortcuts import reverse
 
 from .models_utils import get_likes_received_count, get_list_of_profiles_by_user
-
+#from posts.models import Power
 
 # Profile Model
 
@@ -24,6 +25,17 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=200, blank=True)
     last_name = models.CharField(max_length=200, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    is_banned = models.BooleanField(default=False)
+
+    CATEGORIES = [
+        ('etudiant', 'Étudiant'),
+        ('administration', 'Administration'),
+        ('association', 'Association'),
+        ('convention', 'Soirée Convention Étudiante'),
+    ]
+
+    category = models.CharField(max_length=50, choices=CATEGORIES, default='etudiant')
+
     bio = models.TextField(default="No Bio..", max_length=300, blank=True)
     email = models.EmailField(max_length=200, blank=True)
     country = models.CharField(max_length=200, blank=True)
@@ -65,16 +77,12 @@ class Profile(models.Model):
 
     # Methods for profile details #
 
-    def get_likes_given_count(self):
-        # Like model is connected to Profile model via a foreign key,
-        # likes given are stored in that Profile model
-        likes = self.like_set.all()
+    def get_votes_given_count(self):
+        from posts.models import Power
+        votes = Power.objects.filter(profile=self)
+        return len(votes)
 
-        total_liked = likes.count()
-
-        return total_liked
-
-    def get_likes_received_count(self):
+    def get_votes_received_count(self):
         posts = self.posts.all()
 
         total_liked = get_likes_received_count(posts)
