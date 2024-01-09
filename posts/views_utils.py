@@ -3,6 +3,7 @@ from .forms import CommentCreateModelForm, PostCreateModelForm
 from .models import Like, Post, Power, Report, Choice
 from profiles.views_utils import get_request_user_profile
 from django.template.loader import render_to_string
+from django.middleware.csrf import get_token
 
 def filter_by_new_posts(post_to_show, user):
     profile = get_request_user_profile(user)
@@ -78,11 +79,14 @@ def add_comment_if_submitted(request, profile):
         new_comment.save()
 
         comment_id = new_comment.id
+        csrf_token = get_token(request)
 
         if comment_id:
             comment_html = render_to_string(
                 "posts/single_comment.html",
-                {"comment": Post.objects.get(id=comment_id)},
+                {"comment": Post.objects.get(id=comment_id),
+                 "csrf_token": csrf_token,
+                 "request": request}
             )
             return comment_html
     

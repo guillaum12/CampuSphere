@@ -9,9 +9,9 @@
     <div class="card card-body">
 
         <div class="extra content">
+            {% include 'posts/comment_form.html' with post=post%}
             <div id="comment-box-{{post.id}}" class="comment-box">
                 <!-- Form to comment a post -->
-                {% include 'posts/comment_form.html' with post=post%}
                 <!-- Comments -->
                 {% if post.comments %}
                     {% for comment in post.comments %}

@@ -7,6 +7,8 @@ from profiles.views_utils import get_request_user_profile
 
 from .models_utils import get_related_posts_queryset
 import colorsys
+from urllib.parse import quote
+from convention.settings import BASE_URL
 
 class Choice(models.Model):
     """
@@ -140,6 +142,17 @@ class Post(models.Model):
         color_hex = "#{:02x}{:02x}{:02x}".format(*rgb_int)
 
         return color_hex
+
+    @property
+    def whatsapp_link(self):
+        # On renvoit le lien d'un post à partager sur Whatsapp 
+        wa_url = "https://api.whatsapp.com/send?text="
+        
+        link_to_post = BASE_URL + "posts/" + str(self.id) + "/show/"
+
+        texte_explicatif = "Viens donner ton avis ! "
+
+        return wa_url + quote(texte_explicatif) + link_to_post
 
 
     class Meta:

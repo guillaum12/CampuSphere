@@ -1,15 +1,20 @@
 <div class="card p-1">
     <form method="get" id="filter_form" action="">
-        <label for="{{ filter_form.filter_option.id_for_label }}">Filter by:</label>
-        {{ filter_form.filter_option }} 
-        <br>
-        
-        <label for="{{ filter_form.themes.id_for_label }}">Themes:</label>
-        {{ filter_form.themes }}
-        <br>
-
-        <label for="{{ filter_form.new_posts.id_for_label }}">New Posts Only :</label>
-        {{ filter_form.new_posts }}
+        <div class="row p-1">
+            <div class="col-4">
+                    
+            <label for="{{ filter_form.filter_option.id_for_label }}">Attributs</label>
+            {{ filter_form.filter_option }} 
+            </div>
+            <div class="col-4">
+                <label for="{{ filter_form.themes.id_for_label }}">Themes:</label>
+                {{ filter_form.themes }}
+            </div>
+            <div class="col-4">
+                    <label for="{{ filter_form.new_posts.id_for_label }}">New Posts Only :</label>
+                {{ filter_form.new_posts }}
+            </div>
+        </div>
 
     </form>
 </div>

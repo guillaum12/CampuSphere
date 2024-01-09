@@ -27,5 +27,11 @@
         <div class="column">
             {% include 'posts/like.html' with post=post profile=profile %}
         </div>
+
+        <div class="column">
+            <a href="{{post.whatsapp_link}}" target="_blank" data-action="share/whatsapp/share">
+                <i class="share large grey alternate outline icon"></i> <!-- Bin icon -->
+            </a>
+        </div>
     </div>
 </div>

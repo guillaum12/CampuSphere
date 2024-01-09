@@ -8,7 +8,8 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, UpdateView
-
+from django.core.mail import send_mail, EmailMessage, get_connection
+from convention import settings
 from profiles.views_utils import get_request_user_profile, redirect_back
 
 from .forms import CommentCreateModelForm, PostCreateModelForm, PostFilterForm
@@ -199,11 +200,13 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = "posts/confirm_delete.html"
     success_url = reverse_lazy("posts:main-post-view")
-
+    
     def form_valid(self, *args, **kwargs):
         post = self.get_object()
+        author = post.author
+        author_email = author.user.email
         # If post's author user doesnt equal request's user or user is not staff.
-        if (post.author.user != self.request.user) and not(self.request.user.is_staff):
+        if (author.user != self.request.user) and not(self.request.user.is_staff):
             messages.add_message(
                 self.request,
                 messages.ERROR,
@@ -220,6 +223,25 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
             messages.SUCCESS,
             "Post deleted successfully!",
         )
+        print(settings.EMAIL_HOST_USER)
+        print(settings.EMAIL_HOST_PASSWORD)
+        
+        #Send a email if deletion by staff
+        if self.request.user.is_staff:
+            with get_connection(  
+                    host=settings.EMAIL_HOST, 
+                    port=settings.EMAIL_PORT,  
+                    username=settings.EMAIL_HOST_USER, 
+                    password=settings.EMAIL_HOST_PASSWORD, 
+                    use_tls=settings.EMAIL_USE_TLS  
+                    ) as connection:  
+                        subject = "Post deleted"  
+                        email_from = settings.EMAIL_HOST_USER  
+                        recipient_list = [author_email, ]  
+                        message = "hello World" 
+                        EmailMessage(subject, message, email_from, recipient_list, connection=connection).send()
+
+
         return HttpResponseRedirect(self.success_url)
 
 
