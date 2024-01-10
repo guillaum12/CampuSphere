@@ -1,6 +1,4 @@
 from distutils.dist import command_re
-from gettext import find
-from math import log
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -12,8 +10,8 @@ from django.core.mail import send_mail, EmailMessage, get_connection
 from convention import settings
 from profiles.views_utils import get_request_user_profile, redirect_back
 
-from .forms import CommentCreateModelForm, PostCreateModelForm, PostFilterForm
-from .models import Post, Like
+from .forms import PostCreateModelForm, PostFilterForm
+from .models import Post, Feedback
 from .views_utils import (
     add_comment_if_submitted,
     add_post_if_submitted,
@@ -65,33 +63,20 @@ def show_all_posts(request):
     return render(request, "posts/main.html", context)
 
 @login_required
-def favorite_post(request):
-    """
-    Shows favorite posts of user
-    View url: /posts/favorite
-    """
+def feedback(request):
 
-    profile = get_request_user_profile(request.user)
+    if request.method == "POST":
+        feedback = request.POST.get('feedback')
+        profile = get_request_user_profile(request.user)
+        Feedback.objects.create(author=profile, content=feedback)
 
-    like_objects = Like.objects.filter(profile=profile).order_by("-created")
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            "Feedback sent successfully!",
+        )
 
-    qs = [like_object.post for like_object in like_objects]
-    
-    p_form = PostCreateModelForm()
-
-    if add_post_if_submitted(request, profile):
-        return redirect_back(request)
-
-    if add_comment_if_submitted(request, profile):
-        return redirect_back(request)
-
-    context = {
-        "qs": qs,
-        "profile": profile,
-        "p_form": p_form,
-    }
-
-    return render(request, "posts/main.html", context)
+    return render(request, "posts/retours.html")
 
 @login_required
 def show_post(request, pk):

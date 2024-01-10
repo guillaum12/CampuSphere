@@ -1,4 +1,4 @@
-# Convention étudiante 
+# CampuSphère
 
 ## Comment lancer le site web en local ?
 

@@ -10,6 +10,18 @@ import colorsys
 from urllib.parse import quote
 from convention.settings import BASE_URL
 
+class Feedback(models.Model):
+    """
+    Model to store feedbacks
+    """
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="feedbacks")
+    content = models.TextField(max_length=1000,blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.author} - {str(self.content)}"
+
+
 class Choice(models.Model):
     """
     Model to store dynamic Choice for themes
