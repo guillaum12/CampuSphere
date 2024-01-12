@@ -18,3 +18,6 @@ def home_view(request):
     }
     
     return render(request, "main/home.html", context=context)
+
+def charte(request):
+    return render(request, "main/charte.html")

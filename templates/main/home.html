@@ -4,39 +4,47 @@
     Home
 {% endblock title %}
 {% block content %}
-<div class="container-fluid" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{% static 'img/batiments.jpeg' %}');
+<div class="container-fluid" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{% static 'img/batiments_flous.jpeg' %}');
                                        background-size: cover;
                                        background-position: center;
-                                       height: 100vh;
-                                       border-radius : 50px;">
+                                       height: 80vh;
+                                       border-radius : 10px;">
 
-        <div class="text-center">
-        <h2 style="font-weight: lighter; color: white; font-size: 3em">Ensemble faisons bouger le campus !</h2>
-                    
+    <div class="text-center">
+    <p class="p-2" style="color: white; font-size: 1.5em;"><i>Par les étudiants, <br>Pour les étudiants</i></p>
+
         
-        <br>
             <!--
             <ul>
                 <li>{{nombre_utilisateur}} utilisateurs.</li>
                 <li>{{nombre_post}} idées</li>
             </ul>
             -->
-
-            <a class="nav-link ui item" href="{% url 'registration' %}">
-                <button class="btn btn-success m-3 row">
-                    <img style="width:30px" class="mr-3" src="{% static "img/viarezo.png" %}">
-                    Connexion avec Viarézo
-                </button>
+            <img class="m-2" src="{% static "img/logo_complet_white.png" %}" width=200 class="d-inline-block align-top">
+            <br> 
+            <a class="btn btn-lg btn-primary" href="{% url 'registration' %}">
+                <div class="row">
+                    <div class="col-2">
+                        <img style="width:30px" class="mr-3" src="{% static "img/viarezo.png" %}">
+                    </div>
+                    <div class="col-10" sytle="display: flex;align-items: center;justify-content: center;">
+                        <p>Connexion</p>
+                    </div>
+                </div>
             </a>
-            
+            <!--
             <img style= "border-radius : 5px;" width="200px" src={% static "img/centralesupelec.jpeg" %} alt="CentraleSupélec">
-
-            <div style="margin-top: 100px;">
-                <p style="color :  white; font-size: 2em;">Bonjour à toutes et à tous, et bienvenue sur la toute nouvelle plateforme de discussion du campus !<br><br><br>
-
-                    Ici, vous êtes invités à proposer des sujets qui concernent le campus via des posts, à commenter les posts des autres utilisateurs, à les liker, à faire remonter les idées qui permettront d’améliorer notre vie sur le campus. 
+            -->
+        
+            <div style="margin-top: 50px;">
+                <p style="color :  white; font-size: 2em;">
+                    Proposez vos idées, votez celles des autres
                 </p>
             </div>
+            <p>En me connectant, je consens respecter la 
+                <a href="{% url 'charte' %}"> charte </a>.            
+                </p>
+              
                     
             
     </div>
