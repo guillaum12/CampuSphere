@@ -34,6 +34,10 @@ def show_all_posts(request):
     """
     #qs = Post.objects.get_related_posts(user=request.user)
 
+    filter_form = PostFilterForm(request.GET)
+
+    post_to_show = find_post_to_show(request.user, filter_form)
+
     profile = get_request_user_profile(request.user)
 
     if not profile.is_banned:
@@ -48,11 +52,6 @@ def show_all_posts(request):
             messages.ERROR,
             "You are banned",
         )
-        
-    filter_form = PostFilterForm(request.GET)
-
-    post_to_show = find_post_to_show(request.user, filter_form)
-
 
     context = {
         "post_to_show": post_to_show,
@@ -209,11 +208,11 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
             messages.SUCCESS,
             "Post deleted successfully!",
         )
-        #print(settings.EMAIL_HOST_USER)
-        #print(settings.EMAIL_HOST_PASSWORD)
+        print(settings.EMAIL_HOST_USER)
+        print(settings.EMAIL_HOST_PASSWORD)
         
         #Send a email if deletion by staff
-        if 0 and self.request.user.is_staff:
+        if self.request.user.is_staff:
             with get_connection(  
                     host=settings.EMAIL_HOST, 
                     port=settings.EMAIL_PORT,  

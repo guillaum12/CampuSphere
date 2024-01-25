@@ -1,1 +1,0 @@
-ssh ubuntu@convention.cs-campus.fr

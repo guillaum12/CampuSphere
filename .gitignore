@@ -9,5 +9,3 @@ env
 database.sqlite3
 
 mi.sh
-linkcs.py
-selenium_test.py

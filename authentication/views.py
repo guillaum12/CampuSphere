@@ -1,9 +1,8 @@
-from email import message
 from django.shortcuts import render, redirect
 import requests
 from django.contrib.auth import get_user_model, login
 from allauth.account.models import EmailAddress
-from django.contrib import messages
+
 import convention.settings as settings
 from urllib.parse import urlparse, parse_qs
 
@@ -29,13 +28,6 @@ def connexion(request):
     # Vérifiez si le paramètre 'code' est présent dans les paramètres
     if 'code' in query_params:
         code = query_params['code'][0]
-    else:
-        messages.add_message(
-            request,
-            messages.ERROR,
-            "Erreur lors de la connexion ViaRezo",
-        )
-        return redirect(settings.LOGIN_REDIRECT_URL)
 
 
     server_response = requests.post("https://auth.viarezo.fr/oauth/token", data={
@@ -54,7 +46,7 @@ def connexion(request):
                                              +access_token}).json()
 
     username = user_infos['login']
-    print(user_infos)
+
     User = get_user_model()
     existing_user = User.objects.filter(username=username).first()
 
