@@ -26,7 +26,7 @@ class PostFilterForm(forms.Form):
 
 class PostCreateModelForm(forms.ModelForm):
     title = forms.CharField(max_length=150, widget=forms.Textarea(attrs={"rows": 1}))
-    content = forms.CharField(max_length=1000, widget=CKEditorWidget())
+    content = forms.CharField(max_length=1000, widget=CKEditorWidget(), required=False)
 
     class Meta:
         model = Post
