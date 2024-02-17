@@ -5,10 +5,12 @@
 {% block title %}
     Board
 {% endblock title %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'posts/css/posts.css' %}">
+{% endblock extrahead %}
 {% block content %}
     {% include 'messages.html' %}
 
-    
     <div class="ui grid">
         <div class="column">
             <!-- Filter Form -->
@@ -17,6 +19,8 @@
             {% if not profile.is_banned %}
                 {% include 'posts/new_post.html' with p_form=p_form  %}
             {% endif %}
+
+            {% comment %}
             {% for post in post_to_show %}
                 {% include 'posts/post.html' with post=post is_staff=is_staff request=request %}
             {% endfor %}
@@ -26,11 +30,23 @@
                 <p class="fs-5">
                     Aucune proposition ne correspond à votre recherche.
                 </p>
+            {% endif %}
+            {% endcomment %}
+
+            {% if post_to_show %}
+            <div class="ui fluid cards d-flex g-4 flex-wrap justify-content-center my-3">
+                {% for post in post_to_show %}
+                    {% include 'posts/post_v2.html' with post=post is_staff=is_staff request=request %}
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="ui fluid card text-center">
+                <p class="fs-5">
+                    Aucune proposition ne correspond à votre recherche.
+                </p>
             </div>
             {% endif %}
-
-        </div>
-                
+        </div> 
     </div>
 {% endblock content %}
 

@@ -1,0 +1,64 @@
+{% load custom_filters %}
+{% load static %}
+
+<div class="ui fluid m-2 d-flex justify-content-center custom-post-card-parent">
+    <div class="card custom-post-card">
+        <!-- Gérer les contrôles -->
+        <div>
+            <button class="control-display-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePostViewControl_{{post.id}}" aria-expanded="false" aria-controls="collapsePostViewControl_{{post.id}}">
+                <i class="icon ellipsis vertical large"></i>
+            </button>
+        </div>
+        <div class="collapse collapsePostViewControl" id="collapsePostViewControl_{{post.id}}">
+            Contenu random pour le moment
+        </div>
+        <!-- Image de la carte -->
+        <a href="{% url 'posts:one-post-view' post.id %}">
+            <img src="{% static 'posts/img/theme-asso.jpg'%}" class="card-img-top" alt="theme">
+        </a>
+        <div class="card-body">
+            <!-- En-tête de la carte -->
+            <h5 class="card-title my-0">
+                <a href="{% url 'posts:one-post-view' post.id %}">
+                    {{ post.title|safe }}
+                </a>
+            </h5>
+            <p>
+                <small>
+                    {% include 'posts/identity.html' with profile=post.author request=request  %},
+                    <i>il y a {{ post.created|timesince }}</i>
+                </small>
+            </p>
+            <!-- Description de la carte -->
+            <p class="card-text">
+                {% if post.content != ""%}
+                    {{ post.content|safe|truncatechars_html:120 }}
+                {% else %}
+                    <p class="fst-italic">Aucune description n'a été rédigée...</p>
+                {% endif %}
+            </p>
+            <!-- Boutons pour intéragir avec la carte (favori, réagir, voir le post complet) -->
+            <div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-around mt-2">
+                    <div>
+                        {% include 'posts/like.html' with post=post profile=profile %}
+                    </div>
+                    <div>
+
+                    </div>
+                    <div class="text-center">
+                        <a href="{% url 'posts:one-post-view' post.id %}"
+                        class="d-flex flex-column align-items-center">
+                            <i class="icon eye large d-block"></i>
+                            <small class="mt-1" style="line-height:1em;">
+                                Voir le post</br>complet
+                            </small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

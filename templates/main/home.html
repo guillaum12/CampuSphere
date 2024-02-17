@@ -3,17 +3,13 @@
 {% block title %}
     Home
 {% endblock title %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/style-home.css' %}">
+{% endblock extrahead%}
 {% block content %}
-<div class="container-fluid" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{% static 'img/batiments_flous.jpeg' %}');
-                                       background-size: cover;
-                                       background-position: center;
-                                       height: 80vh;
-                                       border-radius : 10px;">
-
+<div class="container-fluid container-home">
     <div class="text-center">
-    <p class="p-2" style="color: white; font-size: 1.5em;"><i>Par les étudiants, <br>Pour les étudiants</i></p>
-
-        
+    <p class="p-2" style="color: white; font-size: 1.5em;"><i>Par les étudiant·e·s, <br>pour les étudiant·e·s</i></p>
             <!--
             <ul>
                 <li>{{nombre_utilisateur}} utilisateurs.</li>
@@ -27,7 +23,7 @@
                     <div class="col-2">
                         <img style="width:30px" class="mr-3" src="{% static "img/viarezo.png" %}">
                     </div>
-                    <div class="col-10" sytle="display: flex;align-items: center;justify-content: center;">
+                    <div class="col-10 d-flex justify-content-center align-items-center">
                         <p>Connexion</p>
                     </div>
                 </div>
@@ -36,17 +32,17 @@
             <img style= "border-radius : 5px;" width="200px" src={% static "img/centralesupelec.jpeg" %} alt="CentraleSupélec">
             -->
         
-            <div style="margin-top: 50px;">
+            <div style="margin-top: 1em;">
                 <p style="color :  white; font-size: 2em;">
                     Proposez vos idées, votez celles des autres
                 </p>
             </div>
-            <p>En me connectant, je consens respecter la 
-                <a href="{% url 'charte' %}"> charte </a>.            
-                </p>
-              
-                    
-            
+            <p>En me connectant, je consens respecter la
+                <a href="{% url 'charte' %}" style="text-shadow:0 0 3px rgba(0, 0, 0, 0.7);">
+                    charte
+                </a>.
+                
+            </p>
     </div>
 </div>
 {% endblock content %}

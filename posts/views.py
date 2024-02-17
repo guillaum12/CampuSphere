@@ -195,7 +195,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
             messages.add_message(
                 self.request,
                 messages.ERROR,
-                "You aren't allowed to delete this post",
+                "Vous n'êtes pas autorisé à supprimer ce post.",
             )
             return HttpResponseRedirect(self.success_url)
 
@@ -206,7 +206,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         messages.add_message(
             self.request,
             messages.SUCCESS,
-            "Post deleted successfully!",
+            "Post supprimé avec succès !",
         )
         print(settings.EMAIL_HOST_USER)
         print(settings.EMAIL_HOST_PASSWORD)
@@ -250,7 +250,7 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
             messages.add_message(
                 self.request,
                 messages.ERROR,
-                "You aren't allowed to update this post",
+                "Vous n'êtes pas autorisé à modifier ce post.",
             )
             return HttpResponseRedirect(self.success_url)
 
@@ -260,6 +260,6 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         messages.add_message(
             self.request,
             messages.SUCCESS,
-            "Post updated successfully!",
+            "Post mis à jour avec succès !",
         )
         return HttpResponseRedirect(self.success_url)

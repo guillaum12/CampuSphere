@@ -1,0 +1,9 @@
+.container-home{
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../img/batiments_flous.jpeg');
+    background-size: cover;
+    background-position: center;
+    height: min-content;
+    min-height:80vh;
+    border-radius : 10px;
+    padding:1em 0;
+}

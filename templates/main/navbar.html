@@ -9,40 +9,37 @@
 {% url 'profiles:sent-invites-view' as path_to_invites %}
 {% url 'profiles:all-profiles-view' as path_to_all_profiles %}
 {% url 'profiles:messenger-list-view' as path_to_messenger %}
+
 <nav class="navbar ui inverted menu navbar-expand-sm">
-        <a class="navbar-brand" href="#">
-        </a>
-        
-        <a href="{{ path_to_home }}"
-        class="navbar-brand {% if request.path == path_to_home %}active{% endif %} item">
+    <a href="{{ path_to_home }}"
+    class="navbar-brand item mx-3"
+    style="border-radius:5px; padding:.5em .4em !important;">
         <img src="{% static "img/logo.png" %}" class="d-inline-block align-top">
         <p class="p-2">CampuSphère</p>
-        </a>
+    </a>
 
-        <button class="navbar-toggler" style="color: white;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="bars white icon"></i>
-        </button>
-        <!--
+    <button class="navbar-toggler" style="color: white;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="bars white icon"></i>
+    </button>
+
+    <!--
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'posts:main-post-view' %}"
+            class="{% if request.path == path_to_posts %}active{% endif %} item">Accueil</a>
+
+    {% endif %}
+    -->
+
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav container-fluid text-center justify-content-end">
         {% if request.user.is_authenticated %}
-            <a href="{% url 'posts:main-post-view' %}"
-               class="{% if request.path == path_to_posts %}active{% endif %} item">Accueil</a>
-
-        {% endif %}
-        -->
-
-        <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav text-center mr-auto">
-
-        {% if request.user.is_authenticated %}
-
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'profiles:my-profile-view' %}">Mon profil</a>
-        </li>
-        
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'posts:feedback-view' %}">Vos retours</a>
-        </li>
-        
+            <li class="nav-item mx-2">
+                <a class="nav-link" href="{% url 'profiles:my-profile-view' %}">Mon profil</a>
+            </li>
+            
+            <li class="nav-item mx-2">
+                <a class="nav-link" href="{% url 'posts:feedback-view' %}">Vos retours</a>
+            </li>
         <!--
             <a href="{{ path_to_messenger }}"
                class="{% if request.path == path_to_messenger %}active{% endif %} item">Messenger</a>
@@ -92,29 +89,29 @@
                     {{ request.user }}
                 </a>
                 -->                
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'account_logout' %}">Déconnexion</a>
-                </li>
-            {% else %}
-                <!--
-                <li class="nav-item">
-                    <a href="/auth/signup/" class="nav-link">S'inscrire</a>
-                </li>
-                -->
-                <li class="nav-item">
-                    <a href="{{ login }}" class="nav-link">Se connecter</a>
-                </li>
+            <li class="nav-item mx-2">
+                <a class="nav-link" href="{% url 'account_logout' %}">Déconnexion</a>
+            </li>
+        {% else %}
+            <!--
+            <li class="nav-item">
+                <a href="/auth/signup/" class="nav-link">S'inscrire</a>
+            </li>
+            -->
+            <li class="nav-item d-flex justify-content-center align-items-center mx-2">
+                <a href="{{ login }}" class="nav-link">Se connecter</a>
+            </li>
+            
+            <li class="nav-item mx-2">
+                <div>
+                    <a class="nav-link d-flex align-items-center justify-content-center" href="{% url 'registration' %}">
+                        <img style="width:25px" class="me-2" src="{% static "img/viarezo.png" %}">
+                        <span>Connexion avec Viarézo</span>
+                    </a>
+                </div>
+            </li>
 
-                <li class="nav-item">
-                    <img style="width:30px" class="mr-3" src="{% static "img/viarezo.png" %}">
-                </li>
-                
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'registration' %}"><!--<img style="width:30px" class="mr-3" src="{% static "img/viarezo.png" %}"> -->  Connexion avec Viarézo</a>
-                </li>
-
-            {% endif %}
-
-</ul>
-</div>
+        {% endif %}
+        </ul>
+    </div>
 </nav>

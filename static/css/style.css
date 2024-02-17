@@ -1,0 +1,59 @@
+*{
+    box-sizing: border-box !important;
+    -moz-box-sizing: border-box !important;
+}
+
+body {
+    min-height:100%;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url('../img/bkg_light.png') !important;
+    background-size:20em auto !important;
+    background-repeat: repeat !important;
+    background-attachment: fixed !important;
+}
+
+nav{
+    margin:0 !important;
+    border-radius: 0 !important;
+    position:sticky !important;
+    top:0;
+    z-index:999;
+    padding:0 .5em !important;
+}
+
+#main-body-container{
+    background-color:white;
+    padding:1em 0.5em;
+    box-shadow:0 0 10px rgba(150,150,150,0.5);
+}
+
+img {
+    object-fit:cover;
+}
+
+.nav-link {
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+.mymodal {
+    height: 300px !important;
+    top: 200px !important;
+    font-size: 20px !important;
+}
+
+.w-big {
+    width: 200px !important;
+}
+
+.post-content{
+    margin-bottom: 25px;
+}
+
+.img-src {
+    height: 400px;
+    width: 550px;
+}
+
+div.grid{
+    margin:0 !important;
+}

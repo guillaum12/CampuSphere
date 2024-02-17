@@ -8,10 +8,10 @@ from ckeditor.widgets import CKEditorWidget
 
 class PostFilterForm(forms.Form):
     FILTER_CHOICES = [
-        ('recent', 'Most recent'),
-        ('favorite', 'Favorite'),
-        ('votedpercentage', 'Best voted percentage'),
-        ('many', 'Most rated'),
+        ('recent', 'Les plus récents'),
+        ('favorite', 'Mes favoris'),
+        ('votedpercentage', 'Meilleures notes'),
+        ('many', 'Les plus notés'),
         #('reported', 'Most Reported'),
     ]
 
