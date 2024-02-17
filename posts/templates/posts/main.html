@@ -21,7 +21,9 @@
                 {% include 'posts/post.html' with post=post is_staff=is_staff request=request %}
             {% endfor %}
 
-            {% if not post_to_show %}
+            {% if post_to_show %}
+                <a class="btn btn-primary" href="{% url 'posts:following-post-view' next_first_post_to_show %}">Following Posts =></a>
+            {% else %}
             <div class="ui fluid card text-center">
                 <p class="fs-5">
                     Aucune proposition ne correspond à votre recherche.

@@ -25,9 +25,17 @@ from .views_utils import (
 
 # Function-based views
 
+@login_required
+def show_first_posts(request):
+    """
+    Shows first 10 posts.
+    View url: /posts/
+    """
+    return show_selected_posts(request, 0)
+
 
 @login_required
-def show_all_posts(request):
+def show_selected_posts(request, first_post_to_show):	
     """
     Shows all posts considering the filters.
     View url: /posts/
@@ -36,7 +44,7 @@ def show_all_posts(request):
 
     filter_form = PostFilterForm(request.GET)
 
-    post_to_show = find_post_to_show(request.user, filter_form)
+    post_to_show = find_post_to_show(request.user, filter_form, first_post=first_post_to_show)
 
     profile = get_request_user_profile(request.user)
 
@@ -53,11 +61,14 @@ def show_all_posts(request):
             "You are banned",
         )
 
+    next_first_post_to_show = first_post_to_show + 10
+
     context = {
         "post_to_show": post_to_show,
         "profile": profile,
         "p_form": PostCreateModelForm(),
         "filter_form":filter_form,
+        "next_first_post_to_show":next_first_post_to_show,
     }
 
     return render(request, "posts/main.html", context)
