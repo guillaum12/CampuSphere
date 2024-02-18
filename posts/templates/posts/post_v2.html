@@ -3,33 +3,7 @@
 <div class="ui fluid m-2 d-flex justify-content-center custom-post-card-parent">
     <div class="card custom-post-card">
         <!-- Gérer les contrôles -->
-        <div>
-            <button class="control-display-button"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapsePostViewControl_{{ post.id }}"
-                    aria-expanded="false"
-                    aria-controls="collapsePostViewControl_{{ post.id }}">
-                <i class="icon ellipsis vertical large"></i>
-            </button>
-        </div>
-        <div class="collapse collapsePostViewControl"
-             id="collapsePostViewControl_{{ post.id }}">
-            <ul>
-                <li>
-                    <a><i class="icon large share alternate"></i>Partager</a>
-                </li>
-                <li>
-                    <a><i class="icon large exclamation triangle"></i>Signaler</a>
-                </li>
-                <li>
-                    <a><i class="icon large edit"></i>Modifier</a>
-                </li>
-                <li>
-                    <a><i class="icon large trash alternate outline"></i>Supprimer</a>
-                </li>
-            </ul>
-        </div>
+        {% include 'posts/post_control_v2.html' with user=request.user post=post %}
         <!-- Image de la carte -->
         <a href="{% url 'posts:one-post-view' post.id %}">
             <img src="{% static 'posts/img/theme-asso.jpg' %}"

@@ -75,19 +75,23 @@
     border: 1px solid rgba(0, 0, 0, 0.4);
 }
 
-.collapsePostViewControl li a {
+.collapsePostViewControl li button, .collapsePostViewControl li a {
     margin: 0.5em 1.2em 0.5em 0.5em;
     display: block;
 }
 
-.collapsePostViewControl li a > i.icon {
+.collapsePostViewControl li i.icon {
     margin-right: 0.3em;
 }
 
-.collapsePostViewControl ul li:not(:last-child)::after {
+.collapsePostViewControl li:not(:last-child)::after {
     content: '';
     width: 100%;
     height: 1px;
     display: block;
     background-color: rgba(0, 0, 0, 0.1);
+}
+
+.report-form button[type="submit"]:hover, .report-form button[type="submit"].red{
+    color:red !important;
 }

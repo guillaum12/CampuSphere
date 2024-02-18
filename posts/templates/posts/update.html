@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}
-    Update Post
+    Modifier un post
 {% endblock title %}
 {% block content %}
     <div class="ui segment">
-        <h3>Update Post</h3>
+        <h3>Modifier un post</h3>
         <form action="" method="POST" class="ui form" enctype="mutlipart/form-data">
             {% csrf_token %}
             {{ form.media }}
@@ -13,7 +13,7 @@
                    type="button"
                    value="Cancel"
                    onclick="window.history.go(-1);" />
-            <button type="submit" class="ui button primary mt-5">Update</button>
+            <button type="submit" class="ui button primary mt-5">Mettre à jour</button>
         </form>
     </div>
 {% endblock content %}

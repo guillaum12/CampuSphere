@@ -1,0 +1,17 @@
+<form action="{% url 'posts:switch-report-view' %}"
+      method="POST"
+      class='report-form'
+      id='{{ post.id }}'>
+    {% csrf_token %}
+    <input type="hidden" name="post_id" value={{ post.id }}>
+    <button type="submit"
+            id="report_button_{{ post.id }}"
+            class="{% if profile in post.reported.all %}red{% endif %}"
+            style="border: none;
+                   background: none;
+                   padding: 0">
+        <!-- Cet id est utilisé dans report.js -->
+        <i class="icon large exclamation triangle"></i>
+        <p class="d-inline-block">Signaler</p>
+    </button>
+</form>
