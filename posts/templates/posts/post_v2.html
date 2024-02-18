@@ -10,7 +10,20 @@
             </button>
         </div>
         <div class="collapse collapsePostViewControl" id="collapsePostViewControl_{{post.id}}">
-            Contenu random pour le moment
+            <ul>
+                <li>
+                    <a><i class="icon large share alternate"></i>Partager</a>
+                </li>
+                <li>
+                    <a><i class="icon large exclamation triangle"></i>Signaler</a>
+                </li>
+                <li>
+                    <a><i class="icon large edit"></i>Modifier</a>
+                </li>
+                <li>
+                    <a><i class="icon large trash alternate outline"></i>Supprimer</a>
+                </li>
+            </ul>
         </div>
         <!-- Image de la carte -->
         <a href="{% url 'posts:one-post-view' post.id %}">
