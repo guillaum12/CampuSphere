@@ -1,3 +1,4 @@
+import sqlite3
 from sre_parse import CATEGORIES
 from unicodedata import category
 from zlib import MAX_WBITS
@@ -16,11 +17,15 @@ class PostFilterForm(forms.Form):
     ]
 
     filter_option = forms.ChoiceField(choices=FILTER_CHOICES, required=False)
-    THEMES = Choice.objects.all().values_list('theme_name', 'theme_name')
-    THEMES = list(THEMES)
-    THEMES.append(('-', '---------'))
-    THEMES.reverse()
-    themes = forms.ChoiceField(choices=THEMES, required=False)
+    try:
+        THEMES = Choice.objects.all().values_list('theme_name', 'theme_name')
+        THEMES = list(THEMES)
+        THEMES.append(('-', '---------'))
+        THEMES.reverse()
+        themes = forms.ChoiceField(choices=THEMES, required=False)
+
+    except sqlite3.OperationalError:
+        print('Table Choice does not exist')
     
     new_posts = forms.BooleanField(required=False, label='New Posts')
 

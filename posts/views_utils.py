@@ -9,7 +9,7 @@ def filter_by_new_posts(post_to_show, user):
     profile = get_request_user_profile(user)
     return [post for post in post_to_show if profile not in post.powered.all()	]
 
-def find_post_to_show(user, filter_form):
+def find_post_to_show(user, filter_form, first_post):
 
     post_to_show = Post.objects.filter(is_post=True).order_by('-created')
 
@@ -39,13 +39,12 @@ def find_post_to_show(user, filter_form):
         # Filter by theme
         theme = filter_form.cleaned_data.get('themes')
 
-        if theme in '- ':
-            return post_to_show
-        
-        theme_obj = Choice.objects.get(theme_name=theme)
-        post_to_show_by_theme = [post for post in post_to_show if post.theme == theme_obj]
-
-        return post_to_show_by_theme
+        if theme not in '- ':       
+            theme_obj = Choice.objects.get(theme_name=theme)
+            post_to_show = [post for post in post_to_show if post.theme == theme_obj]
+            
+        nb_post_per_page = 10
+        return post_to_show[first_post:first_post+nb_post_per_page]
 
 def add_post_if_submitted(request, profile):
     if "submit_p_form" in request.POST:
