@@ -57,3 +57,7 @@ img {
 div.grid{
     margin:0 !important;
 }
+
+a i.icon, button i.icon{
+    transition:color .2s;
+}

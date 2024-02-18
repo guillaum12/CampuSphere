@@ -25,6 +25,7 @@ from .views_utils import (
 
 # Function-based views
 
+
 @login_required
 def show_first_posts(request):
     """
@@ -35,16 +36,18 @@ def show_first_posts(request):
 
 
 @login_required
-def show_selected_posts(request, first_post_to_show):	
+def show_selected_posts(request, first_post_to_show):
     """
     Shows all posts considering the filters.
     View url: /posts/
     """
-    #qs = Post.objects.get_related_posts(user=request.user)
+    # qs = Post.objects.get_related_posts(user=request.user)
 
     filter_form = PostFilterForm(request.GET)
 
-    post_to_show = find_post_to_show(request.user, filter_form, first_post=first_post_to_show)
+    post_to_show = find_post_to_show(
+        request.user, filter_form, first_post=first_post_to_show
+    )
 
     profile = get_request_user_profile(request.user)
 
@@ -67,17 +70,18 @@ def show_selected_posts(request, first_post_to_show):
         "post_to_show": post_to_show,
         "profile": profile,
         "p_form": PostCreateModelForm(),
-        "filter_form":filter_form,
-        "next_first_post_to_show":next_first_post_to_show,
+        "filter_form": filter_form,
+        "next_first_post_to_show": next_first_post_to_show,
     }
 
     return render(request, "posts/main.html", context)
+
 
 @login_required
 def feedback(request):
 
     if request.method == "POST":
-        feedback = request.POST.get('feedback')
+        feedback = request.POST.get("feedback")
         profile = get_request_user_profile(request.user)
         Feedback.objects.create(author=profile, content=feedback)
 
@@ -88,6 +92,7 @@ def feedback(request):
         )
 
     return render(request, "posts/retours.html")
+
 
 @login_required
 def show_post(request, pk):
@@ -103,7 +108,9 @@ def show_post(request, pk):
 
     return render(request, "posts/show_post.html", context)
 
+
 # ________________________________ ASYNCRONOUS ACTIONS ________________________________ #
+
 
 @login_required
 def comment_view(request):
@@ -114,13 +121,14 @@ def comment_view(request):
     if request.method == "POST":
         profile = get_request_user_profile(request.user)
         comment_html = add_comment_if_submitted(request, profile)
-        
+
         if comment_html:
             return JsonResponse(
                 {"comment_html": comment_html},
             )
 
-    return JsonResponse({'error' :'error'})
+    return JsonResponse({"error": "error"})
+
 
 @login_required
 def switch_like(request):
@@ -140,6 +148,7 @@ def switch_like(request):
         {"like_added": like_added},
     )
 
+
 @login_required
 def switch_report(request):
     """
@@ -154,12 +163,16 @@ def switch_report(request):
 
         # Return JSON response for AJAX script in report.js
         return JsonResponse(
-            {'status': 'success', "report_added": report_added, "report_number": post_obj.report_number},
+            {
+                "status": "success",
+                "report_added": report_added,
+                "report_number": post_obj.report_number,
+            },
         )
-    
+
     else:
         report_added = False
-        return JsonResponse({'error' :'error'})
+        return JsonResponse({"error": "error"})
 
 
 @login_required
@@ -171,21 +184,22 @@ def power(request):
     if request.method == "POST":
         post_id, post_obj = get_post_id_and_post_obj(request)
         profile = get_request_user_profile(request.user)
-        power_amount = request.POST.get('power_amount')
+        power_amount = request.POST.get("power_amount")
         power_added = power_post(profile, post_id, post_obj, power_amount)
-
 
         # Return JSON response for AJAX script in power.js
         return JsonResponse(
-            {"post_progress": post_obj.progress, 
-             "voter_number" : post_obj.voter_number, 
-             "power_added": power_added,
-             "post_color": post_obj.get_color_progress,
-             },
+            {
+                "post_progress": post_obj.progress,
+                "voter_number": post_obj.voter_number,
+                "power_added": power_added,
+                "post_color": post_obj.get_color_progress,
+            },
         )
 
 
 # Class-based views
+
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     """
@@ -196,13 +210,13 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = "posts/confirm_delete.html"
     success_url = reverse_lazy("posts:main-post-view")
-    
+
     def form_valid(self, *args, **kwargs):
         post = self.get_object()
         author = post.author
         author_email = author.user.email
         # If post's author user doesnt equal request's user or user is not staff.
-        if (author.user != self.request.user) and not(self.request.user.is_staff):
+        if (author.user != self.request.user) and not (self.request.user.is_staff):
             messages.add_message(
                 self.request,
                 messages.ERROR,
@@ -221,25 +235,27 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         )
         print(settings.EMAIL_HOST_USER)
         print(settings.EMAIL_HOST_PASSWORD)
-        
-        #Send a email if deletion by staff
-        if self.request.user.is_staff:
-            with get_connection(  
-                    host=settings.EMAIL_HOST, 
-                    port=settings.EMAIL_PORT,  
-                    username=settings.EMAIL_HOST_USER, 
-                    password=settings.EMAIL_HOST_PASSWORD, 
-                    use_tls=settings.EMAIL_USE_TLS  
-                    ) as connection:  
-                        subject = "Post deleted"  
-                        email_from = settings.EMAIL_HOST_USER  
-                        recipient_list = [author_email, ]  
-                        message = "hello World" 
-                        EmailMessage(subject, message, email_from, recipient_list, connection=connection).send()
 
+        # Send a email if deletion by staff
+        if self.request.user.is_staff:
+            with get_connection(
+                host=settings.EMAIL_HOST,
+                port=settings.EMAIL_PORT,
+                username=settings.EMAIL_HOST_USER,
+                password=settings.EMAIL_HOST_PASSWORD,
+                use_tls=settings.EMAIL_USE_TLS,
+            ) as connection:
+                subject = "Post deleted"
+                email_from = settings.EMAIL_HOST_USER
+                recipient_list = [
+                    author_email,
+                ]
+                message = "hello World"
+                EmailMessage(
+                    subject, message, email_from, recipient_list, connection=connection
+                ).send()
 
         return HttpResponseRedirect(self.success_url)
-
 
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
