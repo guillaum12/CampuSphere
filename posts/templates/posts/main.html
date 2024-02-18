@@ -29,7 +29,7 @@
             {% if post_to_show %}
                 <div class="ui fluid cards d-flex g-4 flex-wrap justify-content-center my-3">
                     {% for post in post_to_show %}
-                        {% include 'posts/post_v2.html' with post=post is_staff=is_staff request=request %}
+                        {% include 'posts/post_preview.html' with post=post is_staff=is_staff request=request %}
                     {% endfor %}
                 </div>
             {% else %}

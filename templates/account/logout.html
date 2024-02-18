@@ -1,11 +1,10 @@
 {% extends "base.html" %}
-{% load i18n %}
 {% block title %}
     Déconnexion
 {% endblock title %}
 {% block content %}
-    <h1>{% trans "Logout" %}</h1>
-    <p>{% trans 'Are you sure you want to sign out?' %}</p>
+    <h1>Déconnexion</h1>
+    <p>Êtes-vous sûr·e de vouloir vous déconnecter ?</p>
     <form method="post" action="{% url 'account_logout' %}">
         {% csrf_token %}
         {% if redirect_field_value %}
@@ -15,8 +14,8 @@
         {% endif %}
         <input class="ui button"
                type="button"
-               value="Cancel"
+               value="Annuler"
                onclick="window.history.go(-1);" />
-        <button class="ui button negative"type="submit">{% trans 'Sign Out' %}</button>
+        <button class="ui button negative"type="submit">Se déconnecter</button>
     </form>
 {% endblock %}
