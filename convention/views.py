@@ -7,8 +7,8 @@ def home_view(request):
     """
     Welcoming page view, redirects to the board if user is authenticated.
     """
-    if request.user.is_authenticated:
-        return redirect("posts/")
+    # if request.user.is_authenticated:
+    #    return redirect("posts/")
 
     context = {
         "nombre_utilisateur": len(User.objects.all()),

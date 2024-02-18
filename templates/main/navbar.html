@@ -37,6 +37,9 @@
         <ul class="navbar-nav container-fluid text-center justify-content-end">
             {% if request.user.is_authenticated %}
                 <li class="nav-item mx-2">
+                    <a class="nav-link" href="{% url 'posts:main-post-view' %}">Propositions</a>
+                </li>
+                <li class="nav-item mx-2">
                     <a class="nav-link" href="{% url 'profiles:my-profile-view' %}">Mon profil</a>
                 </li>
                 <li class="nav-item mx-2">
