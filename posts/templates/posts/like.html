@@ -12,8 +12,8 @@ id='{{ post.id }}'>
         {% if profile not in post.liked.all %}black{% else %}yellow{% endif %}
         icon d-block"></i>
         <small class="mt-1" style="line-height:1em;">
-            {% if profile not in post.liked.all %}Ajouter aux</br>favoris
-            {% else %}Retirer des</br>favoris{% endif %}
+            {% if profile not in post.liked.all %}Ajouter aux favoris
+            {% else %}Retirer des favoris{% endif %}
         </small>
         <!--
         <p style="display: inline-block;" class="like-count{{ post.id }}">{{ post.liked.all.count }}</p>

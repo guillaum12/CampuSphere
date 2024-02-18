@@ -18,11 +18,11 @@ $('.like-form').submit(function(e){
         if(response['like_added']) {
             $(icon_str_id).removeClass('black')
             $(icon_str_id).addClass('yellow')
-            $(icon_str_id).next("small").html("Retirer des</br>favoris")
+            $(icon_str_id).next("small").html("Retirer des favoris")
         } else {
             $(icon_str_id).removeClass('yellow')
             $(icon_str_id).addClass('black')
-            $(icon_str_id).next("small").html("Ajouter aux</br>favoris")
+            $(icon_str_id).next("small").html("Ajouter aux favoris")
         }
       },
       error: function(response) {
