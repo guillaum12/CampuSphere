@@ -1,0 +1,17 @@
+<div>
+    <h1>Aperçu des propositions</h1>
+    <div aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>';">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page">
+                <a href="{% url 'posts:main-post-view' %}">Propositions</a>
+            </li>
+            <li class="breadcrumb-item" aria-current="page">Thème</li>
+            <li class="breadcrumb-item active" aria-current="page">Sous-thème</li>
+        </ol>
+    </div>
+    <!-- Filter Form -->
+    {% include 'posts/filter.html' with filter_form=filter_form %}
+    {% if not profile.is_banned %}
+        {% include 'posts/new_post.html' with p_form=p_form %}
+    {% endif %}
+</h1>
