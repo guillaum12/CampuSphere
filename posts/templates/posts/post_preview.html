@@ -10,36 +10,40 @@
                  class="card-img-top"
                  alt="theme" />
         </a>
-        <div class="card-body">
-            <!-- En-tête de la carte -->
-            <h5 class="card-title my-0">
-                <a href="{% url 'posts:one-post-view' post.id %}">{{ post.title|safe }}</a>
-            </h5>
-            <p>
-                <small>
-                    {% include 'posts/identity.html' with profile=post.author request=request %}
-                    ,
-                    <i>il y a {{ post.created|timesince }}</i>
-                </small>
-            </p>
-            <!-- Description de la carte -->
-            {% if post.content != "" %}
-                <p class="card-text">{{ post.content|safe|truncatechars_html:120 }}</p>
-            {% else %}
-                <p class="card-text fst-italic">Aucune description n'a été rédigée...</p>
-            {% endif %}
+        <div class="card-body d-flex flex-column">
+            <div class="flex-grow-1">
+                <!-- En-tête de la carte -->
+                <h5 class="card-title my-0">
+                    <a href="{% url 'posts:one-post-view' post.id %}">{{ post.title|safe }}</a>
+                </h5>
+                <p>
+                    <small>
+                        {% include 'posts/identity.html' with profile=post.author request=request %}
+                        ,
+                        <i>il y a {{ post.created|timesince }}</i>
+                    </small>
+                </p>
+                <!-- Description de la carte -->
+                {% if post.content != "" %}
+                    <p class="card-text">{{ post.content|safe|truncatechars_html:120 }}</p>
+                {% else %}
+                    <p class="card-text fst-italic">Aucune description n'a été rédigée...</p>
+                {% endif %}
+            </div>
             <!-- Boutons pour intéragir avec la carte (favori, réagir, voir le post complet) -->
-            <div>
+            <div class="flex-grow-0 my-1">
                 <hr />
-                <div class="d-flex align-items-center justify-content-around mt-2">
-                    <div>{% include 'posts/like.html' with post=post profile=profile %}</div>
-                    <div></div>
-                    <div class="text-center">
-                        <a href="{% url 'posts:one-post-view' post.id %}"
-                           class="d-flex flex-column align-items-center">
-                            <i class="icon eye large d-block"></i>
-                            <small class="mt-1" style="line-height: 1em">Voir le post complet</small>
-                        </a>
+                <div class="container">
+                    <!--"d-flex align-items-center justify-content-evenly mt-2">-->
+                    <div class="row">
+                        <div class="col-6">{% include 'posts/like.html' with post=post profile=profile %}</div>
+                        <div class="col-6 text-center">
+                            <a href="{% url 'posts:one-post-view' post.id %}"
+                               class="d-flex flex-column align-items-center">
+                                <i class="icon eye large d-block"></i>
+                                <small class="mt-1" style="line-height: 1em">Voir le post complet</small>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

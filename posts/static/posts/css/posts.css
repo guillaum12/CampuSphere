@@ -37,6 +37,10 @@
     color: black;
 }
 
+.custom-post-card i.icon {
+    margin:0;
+}
+
 .control-display-button {
     position: absolute;
     top: 4px;
