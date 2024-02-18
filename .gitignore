@@ -12,3 +12,10 @@ mi.sh
 
 linkcs.py
 selenium_test.py
+
+# Prettier config
+.prettierrc
+
+# Node modules
+node_modules
+package-lock.json
