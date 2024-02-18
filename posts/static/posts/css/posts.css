@@ -95,3 +95,7 @@
 .report-form button[type="submit"]:hover, .report-form button[type="submit"].red{
     color:red !important;
 }
+
+.breadcrumb a {
+    color: black;
+}

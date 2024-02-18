@@ -1,8 +1,12 @@
-<button class="btn btn-primary"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasPostFiltering"
-        aria-controls="offcanvasPostFiltering">Filtrer les posts</button>
+<div class="d-flex flex-row justify-content-center">
+    <button class="btn btn-lg btn-light"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasPostFiltering"
+            aria-controls="offcanvasPostFiltering">
+        Filtrer <i class="icon sliders horizontal"></i>
+    </button>
+</div>
 <!-- Div off canva (bandeau à gauche) -->
 <div class="offcanvas offcanvas-start"
      tabindex="-1"
@@ -44,32 +48,3 @@
         </form>
     </div>
 </div>
-{% comment %}
-<div class="card p-1">
-    <form method="get" id="filter_form" action="">
-        <div class="d-flex row flex-wrap p-1 gx-2 gy-1 justify-content-between">
-            <div class="col-md-3">
-                <label for="{{ filter_form.filter_option.id_for_label }}">Trier par :</label>
-                {{ filter_form.filter_option }} 
-            </div>
-            <div class="col-md-3">
-                <label for="{{ filter_form.themes.id_for_label }}">Filtrer :</label>
-                {{ filter_form.themes }}
-            </div>
-            <div class="col-md-3">
-                <label for="{{ filter_form.new_posts.id_for_label }}">Seulement le nouveau contenu :</label>
-                {{ filter_form.new_posts }}
-            </div>
-        </div>
-    </form>
-</div>
-
-
-<script>
-    $(document).ready(function () {
-        $('#id_filter_option, #id_themes, #id_new_posts').change(function () {
-            $('#filter_form').submit();
-        });
-    });
-</script>
-{% endcomment %}

@@ -11,11 +11,7 @@
     {% include 'messages.html' %}
     <div class="ui grid">
         <div class="column">
-            <!-- Filter Form -->
-            {% include 'posts/filter.html' with filter_form=filter_form %}
-            {% if not profile.is_banned %}
-                {% include 'posts/new_post.html' with p_form=p_form %}
-            {% endif %}
+            {% include 'posts/main_view_intitle.html' with filter_form=filter_form p_form=p_form %}
             {% comment %}
             {% for post in post_to_show %}
                 {% include 'posts/post.html' with post=post is_staff=is_staff request=request %}
