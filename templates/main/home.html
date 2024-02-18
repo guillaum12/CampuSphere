@@ -20,29 +20,33 @@
                 <li>{{nombre_post}} idées</li>
             </ul>
             -->
-            <img class="m-2" src="{% static "img/logo_complet_white.png" %}" width=200 class="d-inline-block align-top">
-            <br>
-            <a class="btn btn-lg btn-primary" href="{% url 'registration' %}">
-                <div class="row">
-                    <div class="col-2">
-                        <img style="width:30px" class="mr-3" src="{% static "img/viarezo.png" %}">
-                    </div>
-                    <div class="col-10 d-flex justify-content-center align-items-center">
-                        <p>Connexion</p>
-                    </div>
-                </div>
-            </a>
-            <!--
-            <img style= "border-radius : 5px;" width="200px" src={% static "img/centralesupelec.jpeg" %} alt="CentraleSupélec">
--->
+            <img class="d-inline-block align-top m-2" src="{% static "img/logo_complet_white.png" %}" width=200>
             <div style="margin-top: 1em;">
                 <p style="color :  white; font-size: 2em;">Proposez vos idées, votez celles des autres</p>
             </div>
-            <p>
-                En me connectant, je consens respecter la
-                <a href="{% url 'charte' %}"
-                   style="text-shadow:0 0 3px rgba(0, 0, 0, 0.7)">charte</a>.
-            </p>
+            <br>
+            {% if not request.user.is_authenticated %}
+                <a class="btn btn-lg btn-primary" href="{% url 'registration' %}">
+                    <div class="row">
+                        <div class="col-2">
+                            <img style="width:30px" class="mr-3" src="{% static "img/viarezo.png" %}">
+                        </div>
+                        <div class="col-10 d-flex justify-content-center align-items-center">
+                            <p>Connexion</p>
+                        </div>
+                    </div>
+                </a>
+                <!--
+            <img style= "border-radius : 5px;" width="200px" src={% static "img/centralesupelec.jpeg" %} alt="CentraleSupélec"> -->
+                <p>
+                    En me connectant, je consens respecter la
+                    <a href="{% url 'charte' %}"
+                       style="text-shadow:0 0 3px rgba(0, 0, 0, 0.7)">charte</a>.
+                </p>
+            {% else %}
+                <a class="btn btn-lg btn-primary"
+                   href="{% url 'posts:main-post-view' %}">Consulter les propositions</a>
+            {% endif %}
         </div>
     </div>
 {% endblock content %}
