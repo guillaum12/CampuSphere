@@ -25,78 +25,76 @@
                 </li>
                 <li>
                     <a
-                        ><i class="icon large exclamation triangle"></i
+                    ><i class="icon large exclamation triangle"></i
                         >Signaler</a
-                    >
-                </li>
-                <li>
-                    <a><i class="icon large edit"></i>Modifier</a>
-                </li>
-                <li>
-                    <a
-                        ><i class="icon large trash alternate outline"></i
-                        >Supprimer</a
-                    >
-                </li>
-            </ul>
-        </div>
+                        >
+                    </li>
+                        <li>
+                            <a><i class="icon large edit"></i>Modifier</a>
+                        </li>
+                        <li>
+                            <a
+                            ><i class="icon large trash alternate outline"></i
+                                >Supprimer</a
+                                >
+                            </li>
+                            </ul>
+                        </div>
         <!-- Image de la carte -->
-        <a href="{% url 'posts:one-post-view' post.id %}">
-            <img
-                src="{% static 'posts/img/theme-asso.jpg'%}"
-                class="card-img-top"
-                alt="theme"
-            />
-        </a>
-        <div class="card-body">
+                        <a href="{% url 'posts:one-post-view' post.id %}">
+                            <img
+                                src="{% static 'posts/img/theme-asso.jpg'%}"
+                                class="card-img-top"
+                                alt="theme"
+                            />
+                        </a>
+                        <div class="card-body">
             <!-- En-tête de la carte -->
-            <h5 class="card-title my-0">
-                <a href="{% url 'posts:one-post-view' post.id %}">
-                    {{ post.title|safe }}
-                </a>
-            </h5>
-            <p>
-                <small>
-                    {% include 'posts/identity.html' with profile=post.author
-                    request=request %},
-                    <i>il y a {{ post.created|timesince }}</i>
-                </small>
-            </p>
+                            <h5 class="card-title my-0">
+                                <a href="{% url 'posts:one-post-view' post.id %}">
+                                    {{ post.title|safe }}
+                                </a>
+                            </h5>
+                            <p>
+                                <small>
+                                    {% include 'posts/identity.html' with profile=post.author request=request %},
+                                    <i>il y a {{ post.created|timesince }}</i>
+                                </small>
+                            </p>
 
             <!-- Description de la carte -->
-            <p class="card-text">
-                {% if post.content != ""%} {{
-                post.content|safe|truncatechars_html:120 }}
-            </p>
-            {% else %}
-            <p class="card-text fst-italic">
-                Aucune description n'a été rédigée...
-            </p>
-            {% endif %}
+                            {% if post.content != ""%}
+                                <p class="card-text">
+                                    {{ post.content|safe|truncatechars_html:120 }}
+                                </p>
+                            {% else %}
+                                <p class="card-text fst-italic">
+                                    Aucune description n'a été rédigée...
+                                </p>
+                            {% endif %}
             <!-- Boutons pour intéragir avec la carte (favori, réagir, voir le post complet) -->
-            <div>
-                <hr />
-                <div
-                    class="d-flex align-items-center justify-content-around mt-2"
-                >
-                    <div>
-                        {% include 'posts/like.html' with post=post
-                        profile=profile %}
-                    </div>
-                    <div></div>
-                    <div class="text-center">
-                        <a
-                            href="{% url 'posts:one-post-view' post.id %}"
-                            class="d-flex flex-column align-items-center"
-                        >
-                            <i class="icon eye large d-block"></i>
-                            <small class="mt-1" style="line-height: 1em">
-                                Voir le post complet
-                            </small>
-                        </a>
+                            <div>
+                                <hr />
+                                <div
+                                    class="d-flex align-items-center justify-content-around mt-2"
+                                >
+                                    <div>
+                                        {% include 'posts/like.html' with post=post profile=profile %}
+                                    </div>
+                                    <div></div>
+                                    <div class="text-center">
+                                        <a
+                                            href="{% url 'posts:one-post-view' post.id %}"
+                                            class="d-flex flex-column align-items-center"
+                                        >
+                                            <i class="icon eye large d-block"></i>
+                                            <small class="mt-1" style="line-height: 1em">
+                                                Voir le post complet
+                                            </small>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>

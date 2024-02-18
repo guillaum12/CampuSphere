@@ -4,12 +4,12 @@
     Home
 {% endblock title %}
 {% block extrahead %}
-<link rel="stylesheet" href="{% static 'css/style-home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style-home.css' %}">
 {% endblock extrahead%}
 {% block content %}
-<div class="container-fluid container-home">
-    <div class="text-center">
-    <p class="p-2" style="color: white; font-size: 1.5em;"><i>Par les étudiant·e·s, <br>pour les étudiant·e·s</i></p>
+    <div class="container-fluid container-home">
+        <div class="text-center">
+            <p class="p-2" style="color: white; font-size: 1.5em;"><i>Par les étudiant·e·s, <br>pour les étudiant·e·s</i></p>
             <!--
             <ul>
                 <li>{{nombre_utilisateur}} utilisateurs.</li>
@@ -17,7 +17,7 @@
             </ul>
             -->
             <img class="m-2" src="{% static "img/logo_complet_white.png" %}" width=200 class="d-inline-block align-top">
-            <br> 
+            <br>
             <a class="btn btn-lg btn-primary" href="{% url 'registration' %}">
                 <div class="row">
                     <div class="col-2">
@@ -31,7 +31,7 @@
             <!--
             <img style= "border-radius : 5px;" width="200px" src={% static "img/centralesupelec.jpeg" %} alt="CentraleSupélec">
             -->
-        
+
             <div style="margin-top: 1em;">
                 <p style="color :  white; font-size: 2em;">
                     Proposez vos idées, votez celles des autres
@@ -41,10 +41,10 @@
                 <a href="{% url 'charte' %}" style="text-shadow:0 0 3px rgba(0, 0, 0, 0.7);">
                     charte
                 </a>.
-                
+
             </p>
+        </div>
     </div>
-</div>
 {% endblock content %}
 
 <style>

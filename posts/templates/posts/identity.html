@@ -1,7 +1,7 @@
 <a href="{% url 'profiles:show-profile-view' profile.id %}">
-{% if request.user.is_staff %}
-    <u>{{ profile }}</u>
-{% else %}
-    <u>{{ profile.get_category_display }}</u>
-{% endif %}
+    {% if request.user.is_staff %}
+        <u>{{ profile }}</u>
+    {% else %}
+        <u>{{ profile.get_category_display }}</u>
+    {% endif %}
 </a>

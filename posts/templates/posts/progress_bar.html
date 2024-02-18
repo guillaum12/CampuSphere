@@ -1,14 +1,14 @@
 {% load static %}
 {% block extrahead %}
-<link rel="stylesheet" href="{% static 'posts/css/progress_bar.css' %}">
+  <link rel="stylesheet" href="{% static 'posts/css/progress_bar.css' %}">
 {% endblock extrahead %}
 
 <div class="progress-bar-container">
   <div class="progress-bar" id="progress_bar_{{post.id}}" style="width: {{ post.progress }}%;
-    background: {{post.get_color_progress}}">
-    </div>
+                                                                 background: {{post.get_color_progress}}">
+  </div>
 </div>
 <div>
-  <br> <p><span id='post_progress_{{post.id}}'>{{post.progress}}</span>% 
+  <br> <p><span id='post_progress_{{post.id}}'>{{post.progress}}</span>%
     avec <span id="voter_number_{{post.id}}">{{post.voter_number}}</span> avis.</p>
 </div>

@@ -5,46 +5,46 @@
 {% endblock title %}
 {% block content %}
 
-{% include "messages.html" %}
+    {% include "messages.html" %}
 
-Veuillez nous faire part de vos retours sur le site, que ce soit :
+    Veuillez nous faire part de vos retours sur le site, que ce soit :
 
-<ul>
-    <li>- de potentiels bugs</li>
-    <li>- des améliorations du site</li>
-    <li>- de nouvelles idées</li>
-</ul>
+    <ul>
+        <li>- de potentiels bugs</li>
+        <li>- des améliorations du site</li>
+        <li>- de nouvelles idées</li>
+    </ul>
 
-<br>
+    <br>
 
-<form action="{% url 'posts:feedback-view' %}"
-      method="POST"
-      >
+    <form action="{% url 'posts:feedback-view' %}"
+          method="POST"
+    >
 
-    {% csrf_token %}
+        {% csrf_token %}
 
-    <div class="row">
-        <div class="col-10">
-            <textarea class="form-control"
-                      name="feedback"
-                      placeholder="Write feedback ..."
-                      rows="7"
-                      required></textarea>
+        <div class="row">
+            <div class="col-10">
+                <textarea class="form-control"
+                          name="feedback"
+                          placeholder="Write feedback ..."
+                          rows="7"
+                          required></textarea>
+            </div>
+            <div class="col-1">
+                <button type="submit"
+                        class="ui primary button">Send</button>
+            </div>
         </div>
-        <div class="col-1">
-            <button type="submit"
-                    class="ui primary button">Send</button>
-        </div>
-    </div>
-</form>
+    </form>
 
 
 
 
-<br>
+    <br>
 
-Vous pouvez aussi nous contacter par mail :
+    Vous pouvez aussi nous contacter par mail :
 
-<a class="btn btn-success" href="mailto:guillaume.machabert@student-cs.fr">Nous envoyer un mail !</a>
+    <a class="btn btn-success" href="mailto:guillaume.machabert@student-cs.fr">Nous envoyer un mail !</a>
 
 {% endblock content %}

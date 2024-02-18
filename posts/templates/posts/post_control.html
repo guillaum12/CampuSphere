@@ -1,17 +1,17 @@
 <div class="ui grid">
     <div class="row">
         {% if user == post.author.user or user.is_staff %}
-        <div class="column">
-            <a class="ui bwhite-lg" href="{% url 'posts:post-update' post.pk %}">
-                <i class="edit large grey outline icon"></i> <!-- Pen icon -->
-            </a>
-        </div>
-        <div class="column">
-            <a class="ui bwhite-lg" href="{% url 'posts:post-delete' post.pk %}">
-                <i class="trash large grey alternate outline icon"></i> <!-- Bin icon -->
-            </a>
-        </div>
-        
+            <div class="column">
+                <a class="ui bwhite-lg" href="{% url 'posts:post-update' post.pk %}">
+                    <i class="edit large grey outline icon"></i> <!-- Pen icon -->
+                </a>
+            </div>
+            <div class="column">
+                <a class="ui bwhite-lg" href="{% url 'posts:post-delete' post.pk %}">
+                    <i class="trash large grey alternate outline icon"></i> <!-- Bin icon -->
+                </a>
+            </div>
+
         {% endif %}
 
         <div class="column">
@@ -19,9 +19,9 @@
         </div>
 
         {% if user.is_staff %}
-        <div class="column">
-        <p>{{post.report_number}}</p>
-        </div>
+            <div class="column">
+                <p>{{post.report_number}}</p>
+            </div>
         {% endif %}
 
         <div class="column">

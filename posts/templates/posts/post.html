@@ -10,55 +10,55 @@
         <img class="ui avatar image" src={{ post.author.avatar.url }}>
         <span style="color:gray">
             {% include 'posts/identity.html' with profile=post.author request=request  %}
-                {{ post.created|timesince }} ago
+            {{ post.created|timesince }} ago
         </span>
         {% if post.theme %}
-        <span class="badge rounded-pill"
-        style="background-color: {{post.theme.color}};">
-        {{post.theme}}
-        </span>
+            <span class="badge rounded-pill"
+                  style="background-color: {{post.theme.color}};">
+                {{post.theme}}
+            </span>
         {% endif %}
         <h4 class="m-2"><a href="/posts/{{post.id}}/show/" style="color:black;">{{ post.title }}</a></h>
-        </div>
+    </div>
 
-    
+
     <div class="content">
-        
+
         <div id="truncated-content-{{post.id}}">{{ post.content|safe|truncatewords_html:50 }}
             <!-- If the post is longer than 50 words, show the arrow -->
             {% if post.content|safe|length > 50 or post.image %}
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"/>
-            </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"/>
+                </svg>
             {% endif %}
         </div>
         <div id="full-content-{{post.id}}" style="display: none;">
-            
+
             {{ post.content|safe }}
-        
+
             {% if post.image %}
-            <div class="ui fluid image row">
-                <div class="col-lg-4">
-                    <a href={{ post.image.url }} target="_blank"><img src={{ post.image.url }}></a>
+                <div class="ui fluid image row">
+                    <div class="col-lg-4">
+                        <a href={{ post.image.url }} target="_blank"><img src={{ post.image.url }}></a>
+                    </div>
                 </div>
-            </div>
             {% endif %}
 
         </div>
-    
+
 
         <br><br>
         {% include 'posts/feedback.html' with post_id=post.id user_post_power=post|user_post_power:user %}
         <br>
-        
+
         <div id="progress_zone_{{post.id}}" style="display:none;">
             {% include 'posts/progress_bar.html' with post=post %}
         </div>
         <br>
-        
+
     </div>
     {% include 'posts/comments.html' with post=post%}
-    
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

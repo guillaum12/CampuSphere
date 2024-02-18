@@ -6,7 +6,7 @@
         {% if comment.profile == post.author %}
             <strong>Auteur</strong>
         {% else %}
-        {% include 'posts/identity.html' with request=request  %}
+            {% include 'posts/identity.html' with request=request  %}
         {% endif %}
         {{ comment.created|timesince }} ago
 
@@ -19,5 +19,5 @@
     <br>
     <!-- To show comments to a comment -->
     {% include 'posts/comments.html' with post=comment%}
-    
+
 </div>

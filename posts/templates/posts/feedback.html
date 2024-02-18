@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block extrahead %}
-<link rel="stylesheet" href="{% static 'posts/css/feedback.css' %}">
+    <link rel="stylesheet" href="{% static 'posts/css/feedback.css' %}">
 {% endblock extrahead %}
 
 <div class="test">
     <div class="feedback">
         <label class="angry">
-            <input type="radio" value="0" name="feedback{{post_id}}" 
-            {% if user_post_power == "0" %} checked {% endif %} />
+            <input type="radio" value="0" name="feedback{{post_id}}"
+                   {% if user_post_power == "0" %} checked {% endif %} />
             <div>
                 <svg class="eye left">
                     <use xlink:href="#eye">
@@ -23,118 +23,118 @@
                         </div>
                     </label>
                     <label class="sad">
-            <input type="radio" value="1" name="feedback{{post_id}}"
-            {% if user_post_power == "1" %} checked {% endif %} />
-            <div>
-                <svg class="eye left">
-                    <use xlink:href="#eye">
-                    </svg>
-                    <svg class="eye right">
-                        <use xlink:href="#eye">
-                        </svg>
-                        <svg class="mouth">
-                            <use xlink:href="#mouth">
-                            </svg>
-                        </div>
-                    </label>
-                    <label class="ok">
-                        <input type="radio" value="2" name="feedback{{post_id}}" 
-                        {% if user_post_power == "2" %} checked {% endif %} />
-                        <div></div>
-                    </label>
-                    <label class="good">
-                    <input type="radio" value="3" name="feedback{{post_id}}"
-                    {% if user_post_power == "3" %} checked {% endif %} />
-                    <div>
-                        <svg class="eye left">
-                            <use xlink:href="#eye">
-                            </svg>
-                            <svg class="eye right">
+                        <input type="radio" value="1" name="feedback{{post_id}}"
+                               {% if user_post_power == "1" %} checked {% endif %} />
+                        <div>
+                            <svg class="eye left">
                                 <use xlink:href="#eye">
                                 </svg>
-                                <svg class="mouth">
-                                    <use xlink:href="#mouth">
+                                <svg class="eye right">
+                                    <use xlink:href="#eye">
                                     </svg>
-                                </div>
-                            </label>
-                            <label class="happy">
-                                <input type="radio" value="4" name="feedback{{post_id}}"
-                                {% if user_post_power == "4" %} checked {% endif %} />
-                                <div>
-                                    <svg class="eye left">
-                    <use xlink:href="#eye">
-                </svg>
-                <svg class="eye right">
-                    <use xlink:href="#eye">
-                </svg>
-            </div>
-        </label>
-    </div>
-            
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-        <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 4" id="eye">
-            <path d="M1,1 C1.83333333,2.16666667 2.66666667,2.75 3.5,2.75 C4.33333333,2.75 5.16666667,2.16666667 6,1"></path>
-        </symbol>
-        <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 7" id="mouth">
-            <path d="M1,5.5 C3.66666667,2.5 6.33333333,1 9,1 C11.6666667,1 14.3333333,2.5 17,5.5"></path>
-        </symbol>
-    </svg>
-    
+                                    <svg class="mouth">
+                                        <use xlink:href="#mouth">
+                                        </svg>
+                                    </div>
+                                </label>
+                                <label class="ok">
+                                    <input type="radio" value="2" name="feedback{{post_id}}"
+                                           {% if user_post_power == "2" %} checked {% endif %} />
+                                    <div></div>
+                                </label>
+                                <label class="good">
+                                    <input type="radio" value="3" name="feedback{{post_id}}"
+                                           {% if user_post_power == "3" %} checked {% endif %} />
+                                    <div>
+                                        <svg class="eye left">
+                                            <use xlink:href="#eye">
+                                            </svg>
+                                            <svg class="eye right">
+                                                <use xlink:href="#eye">
+                                                </svg>
+                                                <svg class="mouth">
+                                                    <use xlink:href="#mouth">
+                                                    </svg>
+                                                </div>
+                                            </label>
+                                            <label class="happy">
+                                                <input type="radio" value="4" name="feedback{{post_id}}"
+                                                       {% if user_post_power == "4" %} checked {% endif %} />
+                                                <div>
+                                                    <svg class="eye left">
+                                                        <use xlink:href="#eye">
+                                                        </svg>
+                                                        <svg class="eye right">
+                                                            <use xlink:href="#eye">
+                                                            </svg>
+                                                        </div>
+                                                    </label>
+                                                </div>
 
-</div>
+                                                <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                                    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 4" id="eye">
+                                                        <path d="M1,1 C1.83333333,2.16666667 2.66666667,2.75 3.5,2.75 C4.33333333,2.75 5.16666667,2.16666667 6,1"></path>
+                                                    </symbol>
+                                                    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 7" id="mouth">
+                                                        <path d="M1,5.5 C3.66666667,2.5 6.33333333,1 9,1 C11.6666667,1 14.3333333,2.5 17,5.5"></path>
+                                                    </symbol>
+                                                </svg>
 
 
-    
-<script>
-    function showProgressBar(postId) {
-        var progressBar = document.getElementById('progress_zone_' + postId);
-        if (progressBar) {
-            progressBar.style.display = 'block';
-        }
-    }
+                                            </div>
 
-    $(document).ready(function () {
+
+
+                                            <script>
+                                                function showProgressBar(postId) {
+                                                    var progressBar = document.getElementById('progress_zone_' + postId);
+                                                    if (progressBar) {
+                                                        progressBar.style.display = 'block';
+                                                    }
+                                                }
+
+                                                $(document).ready(function () {
         /* If user has already voted, show progress bar */
-        {% if post|user_post_power:user %}
-            showProgressBar({{post_id}});
-        {% endif %}
+                                                    {% if post|user_post_power:user %}
+                                                        showProgressBar({{post_id}});
+                                                    {% endif %}
 
 
-        $('input[name="feedback{{post_id}}"]').click(function () {
-            var post_power = $('input[name="feedback{{post_id}}"]:checked').val();
-            console.log(post_power); 
-            
-            $.ajax({
-                type: 'POST',
-        url: 'power/',
-        data: {
-            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
-            'post_id':{{post_id}},
-            'power_amount':post_power,
-        },
-        success: function(response) {
-            showProgressBar({{post_id}});
+                                                    $('input[name="feedback{{post_id}}"]').click(function () {
+                                                        var post_power = $('input[name="feedback{{post_id}}"]:checked').val();
+                                                        console.log(post_power);
+
+                                                        $.ajax({
+                                                            type: 'POST',
+                                                            url: 'power/',
+                                                            data: {
+                                                                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                                                                'post_id':{{post_id}},
+                                                                'power_amount':post_power,
+                                                            },
+                                                            success: function(response) {
+                                                                showProgressBar({{post_id}});
 
             // update progress number
-            var progress_number = document.getElementById('post_progress_{{post.id}}');
-            progress_number.innerHTML = response['post_progress']; 
+                                                                var progress_number = document.getElementById('post_progress_{{post.id}}');
+                                                                progress_number.innerHTML = response['post_progress'];
 
             // Update voter number
-            var voter_number = document.getElementById('voter_number_{{post.id}}');
-            voter_number.innerHTML = response['voter_number'];
+                                                                var voter_number = document.getElementById('voter_number_{{post.id}}');
+                                                                voter_number.innerHTML = response['voter_number'];
 
             // Update progress bar style
-            var progressBar = document.getElementById('progress_bar_{{post.id}}');
-            progressBar.style.width = response['post_progress'] + '%';
-            progressBar.style.background = response['post_color'];
-        },
-        error: function(response) {
-            console.log('error', response)
-        }
-        });
-    });
-    })
+                                                                var progressBar = document.getElementById('progress_bar_{{post.id}}');
+                                                                progressBar.style.width = response['post_progress'] + '%';
+                                                                progressBar.style.background = response['post_color'];
+                                                            },
+                                                            error: function(response) {
+                                                                console.log('error', response)
+                                                            }
+                                                        });
+                                                    });
+                                                })
 
-    
 
-</script>       
+
+                                            </script>

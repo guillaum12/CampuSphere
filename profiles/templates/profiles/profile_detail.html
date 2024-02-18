@@ -208,12 +208,11 @@
                                         name="submit_c_form"
                                         class="ui primary button mt-5 w-full">Send</button>
                             </form>
-                        {% endfor %}
-                    {% else %}
-                        <h1>This user hasn't posted anything yet.</h1>
-                    {% endif %}
-                </div>
+                    {% endfor %}
+                {% else %}
+                    <h1>This user hasn't posted anything yet.</h1>
+                {% endif %}
             </div>
         </div>
-    {% endblock content %}
-  
+    </div>
+{% endblock content %}
