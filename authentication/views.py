@@ -6,15 +6,16 @@ from django.contrib import messages
 import convention.settings as settings
 from urllib.parse import urlparse, parse_qs
 
+
 def registration(request):
 
     return redirect("https://auth.viarezo.fr/oauth/authorize/?" + "&" +
-                "redirect_uri="+ settings.BASE_URL + 'authentication/connexion/' + "&" +
-                "client_id=" + settings.OAUTH_CLIENT_ID + "&" +
-                "response_type=" + "code" + "&" +
-                "state=" + "MeLlamoLaplayaDeHoy" + "&" +
-                "grant_type=" + "authorization_code" + "&" +
-                "scope=" + "default")
+                    "redirect_uri=" + settings.BASE_URL + 'authentication/connexion/' + "&" +
+                    "client_id=" + settings.OAUTH_CLIENT_ID + "&" +
+                    "response_type=" + "code" + "&" +
+                    "state=" + "MeLlamoLaplayaDeHoy" + "&" +
+                    "grant_type=" + "authorization_code" + "&" +
+                    "scope=" + "default")
 
 
 def connexion(request):
@@ -37,19 +38,18 @@ def connexion(request):
         return redirect(settings.LOGIN_REDIRECT_URL)
 
     server_response = requests.post("https://auth.viarezo.fr/oauth/token", data={
-                "grant_type":"authorization_code",
-                "code":code,
-                "redirect_uri": settings.BASE_URL + 'authentication/connexion/',
-                "client_id":settings.OAUTH_CLIENT_ID,
-                "client_secret":settings.OAUTH_CLIENT_SECRET
+        "grant_type": "authorization_code",
+        "code": code,
+        "redirect_uri": settings.BASE_URL + 'authentication/connexion/',
+        "client_id": settings.OAUTH_CLIENT_ID,
+        "client_secret": settings.OAUTH_CLIENT_SECRET
     }).json()
-
 
     access_token = server_response["access_token"]
 
-    user_infos = requests.get("https://auth.viarezo.fr/api/user/show/me", 
-                                    headers={"Authorization":"Bearer "
-                                             +access_token}).json()
+    user_infos = requests.get("https://auth.viarezo.fr/api/user/show/me",
+                              headers={"Authorization": "Bearer "
+                                       + access_token}).json()
 
     username = user_infos['login']
 
@@ -60,21 +60,20 @@ def connexion(request):
         login(request, existing_user, backend='allauth.account.auth_backends.AuthenticationBackend')
         return redirect(settings.LOGIN_REDIRECT_URL)
 
-    
     # Specify user data
     user_data = {
         'username': user_infos['login'],
         'email': user_infos['email'],
         'password': 'example_password',
     }
-    
+
     # Create the user
     user = User.objects.create_user(**user_data)
-    
+
     # Create an email address entry for the user (required by allauth)
-    #email = user_data['email']
-    #EmailAddress.objects.create(user=user, email=email, primary=True, verified=True)
-    
+    # email = user_data['email']
+    # EmailAddress.objects.create(user=user, email=email, primary=True, verified=True)
+
     login(request, user, backend='allauth.account.auth_backends.AuthenticationBackend')
 
     return redirect(settings.LOGIN_REDIRECT_URL)

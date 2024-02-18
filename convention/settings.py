@@ -110,7 +110,7 @@ WSGI_APPLICATION = "convention.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR /'database.sqlite3',
+        'NAME': BASE_DIR / 'database.sqlite3',
     }
 }
 
@@ -180,7 +180,6 @@ EMAIL_HOST_USER = 'campusphere.centralesupelec@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 
 
-
 # CKEditor
 
 CKEDITOR_UPLOAD_PATH = 'static/ckeditor/'
@@ -199,7 +198,7 @@ CKEDITOR_CONFIGS = {
              'items': ['NumberedList', 'BulletedList', 'Link']},
             {'name': 'styles', 'items': ['Format', 'TextColor']},
             {'name': 'tools', 'items': ['Maximize']},
-        
+
         ],
         'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
         # 'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],

@@ -1,16 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block extrahead %}
     <link rel="stylesheet" href="{% static 'posts/css/feedback.css' %}">
     <link rel="stylesheet" href="{% static 'posts/css/progress_bar.css' %}">
 {% endblock extrahead %}
-
 {% block title %}
     Post Detail
 {% endblock title %}
-
 {% block content %}
     {% include 'posts/post.html' with post=post request=request %}
 {% endblock content %}
-

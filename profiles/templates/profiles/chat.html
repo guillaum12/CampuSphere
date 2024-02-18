@@ -7,11 +7,13 @@
     {% if are_friends %}
         <form action="" method="POST" class='ui fluid form'>
             {% csrf_token %}
-            {{ form.as_p  }}
+            {{ form.as_p }}
             <button type="submit" class="ui primary button mt-5 w-full">Send</button>
         </form>
         <br>
-        {% if not qs %}<h1 style="text-align: center">{{ profile|capfirst }} is waiting for your first message!</h1>{% endif %}
+        {% if not qs %}
+            <h1 style="text-align: center">{{ profile|capfirst }} is waiting for your first message!</h1>
+        {% endif %}
         {% for message in qs %}
             {% if message in received %}
                 <div class='ui grid'>

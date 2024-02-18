@@ -19,3 +19,6 @@ selenium_test.py
 # Node modules
 node_modules
 package-lock.json
+
+# VS Code config
+.vscode/

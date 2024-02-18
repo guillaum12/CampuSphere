@@ -1,7 +1,11 @@
 <!-- Form to send a new post -->
-
 <div class="ui fluid card">
-    <div class="ui button large green" data-bs-toggle='collapse' href='#collapse_add_post' role='button' aria-expanded='false' aria-controls='collapseExample'>
+    <div class="ui button large green"
+         data-bs-toggle='collapse'
+         href='#collapse_add_post'
+         role='button'
+         aria-expanded='false'
+         aria-controls='collapseExample'>
         <i class="add icon"></i>
         New Post
     </div>
@@ -9,9 +13,8 @@
         <div class="ui segment">
             <form action="" method="POST" class='ui form' enctype="multipart/form-data">
                 {% csrf_token %}
-                {{p_form.media}}
+                {{ p_form.media }}
                 {{ p_form.as_p }}
-
                 <button type='submit'
                         name="submit_p_form"
                         class="ui positive button w-full mt-5">Send</button>

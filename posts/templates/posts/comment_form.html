@@ -2,7 +2,6 @@
       method="POST"
       class='comment-form'
       id='{{ post.id }}'>
-
     {% csrf_token %}
     <!-- To know the response to which post it is -->
     <input type="hidden" name="post_id" value={{ post.id }}>
@@ -15,10 +14,7 @@
                       required></textarea>
         </div>
         <div class="col-1">
-            <button type="submit"
-                    name="submit_c_form"
-                    class="ui primary button">Send</button>
+            <button type="submit" name="submit_c_form" class="ui primary button">Send</button>
         </div>
     </div>
 </form>
-

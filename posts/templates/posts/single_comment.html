@@ -6,18 +6,13 @@
         {% if comment.profile == post.author %}
             <strong>Auteur</strong>
         {% else %}
-            {% include 'posts/identity.html' with request=request  %}
+            {% include 'posts/identity.html' with request=request %}
         {% endif %}
         {{ comment.created|timesince }} ago
-
-        <div class="right floated meta">
-            {% include 'posts/post_control.html' with user=request.user post=comment %}
-        </div>
-
+        <div class="right floated meta">{% include 'posts/post_control.html' with user=request.user post=comment %}</div>
     </span>
     <div style="color:black" class='mt-2'>{{ comment.content }}</div>
     <br>
     <!-- To show comments to a comment -->
-    {% include 'posts/comments.html' with post=comment%}
-
+    {% include 'posts/comments.html' with post=comment %}
 </div>

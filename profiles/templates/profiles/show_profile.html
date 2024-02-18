@@ -1,21 +1,17 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
-
 {% block title %}
     Show Profile
 {% endblock title %}
 {% block content %}
-    {% include "messages.html" with messages=messages%}
-
+    {% include "messages.html" with messages=messages %}
     <!-- Modal End -->
     <div class='ui grid'>
         <br>
         <div class='row'>
             <div class='four wide column'>
                 <img class='ui medium rounded image' src='{{ profile.avatar.url }}'>
-                <h1>
-                    {% include 'posts/identity.html' with profile=profile request=request %}
-                </h1>
+                <h1>{% include 'posts/identity.html' with profile=profile request=request %}</h1>
                 {% if request.user.is_staff %}
                     {% if profile.category == "etudiant" %}
                         <a href="https://linkcs.fr/user/{{ profile }}" target="_blank">LinkCS</a>
@@ -24,18 +20,18 @@
                     <br>
                     {% if profile.is_banned %}
                         This user is banned.
-                        <a class="btn btn-success" href="{% url 'profiles:toggle-ban-view' profile_id=profile.id %}" >Unban</a>
+                        <a class="btn btn-success"
+                           href="{% url 'profiles:toggle-ban-view' profile_id=profile.id %}">Unban</a>
                     {% else %}
-                        <a class="btn btn-danger" href="{% url 'profiles:toggle-ban-view' profile_id=profile.id %}" >Ban</a>
+                        <a class="btn btn-danger"
+                           href="{% url 'profiles:toggle-ban-view' profile_id=profile.id %}">Ban</a>
                     {% endif %}
-
                 {% endif %}
                 <div class='ui vertical fluid menu'>
                     <div class='item'>
                         Posts
                         <div class='ui label'>{{ profile.posts.all.count }}</div>
                     </div>
-
                     <div class='item'>
                         Likes Given
                         <div class='ui label'>{{ profile.get_votes_given_count }}</div>
@@ -55,11 +51,10 @@
                     </div>
                     -->
                 </div>
-
             </div>
             <div class='twelve wide column'>
                 {% if profile.posts.all %}
-                    {% for post in profile.posts.all  %}
+                    {% for post in profile.posts.all %}
                         {% include 'posts/post.html' with post=post is_staff=is_staff request=request %}
                     {% endfor %}
                 {% else %}

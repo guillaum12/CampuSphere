@@ -121,9 +121,7 @@
                             <button style="margin-top:10px;
                                            width:200px"
                                     type='submit'
-                                    class='ui negative basic button mb-5 w-big'>
-                                Unfollow
-                            </button>
+                                    class='ui negative basic button mb-5 w-big'>Unfollow</button>
                         </form>
                     {% endif %}
                     <!-- Send a message -->
@@ -132,9 +130,7 @@
                             <button style="margin-top:10px;
                                            width:200px"
                                     type='submit'
-                                    class='ui info teal basic button mb-5 w-big'>
-                                Send a Message
-                            </button>
+                                    class='ui info teal basic button mb-5 w-big'>Send a Message</button>
                         </a>
                     {% endif %}
                 </div>
@@ -142,7 +138,7 @@
             </div>
             <div class='twelve wide column'>
                 {% if posts %}
-                    {% for post in posts  %}
+                    {% for post in posts %}
                         <div class='segment ui fluid'>
                             <div class="post-content">
                                 <h3>Post #{{ forloop.revcounter }}</h3>
@@ -208,11 +204,11 @@
                                         name="submit_c_form"
                                         class="ui primary button mt-5 w-full">Send</button>
                             </form>
-                    {% endfor %}
-                {% else %}
-                    <h1>This user hasn't posted anything yet.</h1>
-                {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <h1>This user hasn't posted anything yet.</h1>
+                    {% endif %}
+                </div>
             </div>
         </div>
-    </div>
-{% endblock content %}
+    {% endblock content %}
