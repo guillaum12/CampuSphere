@@ -1,6 +1,8 @@
 <a href="{% url 'profiles:show-profile-view' profile.id %}">
-    {% if request.user.is_staff %}
+    <img class="ui avatar image" src={{ post.author.avatar.url }}>
+    {% if profile.is_staff %}
         <u>{{ profile }}</u>
+        <i class="icon check verified"></i>
     {% else %}
         <u>{{ profile.get_category_display }}</u>
     {% endif %}

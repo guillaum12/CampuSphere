@@ -1,18 +1,13 @@
-<div class="ui segment mb-5">
-    <!--
-    <img class="ui avatar image" src={{ c.profile.avatar.url }}>
-    -->
+<div class="ui segment my-1">
     <span style="color:gray">
-        {% if comment.profile == post.author %}
-            <strong>Auteur</strong>
+        {% if comment.author == post.author %}
+            <img class="ui avatar image" src={{ comment.author.avatar.url }}>
+            <strong>Auteur·ice de la proposition</strong>
         {% else %}
             {% include 'posts/identity.html' with request=request %}
         {% endif %}
-        {{ comment.created|timesince }} ago
-        <div class="right floated meta">{% include 'posts/post_control.html' with user=request.user post=comment %}</div>
+        ,
+        <i class="fst-italic">il y a {{ post.created|timesince }}</i>
     </span>
-    <div style="color:black" class='mt-2'>{{ comment.content }}</div>
-    <br>
-    <!-- To show comments to a comment -->
-    {% include 'posts/comments.html' with post=comment %}
+    <div style="color:black" class='mt-2'>{{ comment.content|linebreaks|safe }}</div>
 </div>

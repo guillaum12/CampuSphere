@@ -1,0 +1,78 @@
+{% load static %}
+<div class="ui fluid card custom-full-post-card">
+    <div class="d-flex flex-column flex-md-row header">
+        <div class="position-relative">
+            <!-- Gérer les contrôles -->
+            {% include 'posts/post_control_v2.html' with user=request.user post=post %}
+            <img src="{% static 'posts/img/theme-asso.jpg' %}"
+                 alt="Thème de la proposition"
+                 width="100%"
+                 height="auto"
+                 class="img-header" />
+        </div>
+        <div class="px-4 py-3 header-content align-self-md-start">
+            <div>
+                {% include 'posts/breadcrumb_theme.html' %}
+                <h2 class="my-0 fs-1">{{ post.title }}</h2>
+                <p>
+                    <small>
+                        {% include 'posts/identity.html' with profile=post.author request=request %}
+                        ,
+                        <i class="fst-italic">il y a {{ post.created|timesince }}</i>
+                    </small>
+                </p>
+            </div>
+            <div class="fs-5 my-3">
+                <span class="badge rounded-pill bg-dark">Keyword 1</span>
+                <span class="badge rounded-pill bg-dark">Keyword 2</span>
+                <span class="badge rounded-pill bg-dark">Keyword 3</span>
+            </div>
+            <div>
+                <hr />
+                <!-- Boutons pour intéragir avec la carte (favori, réagir, voir le post complet) -->
+                <div class="container full-post-main-interactions">
+                    <div class="row">
+                        <div class="col-6">{% include 'posts/like.html' with post=post profile=profile %}</div>
+                        <div class="col-6">
+                            <div class="d-flex justify-content-center">
+                                <button style="border: none;
+                                               background: none;
+                                               padding: 0"
+                                        class="d-flex flex-column align-items-center">
+                                    <i class="icon share large alternate"></i>
+                                    <small>Partager</small>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Description -->
+    <div class="py-3 px-4">
+        <h3 class="fs-4">Détail de la proposition</h3>
+        {{ post.content|safe }}
+        {% if post.image %}
+            <div class="ui fluid image row">
+                <div class="col-lg-4">
+                    <a href={{ post.image.url }} target="_blank"><img src={{ post.image.url }}></a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<script>
+    // Permet de redimensionner l'image d'en-tête de la carte pour qu'elle ait la même hauteur que le contenu du header
+    $(document).ready(function() {
+        function resize_header() {
+            var header_img = $('.custom-full-post-card .img-header');
+            var header_content = $('.custom-full-post-card .header-content');
+            header_img.css('height', header_content.outerHeight());
+        };
+        $(window).resize(function() {
+            resize_header();
+        });
+        resize_header();
+    });
+</script>

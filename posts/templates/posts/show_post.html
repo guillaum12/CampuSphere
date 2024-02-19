@@ -3,10 +3,12 @@
 {% block extrahead %}
     <link rel="stylesheet" href="{% static 'posts/css/feedback.css' %}">
     <link rel="stylesheet" href="{% static 'posts/css/progress_bar.css' %}">
+    <link rel="stylesheet" href="{% static 'posts/css/posts.css' %}">
 {% endblock extrahead %}
 {% block title %}
-    Post Detail
+    Détail de la proposition
 {% endblock title %}
 {% block content %}
-    {% include 'posts/post.html' with post=post request=request %}
+    {% include 'posts/post_full.html' with post=post request=request %}
+    {% include 'posts/comment_section.html' with post=post request=request %}
 {% endblock content %}

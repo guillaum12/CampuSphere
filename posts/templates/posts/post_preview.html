@@ -20,7 +20,7 @@
                     <small>
                         {% include 'posts/identity.html' with profile=post.author request=request %}
                         ,
-                        <i>il y a {{ post.created|timesince }}</i>
+                        <i class="fst-italic">il y a {{ post.created|timesince }}</i>
                     </small>
                 </p>
                 <!-- Description de la carte -->

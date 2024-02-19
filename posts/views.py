@@ -124,9 +124,7 @@ def comment_view(request):
         comment_html = add_comment_if_submitted(request, profile)
 
         if comment_html:
-            return JsonResponse(
-                {"comment_html": comment_html},
-            )
+            return redirect_back(request)
 
     return JsonResponse({"error": "error"})
 

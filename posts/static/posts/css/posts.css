@@ -30,7 +30,7 @@
 }
 
 .custom-post-card hr {
-    margin: 0;
+    margin: 0 0 0.5em 0;
 }
 
 .custom-post-card a {
@@ -82,6 +82,12 @@
 .collapsePostViewControl li button, .collapsePostViewControl li a {
     margin: 0.5em 1.2em 0.5em 0.5em;
     display: block;
+    color:black;
+    transition:color .1s;
+}
+
+.collapsePostViewControl li:hover button, .collapsePostViewControl li:hover a {
+    color:var(--bs-blue);
 }
 
 .collapsePostViewControl li i.icon {
@@ -102,4 +108,38 @@
 
 .breadcrumb a {
     color: black;
+}
+
+/* Full post style */
+
+.custom-full-post-card .full-post-main-interactions button{
+    transition: color .1s;
+}
+
+.custom-full-post-card .full-post-main-interactions button:hover{
+    color:var(--bs-blue);
+}
+
+.custom-full-post-card .header>div:first-child {
+    flex:2;
+}
+
+.custom-full-post-card .img-header {
+    min-width:250px;
+    border-radius: var(--bs-card-inner-border-radius) 0 0;
+}
+
+@media screen and (max-width: 768px) {
+    .custom-full-post-card .img-header {
+        border-top-right-radius: var(--bs-card-inner-border-radius);
+    }
+}
+
+.custom-full-post-card .header-content {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.6);
+}
+
+.custom-full-post-card .header>div:last-child {
+    flex:3;
 }

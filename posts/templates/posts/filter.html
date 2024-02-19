@@ -8,41 +8,50 @@
     </button>
 </div>
 <!-- Div off canva (bandeau à gauche) -->
-<div class="offcanvas offcanvas-start"
+<div class="offcanvas offcanvas-start d-flex flex-column justify-content-between"
      tabindex="-1"
      id="offcanvasPostFiltering"
      aria-labelledby="offcanvasPostFilteringLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasPostFilteringLabel">Filtrer les posts</h5>
+    <div class="offcanvas-header flex-grow-0">
+        <h5 class="offcanvas-title fs-1 flex-grow-1"
+            id="offcanvasPostFilteringLabel">Filtrer les posts</h5>
         <button type="button"
-                class="btn-close text-reset"
+                class="btn-close text-reset fs-3 m-2 flex-grow-0"
                 data-bs-dismiss="offcanvas"
                 aria-label="Close"></button>
     </div>
-    <div class="offcanvas-body">
-        <div>Ajustez les filtres à votre convenance pour afficher les posts qui vous intéressent&nbsp;!</div>
-        <form method="get" id="filter_form" action="">
-            <div class="row my-2">
-                <div class="col text-end">
-                    <label for="{{ filter_form.filter_option.id_for_label }}">Trier par :</label>
-                </div>
-                <div class="col d-flex align-items-center">{{ filter_form.filter_option }}</div>
+    <div class="offcanvas-body flex-grow-1">
+        <form class="d-flex flex-column justify-content-around"
+              style="height: 100%"
+              method="get"
+              id="filter_form"
+              action="">
+            <div>
+                <p class="fs-5">Ajustez les filtres à votre convenance pour afficher les posts qui vous intéressent&nbsp;!</p>
             </div>
-            <div class="row my-2">
-                <div class="col text-end">
-                    <label for="{{ filter_form.themes.id_for_label }}">Filtrer :</label>
+            <div class="fs-5">
+                <div class="row my-2">
+                    <div class="col text-end">
+                        <label for="{{ filter_form.filter_option.id_for_label }}">Trier par :</label>
+                    </div>
+                    <div class="col d-flex align-items-center">{{ filter_form.filter_option }}</div>
                 </div>
-                <div class="col d-flex align-items-center">{{ filter_form.themes }}</div>
-            </div>
-            <div class="row my-2">
-                <div class="col text-end">
-                    <label for="{{ filter_form.new_posts.id_for_label }}">Seulement le nouveau contenu :</label>
+                <div class="row my-2">
+                    <div class="col text-end">
+                        <label for="{{ filter_form.themes.id_for_label }}">Filtrer :</label>
+                    </div>
+                    <div class="col d-flex align-items-center">{{ filter_form.themes }}</div>
                 </div>
-                <div class="col d-flex align-items-center">{{ filter_form.new_posts }}</div>
+                <div class="row my-2">
+                    <div class="col text-end">
+                        <label for="{{ filter_form.new_posts.id_for_label }}">Nouveau contenu :</label>
+                    </div>
+                    <div class="col d-flex align-items-center">{{ filter_form.new_posts }}</div>
+                </div>
             </div>
             <div class="row my-3">
                 <div class="col text-center">
-                    <button type="submit" class="btn btn-primary">Filtrer</button>
+                    <button type="submit" class="btn btn-primary btn-lg">Filtrer</button>
                 </div>
             </div>
         </form>

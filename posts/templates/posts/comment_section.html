@@ -1,0 +1,21 @@
+<div class="ui fluid card">
+    <div class="py-3 px-4">
+        <h5 class="fs-4">Commentaires et discussion</h5>
+        <div class="alert alert-primary d-flex align-items-center" role="alert">
+            <i class="icon circle info large"></i>
+            <div>
+                Nous vous prions de rester courtois·e·s et ouvert·e·s d'esprit lorsque vous vous exprimez dans cette section.
+                <br>
+                En cas de message inapproprié, vous pouvez signaler le commentaire en cliquant sur le bouton <i class="icon ellipsis vertical me-0"></i> situé en haut à droite de chaque commentaire.
+            </div>
+        </div>
+        <div>{% include 'posts/comment_form.html' with post=post %}</div>
+        <div>
+            {% if post.comments %}
+                {% for comment in post.comments %}
+                    {% include 'posts/single_comment.html' with comment=comment post=post request=request %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

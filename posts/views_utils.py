@@ -5,9 +5,11 @@ from profiles.views_utils import get_request_user_profile
 from django.template.loader import render_to_string
 from django.middleware.csrf import get_token
 
+
 def filter_by_new_posts(post_to_show, user):
     profile = get_request_user_profile(user)
-    return [post for post in post_to_show if profile not in post.powered.all()	]
+    return [post for post in post_to_show if profile not in post.powered.all()]
+
 
 def find_post_to_show(user, filter_form, first_post):
 
@@ -20,16 +22,16 @@ def find_post_to_show(user, filter_form, first_post):
 
         if user.is_staff and filter_option == 'reported':
             post_to_show = Post.objects.order_by_report_number()
-        
+
         elif filter_option == 'votedpercentage':
             post_to_show = Post.objects.order_by_progress()
-        
+
         elif filter_option == 'many':
             post_to_show = Post.objects.order_by_voter_number()
 
         elif filter_option == 'favorite':
             post_to_show = Post.objects.get_all_favorite_posts(user=user)
-        
+
         # Filter by new posts
         new_posts = filter_form.cleaned_data.get('new_posts')
 
@@ -39,12 +41,13 @@ def find_post_to_show(user, filter_form, first_post):
         # Filter by theme
         theme = filter_form.cleaned_data.get('themes')
 
-        if theme not in '- ':       
+        if theme not in '- ':
             theme_obj = Choice.objects.get(theme_name=theme)
             post_to_show = [post for post in post_to_show if post.theme == theme_obj]
-            
+
         nb_post_per_page = 10
-        return post_to_show[first_post:first_post+nb_post_per_page]
+        return post_to_show[first_post:first_post + nb_post_per_page]
+
 
 def add_post_if_submitted(request, profile):
     if "submit_p_form" in request.POST:
@@ -88,9 +91,9 @@ def add_comment_if_submitted(request, profile):
                  "request": request}
             )
             return comment_html
-    
+
     return None
-        
+
 
 def get_post_id_and_post_obj(request):
     post_id = request.POST.get("post_id")
@@ -125,6 +128,7 @@ def like_unlike_post(profile, post_id, post_obj):
     # like_added is used for the like.js script
     return like_added
 
+
 def report_unreport_post(profile, post_id, post_obj):
     # Add / remove target profile
     # from reported field in post_obj
@@ -153,7 +157,7 @@ def report_unreport_post(profile, post_id, post_obj):
 
 
 def power_post(profile, post_id, post_obj, power_amount):
-    
+
     # Add / remove target profile
     # and create power_added variable
     if profile in post_obj.powered.all():
