@@ -9,6 +9,7 @@ from django.views.generic import DeleteView, UpdateView
 from django.core.mail import send_mail, EmailMessage, get_connection
 from convention import settings
 from profiles.views_utils import get_request_user_profile, redirect_back
+from django.template.loader import render_to_string
 
 from .forms import PostCreateModelForm, PostFilterForm
 from .models import Post, Feedback
@@ -236,6 +237,11 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 
         # Send a email if deletion by staff
         if self.request.user.is_staff:
+            message = render_to_string("posts/email_deleted_post.html", {
+                            'author': author,
+                            'post': post,
+                        })
+
             with get_connection(
                 host=settings.EMAIL_HOST,
                 port=settings.EMAIL_PORT,
@@ -248,7 +254,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
                 recipient_list = [
                     author_email,
                 ]
-                message = "hello World"
+                message = message
                 EmailMessage(
                     subject, message, email_from, recipient_list, connection=connection
                 ).send()
