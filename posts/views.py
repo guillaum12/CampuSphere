@@ -233,8 +233,6 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
             messages.SUCCESS,
             "Post supprimé avec succès !",
         )
-        print(settings.EMAIL_HOST_USER)
-        print(settings.EMAIL_HOST_PASSWORD)
 
         # Send a email if deletion by staff
         if self.request.user.is_staff:

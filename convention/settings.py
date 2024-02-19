@@ -60,8 +60,8 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_UNIQUE = True
 
-if DEBUG:
-    EMAIL_BACKEND = "django.core.mail.backends.dummy.EmailBackend"
+# if DEBUG:
+#     EMAIL_BACKEND = "django.core.mail.backends.dummy.EmailBackend"
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
