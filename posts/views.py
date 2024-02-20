@@ -236,9 +236,9 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         # Send a email if deletion by staff
         if self.request.user.is_staff:
             message = render_to_string("posts/email_deleted_post.html", {
-                            'author': author,
-                            'post': post,
-                        })
+                'author': author,
+                'post': post,
+            })
 
             with get_connection(
                 host=settings.EMAIL_HOST,

@@ -1,3 +1,4 @@
+{% load static %}
 <form action="{% url 'posts:switch-like-view' %}"
       method="POST"
       class='like-form d-flex flex-column align-items-center'
@@ -24,3 +25,4 @@
 -->
     </button>
 </form>
+<script src="{% static 'posts/js/like.js' %}"></script>
