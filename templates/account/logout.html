@@ -4,7 +4,7 @@
 {% endblock title %}
 {% block content %}
     <h1>Déconnexion</h1>
-    <p>Êtes-vous sûr·e de vouloir vous déconnecter ?</p>
+    <p>Êtes-vous sûr/sûre de vouloir vous déconnecter ?</p>
     <form method="post" action="{% url 'account_logout' %}">
         {% csrf_token %}
         {% if redirect_field_value %}
