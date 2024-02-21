@@ -1,0 +1,29 @@
+{% load static %}
+<div id="live-toast-{{ id }}"
+     class="toast align-items-center text-white border-0"
+     role="alert"
+     aria-live="assertive"
+     aria-atomic="true">
+    <div class="toast-header text-white {% if sucess %}bg-success{% else %}bg-danger{% endif %}">
+        <strong class="me-auto">
+            {% if sucess %}
+                <i class="icon check circle large"></i>Succès
+            {% else %}
+                <i class="icon exclamation circle large"></i>Échec
+            {% endif %}
+        </strong>
+        <button type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="toast"
+                aria-label="Close"></button>
+    </div>
+    <div class="toast-body {% if sucess %}text-success{% else %}text-danger{% endif %}"
+         style="background-color:{% if sucess %}rgba(200, 255, 200 ,0.7){% else %}rgba(255, 200, 200, 0.7){% endif %}">
+        {{ message }}
+    </div>
+</div>
+<script>
+    toast = $('#live-toast-{{ id }}');
+    myToast = new bootstrap.Toast(toast, {delay: 7000});
+    myToast.show();
+</script>

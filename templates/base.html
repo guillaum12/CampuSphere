@@ -42,9 +42,14 @@
                 {% block content %}
                 {% endblock content %}
             </div>
-            {% comment %}
+        </div>
+        {% comment %}
             {% include 'main/footer.html' %}
-            {% endcomment %}
+        {% endcomment %}
+        <!-- Gestion des toasts -->
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            {% block toasts %}
+            {% endblock toasts %}
         </div>
         {% block scripts %}
         {% endblock scripts %}
