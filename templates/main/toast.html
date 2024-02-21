@@ -4,9 +4,9 @@
      role="alert"
      aria-live="assertive"
      aria-atomic="true">
-    <div class="toast-header text-white {% if sucess %}bg-success{% else %}bg-danger{% endif %}">
+    <div class="toast-header text-white {% if success %}bg-success{% else %}bg-danger{% endif %}">
         <strong class="me-auto">
-            {% if sucess %}
+            {% if success %}
                 <i class="icon check circle large"></i>Succès
             {% else %}
                 <i class="icon exclamation circle large"></i>Échec
@@ -17,13 +17,17 @@
                 data-bs-dismiss="toast"
                 aria-label="Close"></button>
     </div>
-    <div class="toast-body {% if sucess %}text-success{% else %}text-danger{% endif %}"
-         style="background-color:{% if sucess %}rgba(200, 255, 200 ,0.7){% else %}rgba(255, 200, 200, 0.7){% endif %}">
+    <div class="toast-body {% if success %}text-success{% else %}text-danger{% endif %}"
+         style="background-color:{% if success %}rgba(200, 255, 200 ,0.7){% else %}rgba(255, 200, 200, 0.7){% endif %}">
         {{ message }}
     </div>
 </div>
 <script>
     toast = $('#live-toast-{{ id }}');
-    myToast = new bootstrap.Toast(toast, {delay: 7000});
+    {% if success %}
+        myToast = new bootstrap.Toast(toast, {delay: 3000});
+    {% else %}
+        myToast = new bootstrap.Toast(toast, {delay: 8000});
+    {% endif %}
     myToast.show();
 </script>
