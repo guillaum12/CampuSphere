@@ -9,6 +9,14 @@
             <p>You're about to delete "{{ object }}". Please confirm.</p>
             <form action="" method="post">
                 {% csrf_token %}
+                {% if request.user.is_staff %}
+                    <!-- Demander le motif de suppression -->
+                    <div class="field">
+                        <label for="id_reason">Motif de suppression :</label>
+                        <input type='text' name="reason" id="id_reason">
+                    </div>
+                    <br>
+                {% endif %}
                 <input class="ui button"
                        type="button"
                        value="Cancel"

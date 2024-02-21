@@ -214,6 +214,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         post = self.get_object()
         author = post.author
         author_email = author.user.email
+        
         # If post's author user doesnt equal request's user or user is not staff.
         if (author.user != self.request.user) and not (self.request.user.is_staff):
             messages.add_message(
@@ -225,6 +226,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 
         # Executes only if post's author user
         # and request's user are the same
+        # or if request's user is staff.
         self.object.delete()
 
         messages.add_message(
@@ -235,9 +237,12 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 
         # Send a email if deletion by staff
         if self.request.user.is_staff:
+            reason = self.request.POST.get("reason")
+
             message = render_to_string("posts/email_deleted_post.html", {
                 'author': author,
                 'post': post,
+                'reason': reason,
             })
 
             with get_connection(
