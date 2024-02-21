@@ -19,6 +19,9 @@
     </div>
     <div class="toast-body {% if success %}text-success{% else %}text-danger{% endif %}"
          style="background-color:{% if success %}rgba(200, 255, 200 ,0.7){% else %}rgba(255, 200, 200, 0.7){% endif %}">
+        {% if not success and not message %}
+            Une erreur inconnue est survenue lors de l'envoi du signalement... Veuillez réessayer puis contacter un administrateur si le problème persiste.
+        {% endif %}
         {{ message }}
     </div>
 </div>

@@ -1,6 +1,7 @@
 <div>
     <h1>Aperçu des propositions</h1>
-    {% include 'posts/breadcrumb_theme.html' %}
+    <!-- Ajout du breadrcrumb selon les thèmes/sous-thèmes filtrés -->
+    {% include 'posts/breadcrumb_theme.html' with theme_path=theme_path %}
     <!-- Filter Form -->
     {% include 'posts/filter.html' with filter_form=filter_form %}
     {% if not profile.is_banned %}

@@ -5,8 +5,16 @@
 {% block content %}
     <div id="content-container" class="container p-none">
         <div class="side-p">
-            <h3>Are you sure?</h3>
-            <p>You're about to delete "{{ object }}". Please confirm.</p>
+            <h3>Confirmation</h3>
+            <p>
+                Êtes-vous sûr/sure de vouloir supprimer
+                {% if object.in_response_to %}
+                    cette proposition
+                {% else %}
+                    ce commentaire
+                {% endif %}
+                : "{{ object|safe|linebreaksbr|striptags }}" ?
+            </p>
             <form action="" method="post">
                 {% csrf_token %}
                 {% if request.user.is_staff %}
@@ -19,9 +27,9 @@
                 {% endif %}
                 <input class="ui button"
                        type="button"
-                       value="Cancel"
+                       value="Annuler"
                        onclick="window.history.go(-1);" />
-                <input class="ui button positive" type="submit" value="Confirm" />
+                <input class="ui button positive" type="submit" value="Supprimer" />
             </form>
         </div>
     </div>
