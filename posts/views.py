@@ -1,3 +1,4 @@
+from time import time
 from distutils.dist import command_re
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -121,12 +122,19 @@ def comment_view(request):
     """
     if request.method == "POST":
         profile = get_request_user_profile(request.user)
+        # Rendu du nouveau commentaire
         comment_html = add_comment_if_submitted(request, profile)
+        # Rendu du toast de succès
+        toast_html = render_to_string(
+            "main/toast.html", {"id": 'success-new-comment-' + str(int(time())), "success": True, "message": "Commentaire posté avec succès !"})
 
         if comment_html:
-            return JsonResponse({'comment_html': comment_html})
+            return JsonResponse({'comment_html': comment_html, 'toast_html': toast_html})
 
-    return JsonResponse({"error": "error"})
+    # En cas d'erreur
+    toast_html = render_to_string(
+        "main/toast.html", {"id": 'fail-new-comment' + str(int(time())), "success": False, "message": "Une erreur inconnue est survenue lors de l'envoi du commentaire... Veuillez réessayer puis contacter un administrateur si le problème persiste."})
+    return JsonResponse({"toast_html": toast_html})
 
 
 @login_required

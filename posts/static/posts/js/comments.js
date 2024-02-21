@@ -22,13 +22,18 @@ function submitCommentAsync(commentForm, e){
           'content': commentText
       },
     success: function(response) {
-        let comment_html = response['comment_html'];
-        textarea.value = "";
-        $('#custom-comment-' + post_id).find('.comment-replies:first').prepend(comment_html);
-        // On ajoute la méthode AJAX pour les nouveaux commentaires
-        $('#custom-comment-' + post_id).find('.comment-replies:first').find('.comment-form:first').submit(function(e){
-            submitCommentAsync(this, e);
-        })
+        if ("comment_html" in response){
+            let comment_html = response['comment_html'];
+            textarea.value = "";
+            $('#custom-comment-' + post_id).find('.comment-replies:first').prepend(comment_html);
+            // On ajoute la méthode AJAX pour les nouveaux commentaires
+            $('#custom-comment-' + post_id).find('.comment-replies:first').find('.comment-form:first').submit(function(e){
+                submitCommentAsync(this, e);
+            })
+        }
+        // Ajout du toast
+        let toast = response['toast_html'];
+        $('#toasts-container').append(toast);
     },
       error: function(response) {
           console.log('error', response)
