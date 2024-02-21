@@ -7,27 +7,30 @@ from .models import Choice, Post
 from ckeditor.fields import RichTextField
 from ckeditor.widgets import CKEditorWidget
 
+
 class PostFilterForm(forms.Form):
     FILTER_CHOICES = [
         ('recent', 'Les plus récents'),
         ('favorite', 'Mes favoris'),
         ('votedpercentage', 'Meilleures notes'),
         ('many', 'Les plus notés'),
-        #('reported', 'Most Reported'),
+        # ('reported', 'Most Reported'),
     ]
 
     filter_option = forms.ChoiceField(choices=FILTER_CHOICES, required=False)
     try:
         THEMES = Choice.objects.all().values_list('theme_name', 'theme_name')
         THEMES = list(THEMES)
+        print(THEMES)
         THEMES.append(('-', '---------'))
         THEMES.reverse()
         themes = forms.ChoiceField(choices=THEMES, required=False)
 
     except sqlite3.OperationalError:
         print('Table Choice does not exist')
-    
+
     new_posts = forms.BooleanField(required=False, label='New Posts')
+
 
 class PostCreateModelForm(forms.ModelForm):
     title = forms.CharField(max_length=150, widget=forms.Textarea(attrs={"rows": 1}))
@@ -36,8 +39,6 @@ class PostCreateModelForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ("title", "content", "theme", "image")
-
-
 
 
 class CommentCreateModelForm(forms.ModelForm):
@@ -49,4 +50,3 @@ class CommentCreateModelForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ("content",)
-

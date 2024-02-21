@@ -12,7 +12,9 @@
         </div>
         <div class="px-4 py-3 header-content align-self-md-start">
             <div>
+                <!-- Ajout du breadrcrumb selon le (sous-)thème du post -->
                 {% include 'posts/breadcrumb_theme.html' %}
+                <!-- Titre du post -->
                 <h2 class="my-0 fs-1">{{ post.title }}</h2>
                 <p>
                     <small>
@@ -22,7 +24,7 @@
                     </small>
                 </p>
             </div>
-            <div class="fs-5 my-3">
+            <div class="fs-5 my-3 d-none">
                 <span class="badge rounded-pill bg-dark">Keyword 1</span>
                 <span class="badge rounded-pill bg-dark">Keyword 2</span>
                 <span class="badge rounded-pill bg-dark">Keyword 3</span>

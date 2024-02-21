@@ -10,10 +10,11 @@ from django.views.generic import DeleteView, UpdateView
 from django.core.mail import send_mail, EmailMessage, get_connection
 from convention import settings
 from profiles.views_utils import get_request_user_profile, redirect_back
+from posts.views_utils import get_theme_path_from_theme
 from django.template.loader import render_to_string
 
 from .forms import PostCreateModelForm, PostFilterForm
-from .models import Post, Feedback
+from .models import Post, Feedback, Choice
 from .views_utils import (
     add_comment_if_submitted,
     add_post_if_submitted,
@@ -63,10 +64,17 @@ def show_selected_posts(request, first_post_to_show):
         messages.add_message(
             request,
             messages.ERROR,
-            "You are banned",
+            "Votre profil a été banni.",
         )
 
     next_first_post_to_show = first_post_to_show + 10
+
+    # Récupération du thème actuel dans la requête get
+    if Choice.objects.filter(theme_name=request.GET.get("themes")).exists():
+        theme = Choice.objects.get(theme_name=request.GET.get("themes"))
+        theme_path = get_theme_path_from_theme(request, theme)
+    else:
+        theme_path = []
 
     context = {
         "post_to_show": post_to_show,
@@ -74,6 +82,7 @@ def show_selected_posts(request, first_post_to_show):
         "p_form": PostCreateModelForm(),
         "filter_form": filter_form,
         "next_first_post_to_show": next_first_post_to_show,
+        "theme_path": theme_path,
     }
 
     return render(request, "posts/main.html", context)
@@ -102,10 +111,14 @@ def show_post(request, pk):
     Shows a post by pk.
     View url: /posts/<pk>/show/
     """
+    # Arborescence des thèmes
+    theme = Post.objects.get(pk=pk).theme
+    theme_path = get_theme_path_from_theme(request, theme)
 
     context = {
         "post": Post.objects.get(pk=pk),
         "profile": get_request_user_profile(request.user),
+        "theme_path": theme_path,
     }
 
     return render(request, "posts/show_post.html", context)
@@ -126,14 +139,14 @@ def comment_view(request):
         comment_html = add_comment_if_submitted(request, profile)
         # Rendu du toast de succès
         toast_html = render_to_string(
-            "main/toast.html", {"id": 'success-new-comment-' + str(int(time())), "success": True, "message": "Commentaire posté avec succès !"})
+            "main/toast.html", {"id": 'success-new-comment-' + str(int(time() * 1e3 % 1e6)), "success": True, "message": "Commentaire posté avec succès ! Merci pour votre contribution."})
 
         if comment_html:
             return JsonResponse({'comment_html': comment_html, 'toast_html': toast_html})
 
     # En cas d'erreur
     toast_html = render_to_string(
-        "main/toast.html", {"id": 'fail-new-comment' + str(int(time())), "success": False, "message": "Une erreur inconnue est survenue lors de l'envoi du commentaire... Veuillez réessayer puis contacter un administrateur si le problème persiste."})
+        "main/toast.html", {"id": 'fail-new-comment' + str(int(time() * 1e3 % 1e6)), "success": False})
     return JsonResponse({"toast_html": toast_html})
 
 
@@ -168,18 +181,32 @@ def switch_report(request):
 
         report_added = report_unreport_post(profile, post_id, post_obj)
 
+        # Envoi d'un toast
+        if report_added:
+            message = "Signalement envoyé avec succès. L'équipe de modération va examiner le post."
+        else:
+            message = "Signalement retiré avec succès."
+        toast_html = render_to_string(
+            "main/toast.html", {"id": 'success-report-' + str(int(time() * 1e3 % 1e6)),
+                                "success": True,
+                                "message": message})
+
         # Return JSON response for AJAX script in report.js
         return JsonResponse(
             {
                 "status": "success",
                 "report_added": report_added,
                 "report_number": post_obj.report_number,
+                "toast_html": toast_html,
             },
         )
 
     else:
+        # Préparation d'un toast
+        toast_html = render_to_string(
+            "main/toast.html", {"id": 'fail-report-' + str(int(time() * 1e3 % 1e6)), "success": False})
         report_added = False
-        return JsonResponse({"error": "error"})
+        return JsonResponse({"toast_html": toast_html})
 
 
 @login_required

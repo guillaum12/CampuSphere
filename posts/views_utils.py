@@ -107,6 +107,17 @@ def get_post_id_and_post_obj(request):
     return post_id, post_obj
 
 
+def get_theme_path_from_theme(request, theme):
+    current_theme = theme
+    if not current_theme:
+        return ["Divers"]
+    theme_path = [current_theme.theme_name]
+    while current_theme.parent_categorie:
+        current_theme = current_theme.parent_categorie
+        theme_path.insert(0, current_theme.theme_name)
+    return theme_path
+
+
 def like_unlike_post(profile, post_id, post_obj):
 
     # Add / remove target profile
