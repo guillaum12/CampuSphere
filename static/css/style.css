@@ -57,3 +57,6 @@ img {
 div.grid{
     margin:0 !important;
 }
+.image.avatar{
+    box-shadow:0 0 8px rgba(150,150,150,0.5);
+}

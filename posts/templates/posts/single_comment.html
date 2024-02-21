@@ -1,10 +1,11 @@
-<div class="ui segment my-1 px-0 pb-0 custom-comment">
+<div class="ui segment my-1 px-0 pb-0 custom-comment"
+     id="custom-comment-{{ comment.id }}">
     <!-- En-tête du commentaire -->
     <div class="comment-header">
         {% if comment.author.id == post.author.id %}
             <a href="{% url 'profiles:show-profile-view' comment.author.id %}">
                 <img class="ui avatar image" src={{ comment.author.avatar.url }}>
-                <strong>Auteur·ice de la proposition</strong>
+                <strong>Auteur·ice</strong>
             </a>
         {% else %}
             {% include 'posts/identity.html' with request=request profile=comment.author %}
@@ -23,7 +24,7 @@
                 <button class="btn" type="button">
                     <i class="icon thumbs down outline"></i>
                 </button>
-                <button class="btn"
+                <button class="btn btn-reply"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#collapseReply{{ comment.id }}"
@@ -38,7 +39,7 @@
                     <i class="icon large ellipsis horizontal"></i>
                 </button>
             </div>
-            <div class="collapse" id="collapseReply{{ comment.id }}">
+            <div class="collapse reply-container" id="collapseReply{{ comment.id }}">
                 {% include 'posts/comment_form.html' with post=comment %}
             </div>
         </div>

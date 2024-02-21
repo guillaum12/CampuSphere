@@ -71,6 +71,11 @@ def add_comment_if_submitted(request, profile):
         post_id = request.POST.get('post_id', None)
         parent_post = Post.objects.get(id=post_id)
 
+        # Récupération du post parent initial (proposition)
+        parent_proposition = parent_post
+        while parent_proposition.in_response_to:
+            parent_proposition = parent_proposition.in_response_to
+
         new_comment = Post()
         new_comment.author = profile
         new_comment.is_post = False
@@ -87,6 +92,7 @@ def add_comment_if_submitted(request, profile):
             comment_html = render_to_string(
                 "posts/single_comment.html",
                 {"comment": Post.objects.get(id=comment_id),
+                 "post": Post.objects.get(id=parent_proposition.id),
                  "csrf_token": csrf_token,
                  "request": request}
             )

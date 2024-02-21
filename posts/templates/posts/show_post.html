@@ -13,3 +13,7 @@
     {% include 'posts/post_full.html' with post=post request=request %}
     {% include 'posts/comment_section.html' with post=post request=request %}
 {% endblock content %}
+{% block scripts %}
+    <script src="{% static 'posts/js/comments.js' %}"></script>
+    <script src="{% static 'posts/js/report.js' %}"></script>
+{% endblock scripts %}

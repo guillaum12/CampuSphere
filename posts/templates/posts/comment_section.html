@@ -10,12 +10,14 @@
             </div>
         </div>
         <div>{% include 'posts/comment_form.html' with post=post %}</div>
-        <div>
-            {% if post.comments %}
-                {% for comment in post.comments %}
-                    {% include 'posts/single_comment.html' with comment=comment post=post request=request %}
-                {% endfor %}
-            {% endif %}
+        <div id="custom-comment-{{ post.id }}">
+            <div class="comment-replies">
+                {% if post.comments %}
+                    {% for comment in post.comments %}
+                        {% include 'posts/single_comment.html' with comment=comment post=post request=request %}
+                    {% endfor %}
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>
