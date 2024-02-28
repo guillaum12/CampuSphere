@@ -35,9 +35,7 @@
                 <button class="btn">
                     <i class="icon large share alternate"></i><small class="fw-bold d-none d-md-inline">Partager</small>
                 </button>
-                <button class="btn">
-                    <i class="icon large ellipsis horizontal"></i>
-                </button>
+                {% include 'posts/comment_control.html' %}
             </div>
             <div class="collapse reply-container" id="collapseReply{{ comment.id }}">
                 {% include 'posts/comment_form.html' with post=comment %}
