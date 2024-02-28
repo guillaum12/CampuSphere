@@ -48,6 +48,9 @@ class PostManager(models.Manager):
 
         return related_posts
     
+    def only_posts(self):
+        return self.get_queryset().filter(is_post=True)
+
     def order_by_report_number(self):
         return self.get_queryset().annotate(report_count=models.Count('reported')).order_by('-report_count')
     
@@ -107,8 +110,8 @@ class Post(models.Model):
 
     def __str__(self):
         if len(str(self.content)) > 50:
-            return f"{self.author} - {str(self.content)[:50].strip()}.."
-        return f"{self.author} - {str(self.content)}"
+            return f"{str(self.content)[:50].strip()}.."
+        return f"{str(self.content)}"
 
     
     @property

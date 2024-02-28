@@ -53,8 +53,8 @@
                 </div>
             </div>
             <div class='twelve wide column'>
-                {% if profile.posts.all %}
-                    {% for post in profile.posts.all %}
+                {% if profile.posts.only_posts %}
+                    {% for post in profile.posts.only_posts %}
                         {% include 'posts/post.html' with post=post is_staff=is_staff request=request %}
                     {% endfor %}
                 {% else %}
