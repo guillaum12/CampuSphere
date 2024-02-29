@@ -10,12 +10,13 @@ import colorsys
 from urllib.parse import quote
 from convention.settings import BASE_URL
 
+
 class Feedback(models.Model):
     """
     Model to store feedbacks
     """
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="feedbacks")
-    content = models.TextField(max_length=1000,blank=True)
+    content = models.TextField(max_length=1000, blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -29,14 +30,21 @@ class Choice(models.Model):
     theme_name = models.CharField(max_length=30, unique=True)
     color = models.CharField(max_length=7, default='#000000')
     parent_categorie = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
+    image = models.ImageField(
+        blank=True,
+        default='generic_theme.jpg',
+        upload_to="themes",
+        validators=[FileExtensionValidator(["png", "jpg", "jpeg"])],
+    )
 
     def __str__(self):
         if self.parent_categorie:
             return f"{self.parent_categorie} / {self.theme_name}"
-        
+
         return self.theme_name
 
 # Choice.objects.get_or_create(theme_name='aucun')
+
 
 class PostManager(models.Manager):
     def get_related_posts(self, user):
@@ -47,14 +55,14 @@ class PostManager(models.Manager):
         related_posts = get_related_posts_queryset(profile, friends, following)
 
         return related_posts
-    
+
     def order_by_report_number(self):
         return self.get_queryset().annotate(report_count=models.Count('reported')).order_by('-report_count')
-    
+
     def order_by_progress(self):
         all_posts = Post.objects.filter(is_post=True)
         return sorted(all_posts, key=lambda post: post.progress, reverse=True)
-    
+
     def get_all_favorite_posts(self, user):
         profile = get_request_user_profile(user)
         like_objects = Like.objects.filter(profile=profile)
@@ -64,13 +72,14 @@ class PostManager(models.Manager):
         all_posts = Post.objects.filter(is_post=True)
         return sorted(all_posts, key=lambda post: post.voter_number, reverse=True)
 
+
 class Post(models.Model):
     """
     This model is used to show results in main.html
     """
 
     title = models.TextField(max_length=100, blank=True)
-    content = models.TextField(max_length=1000,blank=True)
+    content = models.TextField(max_length=1000, blank=True)
     is_post = models.BooleanField(default=True)
 
     theme = models.ForeignKey(Choice, on_delete=models.SET_NULL, null=True, blank=True)
@@ -87,15 +96,15 @@ class Post(models.Model):
 
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
-    
+
     # A comment is now seen as a response to a post
     in_response_to = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
 
-    @property 
+    @property
     def comments(self):
         return Post.objects.filter(in_response_to=self).order_by('-created')
 
-    @property 
+    @property
     def number_comments(self):
         return len(Post.objects.filter(in_response_to=self))
 
@@ -110,45 +119,43 @@ class Post(models.Model):
             return f"{self.author} - {str(self.content)[:50].strip()}.."
         return f"{self.author} - {str(self.content)}"
 
-    
     @property
     def voter_number(self):
-        all_power_objects = Power.objects.filter(post = self)
+        all_power_objects = Power.objects.filter(post=self)
         return len(all_power_objects)
 
     @property
     def get_all_power(self):
-    
-        all_power_objects = Power.objects.filter(post = self)
+
+        all_power_objects = Power.objects.filter(post=self)
 
         total_power = sum([int(power_object.power) for power_object in all_power_objects])
 
-        return total_power if total_power else 0 
+        return total_power if total_power else 0
 
     @property
     def get_max_power(self):
-        all_power_objects = Power.objects.filter(post = self)
+        all_power_objects = Power.objects.filter(post=self)
 
-        return len(all_power_objects)*4
-    
-    
+        return len(all_power_objects) * 4
+
     @property
     def progress(self):
         if not self.get_max_power:
             return 0
 
-        return round((self.get_all_power/self.get_max_power)*100, 1)
-    
+        return round((self.get_all_power / self.get_max_power) * 100, 1)
+
     @property
     def get_color_progress(self):
-        hue = self.progress/100
+        hue = self.progress / 100
         # Convertir la teinte en une couleur RVB
         rgb = colorsys.hsv_to_rgb(hue, 1, 1)
 
         # Convertir les valeurs RVB en valeurs entières de 0 à 255
         rgb_int = tuple(int(x * 255) for x in rgb)
 
-        rgb_int = (int((1-hue) * 255), int(hue * 255), int(hue * 255 * 0.5))
+        rgb_int = (int((1 - hue) * 255), int(hue * 255), int(hue * 255 * 0.5))
 
         # Formater la couleur en format CSS (chaîne hexadécimale)
         color_hex = "#{:02x}{:02x}{:02x}".format(*rgb_int)
@@ -157,15 +164,14 @@ class Post(models.Model):
 
     @property
     def whatsapp_link(self):
-        # On renvoit le lien d'un post à partager sur Whatsapp 
+        # On renvoit le lien d'un post à partager sur Whatsapp
         wa_url = "https://api.whatsapp.com/send?text="
-        
+
         link_to_post = BASE_URL + "posts/" + str(self.id) + "/show/"
 
         texte_explicatif = "Viens donner ton avis ! "
 
         return wa_url + quote(texte_explicatif) + link_to_post
-
 
     class Meta:
         ordering = ("-created",)
@@ -184,7 +190,8 @@ class Like(models.Model):
 
     def __str__(self):
         return f"{self.profile} liked {self.post}"
-    
+
+
 class Report(models.Model):
     """
     This model is used to leave likes on Posts
@@ -199,6 +206,7 @@ class Report(models.Model):
     def __str__(self):
         return f"{self.profile} reported {self.post}"
 
+
 class Power(models.Model):
     """
     This model is used to leave power on Posts
@@ -211,6 +219,6 @@ class Power(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     power = models.CharField(max_length=5, blank=True)
-    
+
     def __str__(self):
         return f"{self.profile} put {self.power}/5 on {self.post}"

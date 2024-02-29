@@ -1,5 +1,5 @@
 <a href="{% url 'profiles:show-profile-view' profile.id %}">
-    <img class="ui avatar image" src={{ post.author.avatar.url }}>
+    {% if not without_avatar %}<img class="ui avatar image" src={{ profile.avatar.url }}>{% endif %}
     {% if profile.is_staff %}
         {{ profile }}
     {% else %}

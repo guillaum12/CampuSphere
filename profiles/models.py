@@ -5,7 +5,7 @@ from django.db import models
 from django.shortcuts import reverse
 
 from .models_utils import get_likes_received_count, get_list_of_profiles_by_user
-#from posts.models import Power
+# from posts.models import Power
 
 # Profile Model
 
@@ -28,7 +28,7 @@ class Profile(models.Model):
     is_banned = models.BooleanField(default=False)
 
     CATEGORIES = [
-        ('etudiant', 'Étudiant'),
+        ('etudiant', 'Étudiant/e'),
         ('administration', 'Administration'),
         ('association', 'Association'),
         ('convention', 'Soirée Convention Étudiante'),
@@ -55,6 +55,7 @@ class Profile(models.Model):
         blank=True,
         related_name="followers",
     )
+    display_site_explanation = models.BooleanField(default=True)
     slug = models.SlugField(unique=True, blank=True)
 
     updated = models.DateTimeField(auto_now=True)

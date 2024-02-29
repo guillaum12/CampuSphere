@@ -1,0 +1,28 @@
+{% load static %}
+<div id="toast-welcome-placement"
+     class="toast-container position-absolute top-50 start-50 translate-middle">
+    <div class="toast bg-white"
+         role="alert"
+         aria-live="assertive"
+         aria-atomic="true"
+         style="width:90vw;
+                height:90vh">
+        <div class="toast-header bg-dark" style="padding:10px !important">
+            <img src="{% static 'img/logo.png' %}"
+                 class="rounded me-3"
+                 style="height:2.5em"
+                 alt="Logo de CampuShpère">
+            <strong class="me-auto fs-3 text-white">Bienvenue !</strong>
+            <button type="button"
+                    class="btn-close btn-close-white me-1"
+                    data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body">Hello, world! This is a toast message.</div>
+    </div>
+</div>
+<script>
+    toast = $('#toast-welcome-placement .toast').get(0);
+    welcomeToast = new bootstrap.Toast(toast, {autohide: false});
+    welcomeToast.show();
+</script>
