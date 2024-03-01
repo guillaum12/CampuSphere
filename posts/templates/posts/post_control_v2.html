@@ -12,8 +12,30 @@
      id="collapsePostViewControl_{{ post.id }}">
     <ul>
         <li>
-            <a href=""><i class="icon large share alternate"></i>Partager</a>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#shareModal{{ post.id }}"><i class="icon large share alternate"></i>Partager</a>
         </li>
+
+        
+        
+        {% comment %} <!-- Modal -->
+        <div class="modal fade" id="shareModal{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel{{ post.id }}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="shareModalLabel{{ post.id }}">Partager sur WhatsApp</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <a href="whatsapp://send?text=Votre%20texte%20personnalisé%20ici" data-action="share/whatsapp/share" target="_blank">
+                <img src="https://image.flaticon.com/icons/svg/2111/2111692.svg" alt="WhatsApp" width="64" height="64">
+                </a>
+            </div>
+            </div>
+        </div>
+        </div> {% endcomment %}
+
         <li>{% include 'posts/report_v2.html' with post=post profile=profile %}</li>
         {% if user == post.author.user or user.is_staff %}
             <li>
