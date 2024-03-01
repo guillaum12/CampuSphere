@@ -23,7 +23,7 @@ django_env = os.environ.get("DJANGO_ENV")
 if django_env == "development":
     BASE_URL = "http://127.0.0.1:8000/"
 else:
-    BASE_URL = "https://convention.cs-campus.fr/"
+    BASE_URL = "https://campusphere.cs-campus.fr/"
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -134,7 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # CSRF tokens
 
-CSRF_TRUSTED_ORIGINS = ['https://*.convention.cs-campus.fr']
+CSRF_TRUSTED_ORIGINS = ['https://*.campusphere.cs-campus.fr']
 
 
 # Internationalization

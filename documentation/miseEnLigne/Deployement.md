@@ -2,7 +2,7 @@
 
 - Demander à ce qu'on ajoute ma clé ssh au serveur puis taper dans Bash :
 
-        ssh ubuntu@convention.cs-campus.fr
+        ssh ubuntu@campusphere.cs-campus.fr
 
 - Activer l'environnement virtuel : 
 
@@ -13,7 +13,7 @@
 
 Adresse IP : 138.195.139.59
 
-convention.cs-campus.fr
+campusphere.cs-campus.fr
 
 [Charte des VM Viarézo](charteVR.pdf)
 

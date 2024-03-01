@@ -1,1 +1,1 @@
-ssh ubuntu@convention.cs-campus.fr
+ssh ubuntu@campusphere.cs-campus.fr
