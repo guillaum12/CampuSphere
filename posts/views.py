@@ -23,6 +23,7 @@ from .views_utils import (
     power_post,
     find_post_to_show,
     report_unreport_post,
+    never_display_explanations,
 )
 
 
@@ -45,7 +46,6 @@ def show_selected_posts(request, first_post_to_show):
     View url: /posts/
     """
     # qs = Post.objects.get_related_posts(user=request.user)
-
     filter_form = PostFilterForm(request.GET)
 
     post_to_show = find_post_to_show(
@@ -76,6 +76,11 @@ def show_selected_posts(request, first_post_to_show):
     else:
         theme_path = []
 
+    # Récupération des éventuels paramètres GET
+    display_site_explanations = False
+    if request.GET.get("display_site_explanations") == "True":
+        display_site_explanations = True
+
     context = {
         "post_to_show": post_to_show,
         "profile": profile,
@@ -83,6 +88,7 @@ def show_selected_posts(request, first_post_to_show):
         "filter_form": filter_form,
         "next_first_post_to_show": next_first_post_to_show,
         "theme_path": theme_path,
+        "display_site_explanations": display_site_explanations,
     }
 
     return render(request, "posts/main.html", context)
@@ -200,13 +206,41 @@ def switch_report(request):
                 "toast_html": toast_html,
             },
         )
+    # Préparation d'un toast
+    toast_html = render_to_string(
+        "main/toast.html", {"id": 'fail-report-' + str(int(time() * 1e3 % 1e6)), "success": False})
+    report_added = False
+    return JsonResponse({"toast_html": toast_html})
 
-    else:
-        # Préparation d'un toast
-        toast_html = render_to_string(
-            "main/toast.html", {"id": 'fail-report-' + str(int(time() * 1e3 % 1e6)), "success": False})
-        report_added = False
-        return JsonResponse({"toast_html": toast_html})
+
+@login_required
+def hide_site_explanations(request):
+    """
+    Never display site explanations again.
+    View url: /posts/never_display_explanations/
+    """
+    if request.method == "POST":
+        profile = get_request_user_profile(request.user)
+
+        if never_display_explanations(profile):
+            # Envoi d'un toast
+            message = "Les explications ne seront plus affichées lors des prochaines connexions."
+            toast_html = render_to_string(
+                "main/toast.html", {"id": 'success-hide-site-explanations-' + str(int(time() * 1e3 % 1e6)),
+                                    "success": True,
+                                    "message": message})
+
+            # Return JSON response for AJAX script in report.js
+            return JsonResponse(
+                {
+                    "status": "success",
+                    "toast_html": toast_html,
+                },
+            )
+    # Préparation d'un toast
+    toast_html = render_to_string(
+        "main/toast.html", {"id": 'fail-hide-site-explanations-' + str(int(time() * 1e3 % 1e6)), "success": False})
+    return JsonResponse({"toast_html": toast_html})
 
 
 @login_required
@@ -249,7 +283,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         post = self.get_object()
         author = post.author
         author_email = author.user.email
-        
+
         # If post's author user doesnt equal request's user or user is not staff.
         if (author.user != self.request.user) and not (self.request.user.is_staff):
             messages.add_message(

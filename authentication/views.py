@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 import requests
 from django.contrib.auth import get_user_model, login
 from allauth.account.models import EmailAddress
+from profiles.models import Profile
 from django.contrib import messages
 import convention.settings as settings
 from urllib.parse import urlparse, parse_qs
@@ -19,7 +20,6 @@ def registration(request):
 
 
 def connexion(request):
-
     url = request.get_full_path()
 
     # Analysez l'URL pour obtenir les paramètres
@@ -58,6 +58,11 @@ def connexion(request):
 
     if existing_user:
         login(request, existing_user, backend='allauth.account.auth_backends.AuthenticationBackend')
+        # On vérifie le statut de la variable display_site_explanation du profile
+        profile = Profile.objects.get(user=existing_user)
+        if profile.display_site_explanation:
+            return redirect(settings.LOGIN_REDIRECT_URL + "?display_site_explanations=True")
+
         return redirect(settings.LOGIN_REDIRECT_URL)
 
     # Specify user data
@@ -76,4 +81,9 @@ def connexion(request):
 
     login(request, user, backend='allauth.account.auth_backends.AuthenticationBackend')
 
-    return redirect(settings.LOGIN_REDIRECT_URL)
+    # On vérifie le statut de la variable display_site_explanation du profile
+    profile = Profile.objects.get(user=user)
+    if profile.display_site_explanation:
+        return redirect(request, settings.LOGIN_REDIRECT_URL + "?display_site_explanations=True")
+
+    return redirect(request, settings.LOGIN_REDIRECT_URL)

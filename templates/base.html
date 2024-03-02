@@ -25,10 +25,15 @@
         {% endblock extrahead %}
         <script type="text/javascript" src={% static 'main.js' %} defer></script>
         <!-- Semantic UI (gère les icônes entre autre) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"
+                integrity="sha512-Xo0Jh8MsOn72LGV8kU5LsclG7SUzJsWGhXbWcYs2MAmChkQzwiW/yTQwdJ8w6UA9C6EVG18GHb/TrYpYCjyAQw=="
+                crossorigin="anonymous"
+                referrerpolicy="no-referrer"></script>
         <link rel="stylesheet"
-              type='text/css'
-              href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+              href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
+              integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
+              crossorigin="anonymous"
+              referrerpolicy="no-referrer" />
         <title>
             {% block title %}
                 Welcome!
