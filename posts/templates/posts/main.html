@@ -9,6 +9,9 @@
 {% endblock extrahead %}
 {% block content %}
     {% include 'messages.html' %}
+    {% if display_site_explanations %}
+        {% include 'posts/first_connexion.html' %}
+    {% endif %}
     <div class="ui grid">
         <div class="column">
             {% include 'posts/main_view_intitle.html' with filter_form=filter_form p_form=p_form %}
@@ -43,4 +46,5 @@
 {% block scripts %}
     {% load static %}
     <script src="{% static 'posts/js/report.js' %}"></script>
+    <script src="{% static 'posts/js/site_explanations.js' %}"></script>
 {% endblock scripts %}

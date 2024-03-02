@@ -146,6 +146,16 @@ def like_unlike_post(profile, post_id, post_obj):
     return like_added
 
 
+def never_display_explanations(profile):
+    try:
+        profile.display_site_explanation = False
+        profile.save()
+        return True
+    except Exception as e:
+        print("Une erreur est survenue au moment de cacher définitivement les explications du site à la connexion", e)
+        return False
+
+
 def report_unreport_post(profile, post_id, post_obj):
     # Add / remove target profile
     # from reported field in post_obj

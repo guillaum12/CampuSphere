@@ -4,7 +4,7 @@
         <div class="position-relative">
             <!-- Gérer les contrôles -->
             {% include 'posts/post_control_v2.html' with user=request.user post=post %}
-            <img src="{% static 'posts/img/theme-asso.jpg' %}"
+            <img src="{% if post.theme.image %} {{ post.theme.image.url }} {% else %} {% get_media_prefix %}themes/generic_theme.jpg {% endif %}"
                  alt="Thème de la proposition"
                  width="100%"
                  height="auto"

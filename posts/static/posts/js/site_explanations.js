@@ -1,27 +1,24 @@
 // Report post without reloading page
-$('.report-form').submit(function(e){
+$('.form-hide-site-explanations').submit(function(e) {
     e.preventDefault()
-  
-    const post_id = $(this).attr('id')
+    
+    const profile_id = $('.form-hide-site-explanations input[name=profile_id]').val();
     const url = $(this).attr('action')
+    console.log(url)
   
     $.ajax({
         type: 'POST',
         url: url,
         data: {
-            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
-            'post_id':post_id,
+            'csrfmiddlewaretoken': $('.form-hide-site-explanations  input[name=csrfmiddlewaretoken]').val(),
+            'profile_id': profile_id,
         },
         success: function(response) {
-            const button_str_id = '#report_button_' + post_id
-            if(response['report_added']) {
-                $(button_str_id).addClass('red')
-            } else {
-                $(button_str_id).removeClass('red')
-            }
             // Ajout du toast
             let toast = response['toast_html'];
             $('#toasts-container').append(toast);
+            // Hide the explanations
+            $("#toast-welcome-placement").remove();
         },
         error: function(response) {
             console.log('error', response)
