@@ -18,7 +18,7 @@ $('.form-hide-site-explanations').submit(function(e) {
             let toast = response['toast_html'];
             $('#toasts-container').append(toast);
             // Hide the explanations
-            $("#toast-welcome-placement").remove();
+            welcomeModal.hide();
         },
         error: function(response) {
             console.log('error', response)

@@ -18,7 +18,7 @@ app_name = "posts"
 
 urlpatterns = [
     path("", show_first_posts, name="main-post-view"),
-    path("<int:first_post_to_show>", show_selected_posts, name="following-post-view"),
+    path("<int:page_index>", show_selected_posts, name="following-post-view"),
     path("<pk>/show/", show_post, name="one-post-view"),
     path("never_display_explanations/", hide_site_explanations, name="never-display-explanations"),
     path("comment/", comment_view, name="comment-view"),

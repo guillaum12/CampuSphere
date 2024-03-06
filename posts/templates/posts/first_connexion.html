@@ -1,152 +1,147 @@
 {% load static %}
-<div id="toast-welcome-placement"
-     class="toast-container position-fixed top-0 start-0"
-     style="width:100vw;
-            height:100vh;
-            background:radial-gradient(rgb(0,0,0,0.8), rgb(255,255,255,0.7));
-            z-index:99999">
-    <div class="toast bg-white m-auto d-flex flex-column"
-         role="alert"
-         aria-live="assertive"
-         aria-atomic="true"
-         style="width:90vw;
-                height:90vh;
-                margin-top:5vh !important">
-        <div class="toast-header bg-dark" style="padding:1em !important">
-            <img src="{% static 'img/logo.png' %}"
-                 class="rounded me-3"
-                 style="height:2.5em"
-                 alt="Logo de CampuShpère">
-            <strong class="me-auto fs-3 text-white">Bienvenue !</strong>
-            <button type="button"
-                    class="btn-close btn-close-white me-1"
-                    data-bs-dismiss="toast"
-                    aria-label="Close"></button>
-        </div>
-        <div class="toast-body flex-grow-1 d-flex flex-column p-3 overflow-scroll">
-            <div class="flex-grow-1">
-                <h1>Bienvenue sur CampuShpère !</h1>
-                <div class="accordion" id="accordionWelcomeToast">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOneWelcomeAccordion">
-                            <button class="accordion-button fs-5"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseOneWelcomeToast"
-                                    aria-expanded="true"
-                                    aria-controls="collapseOneWelcomeToast">
-                                <i class="icon info circle large"></i>CampuSphère, c'est quoi ?
-                            </button>
-                        </h2>
-                        <div id="collapseOneWelcomeToast"
-                             class="accordion-collapse collapse show"
-                             aria-labelledby="headingOneWelcomeAccordion"
-                             data-bs-parent="#accordionWelcomeToast">
-                            <div class="accordion-body">
-                                <p>
-                                    <strong>CampuSphère</strong> est une plateforme visant à permettre aux étudiants et aux étudiantes de CentraleSupélec de <u>propulser leurs idées et aspirations</u> en leur offrant un espace de partage et de débat.
-                                    <br />
-                                    Qu'il s'agisse des cours à CentraleSupélec, de la vie associative ou d'initiatives en tout genre, <strong>CampuSphère</strong> est là pour offrir un <u>espace de discussion privilégié</u> afin de vous rendre acteurs et actrices des transformations de l'école.
-                                </p>
-                                <p>
-                                    Proposez, réagissez, débatez, partagez, et faites de <strong>CampuSphère</strong> votre espace de liberté et de créativité&nbsp;!
-                                </p>
+<button type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#welcomeModal">Launch demo modal</button>
+<div class="modal fade"
+     aria-labelledby="welcomeModalTitle"
+     tabindex="-1"
+     id="welcomeModal"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-dark">
+                <img src="{% static 'img/logo.png' %}"
+                     class="rounded me-3"
+                     style="height:2.5em"
+                     alt="Logo de CampuShpère">
+                <h5 class="text-white fs-3 my-0" id="welcomeModalTitle">Bienvenue !</h5>
+                <button type="button"
+                        class="btn-close btn-close-white me-1"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <h1>Bienvenue sur CampuShpère !</h1>
+                    <div class="accordion" id="accordionWelcomeToast">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOneWelcomeAccordion">
+                                <button class="accordion-button fs-5"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOneWelcomeToast"
+                                        aria-expanded="true"
+                                        aria-controls="collapseOneWelcomeToast">
+                                    <i class="icon info circle large"></i>CampuSphère, c'est quoi ?
+                                </button>
+                            </h2>
+                            <div id="collapseOneWelcomeToast"
+                                 class="accordion-collapse collapse show"
+                                 aria-labelledby="headingOneWelcomeAccordion"
+                                 data-bs-parent="#accordionWelcomeToast">
+                                <div class="accordion-body">
+                                    <p>
+                                        <strong>CampuSphère</strong> est une plateforme visant à permettre aux étudiants et aux étudiantes de CentraleSupélec de <u>propulser leurs idées et aspirations</u> en leur offrant un espace de partage et de débat.
+                                        <br />
+                                        Qu'il s'agisse des cours à CentraleSupélec, de la vie associative ou d'initiatives en tout genre, <strong>CampuSphère</strong> est là pour offrir un <u>espace de discussion privilégié</u> afin de vous rendre acteurs et actrices des transformations de l'école.
+                                    </p>
+                                    <p>
+                                        Proposez, réagissez, débatez, partagez, et faites de <strong>CampuSphère</strong> votre espace de liberté et de créativité&nbsp;!
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwoWelcomeAccordion">
-                            <button class="accordion-button collapsed fs-5"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseTwoWelcomeAccordion"
-                                    aria-expanded="false"
-                                    aria-controls="collapseTwoWelcomeAccordion">
-                                <i class="icon user secret large"></i>Anonymat
-                            </button>
-                        </h2>
-                        <div id="collapseTwoWelcomeAccordion"
-                             class="accordion-collapse collapse"
-                             aria-labelledby="headingTwoWelcomeAccordion"
-                             data-bs-parent="#accordionWelcomeToast">
-                            <div class="accordion-body">
-                                <p>
-                                    <strong>CampuSphère</strong> est une plateforme qui se veut <u>ouverte et respectueuse</u> de la liberté d'expression de chacun et chacune.
-                                    <br />
-                                    Afin de répondre à cet engagement, votre participation à <strong>CampuSphère</strong> est <u>anonyme</u>. Ainsi, vous pouvez vous exprimer librement, sans crainte de représailles ou de jugement.
-                                </p>
-                                <p>
-                                    Cependant, les propos offensants, discriminatoires ou diffamatoires ne seront pas tolérés et pourront être <u>modérés</u>. Dans le cas où vous seriez victime ou témoin de tels propos, la plateforme vous permet de <u>signaler</u> ces contenus afin qu'ils soient pris en charge par les modérateurs et modératrices.
-                                    <br />
-                                    L'anonymat est un droit, mais il ne doit pas être un prétexte pour nuire à autrui. C'est pourquoi, les modérateurs et modératrices pourront être amené/e/s à <strong>lever l'anonymat</strong> dans le cadre de la modération (un mail vous sera alors envoyé afin de vous en informer, accompagné du motif retenu).
-                                </p>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwoWelcomeAccordion">
+                                <button class="accordion-button collapsed fs-5"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseTwoWelcomeAccordion"
+                                        aria-expanded="false"
+                                        aria-controls="collapseTwoWelcomeAccordion">
+                                    <i class="icon user secret large"></i>Anonymat
+                                </button>
+                            </h2>
+                            <div id="collapseTwoWelcomeAccordion"
+                                 class="accordion-collapse collapse"
+                                 aria-labelledby="headingTwoWelcomeAccordion"
+                                 data-bs-parent="#accordionWelcomeToast">
+                                <div class="accordion-body">
+                                    <p>
+                                        <strong>CampuSphère</strong> est une plateforme qui se veut <u>ouverte et respectueuse</u> de la liberté d'expression de chacun et chacune.
+                                        <br />
+                                        Afin de répondre à cet engagement, votre participation à <strong>CampuSphère</strong> est <u>anonyme</u>. Ainsi, vous pouvez vous exprimer librement, sans crainte de représailles ou de jugement.
+                                    </p>
+                                    <p>
+                                        Cependant, les propos offensants, discriminatoires ou diffamatoires ne seront pas tolérés et pourront être <u>modérés</u>. Dans le cas où vous seriez victime ou témoin de tels propos, la plateforme vous permet de <u>signaler</u> ces contenus afin qu'ils soient pris en charge par les modérateurs et modératrices.
+                                        <br />
+                                        L'anonymat est un droit, mais il ne doit pas être un prétexte pour nuire à autrui. C'est pourquoi, les modérateurs et modératrices pourront être amené/e/s à <strong>lever l'anonymat</strong> dans le cadre de la modération (un mail vous sera alors envoyé afin de vous en informer, accompagné du motif retenu).
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingThreeWelcomeAccordion">
-                            <button class="accordion-button collapsed fs-5"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseThreeWelcomeAccordion"
-                                    aria-expanded="false"
-                                    aria-controls="collapseThreeWelcomeAccordion">
-                                <i class="icon shield alternate large"></i>Politique de la plateforme
-                            </button>
-                        </h2>
-                        <div id="collapseThreeWelcomeAccordion"
-                             class="accordion-collapse collapse"
-                             aria-labelledby="headingThreeWelcomeAccordion"
-                             data-bs-parent="#accordionWelcomeToast">
-                            <div class="accordion-body">
-                                <p>
-                                    Cette plateforme a été développée <strong>par des étudiants et étudiantes</strong> dans le cadre du pôle projet Transition Ecologique et Solidaire de CentraleSupélec. Elle est hébergée gracieusement par <strong>ViaRézo</strong> et est <u>indépendante de l'administration</u> de l'école.
-                                    <br />
-                                    Pour soumettre vos idées d'améliorations ou remarques sur la plateforme, vous pouvez contacter les administrateurs et administratrices via le formulaire de contact. Tous vos retours sont les bienvenus&nbsp;!
-                                </p>
-                                <p>Pour plus d'informations, veuillez vous référer aux mentions légales et à la faq.</p>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThreeWelcomeAccordion">
+                                <button class="accordion-button collapsed fs-5"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThreeWelcomeAccordion"
+                                        aria-expanded="false"
+                                        aria-controls="collapseThreeWelcomeAccordion">
+                                    <i class="icon shield alternate large"></i>Politique de la plateforme
+                                </button>
+                            </h2>
+                            <div id="collapseThreeWelcomeAccordion"
+                                 class="accordion-collapse collapse"
+                                 aria-labelledby="headingThreeWelcomeAccordion"
+                                 data-bs-parent="#accordionWelcomeToast">
+                                <div class="accordion-body">
+                                    <p>
+                                        Cette plateforme a été développée <strong>par des étudiants et étudiantes</strong> dans le cadre du pôle projet Transition Ecologique et Solidaire de CentraleSupélec. Elle est hébergée gracieusement par <strong>ViaRézo</strong> et est <u>indépendante de l'administration</u> de l'école.
+                                        <br />
+                                        Pour soumettre vos idées d'améliorations ou remarques sur la plateforme, vous pouvez contacter les administrateurs et administratrices via le formulaire de contact. Tous vos retours sont les bienvenus&nbsp;!
+                                    </p>
+                                    <p>Pour plus d'informations, veuillez vous référer aux mentions légales et à la faq.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div>
-                <p class="text-center fs-5">
-                    <strong>Bonne navigation&nbsp;!</strong>
-                </p>
-            </div>
-            <div class="pt-2 border-top">
-                <div class="d-flex justify-content-center my-1">
-                    <button type="button"
-                            class="btn btn-primary"
-                            data-bs-dismiss="toast"
-                            aria-label="Close">Poursuivre vers le site</button>
+                <div>
+                    <p class="text-center fs-5">
+                        <strong>Bonne navigation&nbsp;!</strong>
+                    </p>
                 </div>
-                <div class="d-flex justify-content-center my-1">
-                    <form action="{% url 'posts:never-display-explanations' %}"
-                          method="POST"
-                          class='form-hide-site-explanations'
-                          id="form-hide-site-explanations-{{ profile.id }}">
-                        {% csrf_token %}
-                        <input type="hidden" name="profile_id" value={{ profile.id }}>
-                        <button type="submit"
-                                id="btn-dont-show-again-welcome-toast-{{ profile.id }}"
-                                class="btn-dont-show-again-welcome-toast text-decoration-underline"
-                                style="border:0;
-                                       background:none">
-                            Ne plus afficher ce message lors des prochaines connexions
-                        </button>
-                    </form>
+                <div class="modal-footer d-flex flex-column">
+                    <div class="d-flex justify-content-center my-1">
+                        <button type="button"
+                                class="btn btn-primary"
+                                data-bs-dismiss="modal"
+                                aria-label="Close">Poursuivre vers le site</button>
+                    </div>
+                    <div class="d-flex justify-content-center my-1">
+                        <form action="{% url 'posts:never-display-explanations' %}"
+                              method="POST"
+                              class='form-hide-site-explanations'
+                              id="form-hide-site-explanations-{{ profile.id }}">
+                            {% csrf_token %}
+                            <input type="hidden" name="profile_id" value={{ profile.id }}>
+                            <button type="submit"
+                                    id="btn-dont-show-again-welcome-toast-{{ profile.id }}"
+                                    class="btn-dont-show-again-welcome-toast text-decoration-underline"
+                                    style="border:0;
+                                           background:none">
+                                Ne plus afficher ce message lors des prochaines connexions
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script>
-    toast = $('#toast-welcome-placement .toast').get(0);
-    welcomeToast = new bootstrap.Toast(toast, {autohide: false});
-    welcomeToast.show();
-    toast.addEventListener('hide.bs.toast', function () {
-        $('#toast-welcome-placement').remove();
-    });
+    var welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal'))
+    welcomeModal.show()
 </script>

@@ -45,3 +45,8 @@ def shorten_text(value, args):
             break
 
     return res
+
+
+@register.filter(name='times')
+def times(number):
+    return range(number)

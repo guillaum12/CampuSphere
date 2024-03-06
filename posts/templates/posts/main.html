@@ -35,6 +35,9 @@
                         {% include 'posts/post_preview.html' with post=post is_staff=is_staff request=request %}
                     {% endfor %}
                 </div>
+                <div>
+                    {% include 'posts/pagination.html' with page_index=page_index nb_pages=nb_pages next_page_index=next_page_index previous_page_index=previous_page_index %}
+                </div>
             {% else %}
                 <div class="ui fluid card text-center">
                     <p class="fs-5">Aucune proposition ne correspond à votre recherche.</p>
