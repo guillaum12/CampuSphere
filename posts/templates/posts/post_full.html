@@ -42,16 +42,14 @@
                                                padding: 0"
                                         class="d-flex flex-column align-items-center"
                                         type="button"
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#shareModal" 
-                                        data-bs-whatever="@{{post.id}}"
-                                        >
-                                        <i class="icon share large alternate"></i>
-                                        
-                                        <small>Partager</small>
-                                    </button>
-
-                                {% include "posts/modal_share.html" with post=post url=request.build_absolute_uri%}
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#shareModal"
+                                        data-bs-whatever="{{ post.id }}">
+                                    <i class="icon share large alternate"></i>
+                                    <small>Partager</small>
+                                </button>
+                                {% include "posts/modal_share.html" %}
+                                <script src="{% static "posts/js/modal_script.js" %}"></script>
                             </div>
                         </div>
                     </div>
@@ -72,8 +70,6 @@
         {% endif %}
     </div>
 </div>
-
-
 <script>
     // Permet de redimensionner l'image d'en-tête de la carte pour qu'elle ait la même hauteur que le contenu du header
     $(document).ready(function() {

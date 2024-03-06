@@ -2,18 +2,18 @@
       method="POST"
       class='comment-form'
       id='{{ post.id }}'>
-  {% csrf_token %}
-  <!-- To know the response to which post it is -->
-  <input type="hidden" name="post_id" value={{ post.id }}>
-  <div class="d-flex">
-    <textarea id="textComment{{ post.id }}"
-              name="content"
-              class="form-control flex-grow-1 me-3"
-              placeholder="Écrire un nouveau commentaire..."
-              rows="1"
-              required></textarea>
-    <button type="submit"
-            name="submit_c_form"
-            class="ui primary button flex-grow-0">Envoyer</button>
-  </div>
+    {% csrf_token %}
+    <!-- To know the response to which post it is -->
+    <input type="hidden" name="post_id" value={{ post.id }}>
+    <div class="d-flex">
+        <textarea id="textComment{{ post.id }}"
+                  name="content"
+                  class="form-control flex-grow-1 me-3"
+                  placeholder="Écrire un nouveau commentaire..."
+                  rows="1"
+                  required></textarea>
+        <button type="submit"
+                name="submit_c_form"
+                class="ui primary button flex-grow-0">Envoyer</button>
+    </div>
 </form>

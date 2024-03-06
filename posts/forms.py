@@ -21,7 +21,6 @@ class PostFilterForm(forms.Form):
     try:
         THEMES = Choice.objects.all().values_list('theme_name', 'theme_name')
         THEMES = list(THEMES)
-        print(THEMES)
         THEMES.append(('-', '---------'))
         THEMES.reverse()
         themes = forms.ChoiceField(choices=THEMES, required=False)
