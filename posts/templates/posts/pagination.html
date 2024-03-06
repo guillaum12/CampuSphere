@@ -1,0 +1,121 @@
+{% load custom_filters %}
+<ul class="pagination d-flex justify-content-center">
+    <!--Précédent-->
+    <li class="page-item {% if page_index == 0 %}disabled{% endif %}">
+        <a class="page-link"
+           href="{% url 'posts:following-post-view' previous_page_index %}#"
+           aria-label="Précédent">
+            <span aria-hidden="true">Précédent</span>
+        </a>
+    </li>
+    <!--Pages-->
+    {% if nb_pages <= 5 %}
+        {% for i in nb_pages|times %}
+            <li class="page-item {% if page_index == i %}active{% endif %}"
+                {% if page_index == i %}aria-current="page"{% endif %}>
+                <a class="page-link" href="{% url 'posts:following-post-view' i %}#">{{ i|add:1 }}</a>
+            </li>
+        {% endfor %}
+    {% else %}
+        {% if page_index == 0 %}
+            <li class="page-item active"aria-current="page">
+                <a class="page-link" href="{% url 'posts:following-post-view' 0 %}#">1</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="{% url 'posts:following-post-view' 0 %}#">2</a>
+            </li>
+            <li class="page-item disabled">
+                <a class="page-link" href="#">...</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link"
+                   href="{% url 'posts:following-post-view' nb_pages|add:-1 %}#">{{ nb_pages }}</a>
+            </li>
+        {% elif page_index == 1 %}
+            <li class="page-item">
+                <a class="page-link" href="{% url 'posts:following-post-view' 0 %}#">1</a>
+            </li>
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" href="{% url 'posts:following-post-view' 1 %}#">2</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="{% url 'posts:following-post-view' 2 %}#">3</a>
+            </li>
+            <li class="page-item disabled">
+                <a class="page-link" href="#">...</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link"
+                   href="{% url 'posts:following-post-view' nb_pages|add:-1 %}#">{{ nb_pages }}</a>
+            </li>
+        {% elif page_index == nb_pages|add:-2 %}
+            <li class="page-item">
+                <a class="page-link" href="{% url 'posts:following-post-view' 0 %}#">1</a>
+            </li>
+            <li class="page-item disabled">
+                <a class="page-link" href="#">...</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link"
+                   href="{% url 'posts:following-post-view' nb_pages|add:-3 %}#">{{ nb_pages|add:-2 }}</a>
+            </li>
+            <li class="page-item active" aria-current="page">
+                <a class="page-link"
+                   href="{% url 'posts:following-post-view' nb_pages|add:-2 %}#">{{ nb_pages|add:-1 }}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link"
+                   href="{% url 'posts:following-post-view' nb_pages|add:-1 %}#">{{ nb_pages }}</a>
+            </li>
+        {% elif page_index == nb_pages|add:-1 %}
+            <li class="page-item">
+                <a class="page-link" href="{% url 'posts:following-post-view' 0 %}#">1</a>
+            </li>
+            <li class="page-item disabled">
+                <a class="page-link" href="#">...</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link"
+                   href="{% url 'posts:following-post-view' nb_pages|add:-2 %}#">{{ nb_pages|add:-1 }}</a>
+            </li>
+            <li class="page-item active" aria-current="page">
+                <a class="page-link"
+                   href="{% url 'posts:following-post-view' nb_pages|add:-1 %}#">{{ nb_pages }}</a>
+            </li>
+        {% else %}
+            <li class="page-item">
+                <a class="page-link" href="{% url 'posts:following-post-view' 0 %}#">1</a>
+            </li>
+            <li class="page-item disabled">
+                <a class="page-link" href="#">...</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link"
+                   href="{% url 'posts:following-post-view' page_index|add:-1 %}#">{{ page_index }}</a>
+            </li>
+            <li class="page-item active" aria-current="page">
+                <a class="page-link"
+                   href="{% url 'posts:following-post-view' page_index %}#">{{ page_index|add:1 }}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link"
+                   href="{% url 'posts:following-post-view' page_index|add:1 %}#">{{ page_index|add:2 }}</a>
+            </li>
+            <li class="page-item disabled">
+                <a class="page-link" href="#">...</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link"
+                   href="{% url 'posts:following-post-view' nb_pages|add:-1 %}#">{{ nb_pages }}</a>
+            </li>
+        {% endif %}
+    {% endif %}
+    <!--Suivant-->
+    <li class="page-item {% if page_index == nb_pages|add:-1 %}disabled{% endif %}">
+        <a class="page-link"
+           href="{% url 'posts:following-post-view' next_page_index %}#"
+           aria-label="Suivant">
+            <span aria-hidden="true">Suivant</span>
+        </a>
+    </li>
+</ul>

@@ -1,4 +1,5 @@
 from time import time
+from math import ceil
 from distutils.dist import command_re
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -40,7 +41,7 @@ def show_first_posts(request):
 
 
 @login_required
-def show_selected_posts(request, first_post_to_show):
+def show_selected_posts(request, page_index):
     """
     Shows all posts considering the filters.
     View url: /posts/
@@ -48,9 +49,15 @@ def show_selected_posts(request, first_post_to_show):
     # qs = Post.objects.get_related_posts(user=request.user)
     filter_form = PostFilterForm(request.GET)
 
+    nb_post_per_page = 10
+
     post_to_show = find_post_to_show(
-        request.user, filter_form, first_post=first_post_to_show
+        request.user, filter_form,
     )
+    nb_pages = ceil(len(post_to_show) / nb_post_per_page)
+    if page_index >= nb_pages:
+        page_index = 0
+    post_to_show = post_to_show[page_index * nb_post_per_page: (page_index + 1) * nb_post_per_page]
 
     profile = get_request_user_profile(request.user)
 
@@ -66,8 +73,6 @@ def show_selected_posts(request, first_post_to_show):
             messages.ERROR,
             "Votre profil a été banni.",
         )
-
-    next_first_post_to_show = first_post_to_show + 10
 
     # Récupération du thème actuel dans la requête get
     if Choice.objects.filter(theme_name=request.GET.get("themes")).exists():
@@ -86,7 +91,10 @@ def show_selected_posts(request, first_post_to_show):
         "profile": profile,
         "p_form": PostCreateModelForm(),
         "filter_form": filter_form,
-        "next_first_post_to_show": next_first_post_to_show,
+        "nb_pages": nb_pages,
+        "page_index": page_index,
+        "next_page_index": min(page_index + 1, nb_pages - 1),
+        "previous_page_index": max(page_index - 1, 0),
         "theme_path": theme_path,
         "display_site_explanations": display_site_explanations,
     }

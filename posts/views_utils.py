@@ -11,7 +11,7 @@ def filter_by_new_posts(post_to_show, user):
     return [post for post in post_to_show if profile not in post.powered.all()]
 
 
-def find_post_to_show(user, filter_form, first_post):
+def find_post_to_show(user, filter_form):
 
     post_to_show = Post.objects.filter(is_post=True).order_by('-created')
 
@@ -45,8 +45,7 @@ def find_post_to_show(user, filter_form, first_post):
             theme_obj = Choice.objects.get(theme_name=theme)
             post_to_show = [post for post in post_to_show if post.theme == theme_obj]
 
-        nb_post_per_page = 10
-        return post_to_show[first_post:first_post + nb_post_per_page]
+        return post_to_show
 
 
 def add_post_if_submitted(request, profile):
