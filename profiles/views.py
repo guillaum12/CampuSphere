@@ -33,6 +33,9 @@ def show_profile_view(request, id):
     Shows profile by pk.
     View url: /profiles/show_profile/<int:id>/
     """
+    # Check if profile id is current user's id and url is /profiles/show_profile/<int:id>/
+    if id == request.user.id and request.path == f"/profiles/show_profile/{id}/":
+        return redirect("profiles:my-profile-view")
 
     profile = get_object_or_404(Profile, id=id)
 
@@ -41,6 +44,7 @@ def show_profile_view(request, id):
     }
 
     return render(request, "profiles/show_profile.html", context)
+
 
 @login_required
 def my_profile_view(request):
@@ -63,6 +67,7 @@ def toggle_ban_view(request, profile_id):
     profile.save()
 
     return redirect_back(request)
+
 
 @login_required
 def received_invites_view(request):

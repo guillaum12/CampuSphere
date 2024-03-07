@@ -1,16 +1,24 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
+{% load static %}
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'profiles/css/profile.css' %}">
+{% endblock extrahead %}
 {% block title %}
     Profil
 {% endblock title %}
 {% block content %}
     {% include "messages.html" with messages=messages %}
     <!-- Modal End -->
-    <div class='ui grid'>
-        <br>
-        <div class='row'>
-            <div class='four wide column'>
-                <img class='ui medium rounded image' src='{{ profile.avatar.url }}'>
+    <div class='d-flex flex-md-row flex-column'>
+        <div class="p-2 d-flex flex-column flex-sm-row flex-md-column"
+             style='flex:1'>
+            <div class="p-3 d-flex justify-content-center">
+                <img class='rounded image'
+                     id="main-avatar-profile"
+                     src='{{ profile.avatar.url }}'>
+            </div>
+            <div class="p-3 flex-fill">
                 <h1>{% include 'posts/identity.html' with profile=profile request=request without_avatar=True %}</h1>
                 {% if request.user.is_staff %}
                     {% if profile.category == "etudiant" %}
@@ -29,11 +37,11 @@
                 {% endif %}
                 <div class='ui vertical fluid menu'>
                     <div class='item'>
-                        Posts
+                        Publications postées
                         <div class='ui label'>{{ profile.posts.all.count }}</div>
                     </div>
                     <div class='item'>
-                        Likes Given
+                        Favoris
                         <div class='ui label'>{{ profile.get_votes_given_count }}</div>
                     </div>
                     <!--
@@ -52,15 +60,15 @@
                     -->
                 </div>
             </div>
-            <div class='twelve wide column'>
-                {% if profile.posts.only_posts %}
-                    {% for post in profile.posts.only_posts %}
-                        {% include 'posts/post.html' with post=post is_staff=is_staff request=request %}
-                    {% endfor %}
-                {% else %}
-                    <h1>Vous n'avez encore rien posté.</h1>
-                {% endif %}
-            </div>
+        </div>
+        <div class="p-2" style='flex:3;'>
+            {% if profile.posts.only_posts %}
+                {% for post in profile.posts.only_posts %}
+                    {% include 'posts/post.html' with post=post is_staff=is_staff request=request %}
+                {% endfor %}
+            {% else %}
+                <h1>Vous n'avez encore rien posté.</h1>
+            {% endif %}
         </div>
     </div>
 {% endblock content %}

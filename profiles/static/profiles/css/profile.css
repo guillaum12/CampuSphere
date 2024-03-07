@@ -1,0 +1,9 @@
+#main-avatar-profile{
+    max-width:100%;
+}
+
+@media (max-width: 768px) {
+    #main-avatar-profile{
+        max-width:200px;
+    }
+}

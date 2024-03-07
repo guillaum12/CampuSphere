@@ -1,0 +1,14 @@
+<form action="{% url 'posts:switch-report-view' %}"
+      method="POST"
+      class='report-form d-inline-block'
+      id='{{ comment.id }}'>
+  {% csrf_token %}
+  <input type="hidden" name="post_id" value={{ comment.id }}>
+  <button type="submit"
+          id="report_button_{{ comment.id }}"
+          class="btn {% if profile in comment.reported.all %}red{% endif %}">
+    <!-- Cet id est utilisé dans report.js -->
+    <i class="icon exclamation triangle"></i>
+    <small class="fw-bold d-none d-md-inline">Signaler</small>
+  </button>
+</form>

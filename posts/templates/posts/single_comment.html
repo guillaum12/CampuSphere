@@ -33,9 +33,17 @@
                     <i class="icon comment"></i><small class="fw-bold d-none d-md-inline">Répondre</small>
                 </button>
                 <button class="btn">
-                    <i class="icon large share alternate"></i><small class="fw-bold d-none d-md-inline">Partager</small>
-                </button>
-                {% include 'posts/comment_control.html' %}
+                    <i class="icon share alternate"></i><small class="fw-bold d-none d-md-inline">Partager</small>
+                </button class="btn">
+                {% if user == comment.author.user or user.is_staff %}
+                    <button class="btn">
+                        <i class="icon edit"></i><small class="fw-bold d-none d-md-inline">Éditer</small>
+                    </button>
+                    <a class="btn" href="{% url 'posts:post-delete' comment.pk %}">
+                        <i class="icon trash alternate outline"></i><small class="fw-bold d-none d-md-inline">Supprimer</small>
+                    </a>
+                {% endif %}
+                {% include 'posts/report_comment.html' with comment=comment profile=profile %}
             </div>
             <div class="collapse reply-container" id="collapseReply{{ comment.id }}">
                 {% include 'posts/comment_form.html' with post=comment %}

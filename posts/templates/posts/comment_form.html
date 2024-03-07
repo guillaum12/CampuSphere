@@ -9,11 +9,14 @@
     <textarea id="textComment{{ post.id }}"
               name="content"
               class="form-control flex-grow-1 me-3"
-              placeholder="Écrire un nouveau commentaire..."
+              placeholder="Nouveau commentaire..."
               rows="1"
               required></textarea>
     <button type="submit"
             name="submit_c_form"
-            class="ui primary button flex-grow-0">Envoyer</button>
+            class="ui primary button align-self-center">
+      <i class="icon paper plane d-sm-none mx-0"></i>
+      <p class="d-none d-sm-inline-block">Envoyer</p>
+    </button>
   </div>
 </form>
