@@ -1,5 +1,5 @@
 // Report post without reloading page
-$('.form-hide-site-explanations').submit(function(e) {
+$(document).on('submit', '.form-hide-site-explanations', function(e){
     e.preventDefault()
     
     const profile_id = $('.form-hide-site-explanations input[name=profile_id]').val();

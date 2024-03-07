@@ -1,5 +1,5 @@
 // Report post without reloading page
-$('.report-form').submit(function(e){
+$(document).on('submit', '.report-form', function(e){
     e.preventDefault()
   
     const post_id = $(this).attr('id')

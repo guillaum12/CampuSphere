@@ -1,5 +1,5 @@
 // Like post without reloading page
-$('.like-form').submit(function(e){
+$(document).on('submit', '.like-form', function(e){
   e.preventDefault()
 
   const post_id = $(this).attr('id')

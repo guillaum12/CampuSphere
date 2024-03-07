@@ -2,7 +2,12 @@
      id="custom-comment-{{ comment.id }}">
     <!-- En-tête du commentaire -->
     <div class="comment-header">
-        {% if comment.author.id == post.author.id %}
+        {% if comment.author == request.user.profile %}
+            <a href="{% url 'profiles:show-profile-view' comment.author.id %}">
+                <img class="ui avatar image" src={{ comment.author.avatar.url }}>
+                <strong>Vous</strong>
+            </a>
+        {% elif comment.author.id == post.author.id %}
             <a href="{% url 'profiles:show-profile-view' comment.author.id %}">
                 <img class="ui avatar image" src={{ comment.author.avatar.url }}>
                 <strong>Auteur·ice</strong>
@@ -32,10 +37,7 @@
                         aria-controls="collapseReply{{ comment.id }}">
                     <i class="icon comment"></i><small class="fw-bold d-none d-md-inline">Répondre</small>
                 </button>
-                <button class="btn">
-                    <i class="icon share alternate"></i><small class="fw-bold d-none d-md-inline">Partager</small>
-                </button class="btn">
-                {% if user == comment.author.user or user.is_staff %}
+                {% if request.user == comment.author.user or request.user.is_staff %}
                     <button class="btn">
                         <i class="icon edit"></i><small class="fw-bold d-none d-md-inline">Éditer</small>
                     </button>

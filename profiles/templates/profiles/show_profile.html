@@ -70,6 +70,7 @@
                 {% for post in profile.posts.only_posts %}
                     {% include 'posts/post_preview_long.html' with post=post is_staff=is_staff request=request %}
                 {% endfor %}
+                {% include "posts/modal_share.html" %}
             {% else %}
                 <h1>Vous n'avez encore rien posté.</h1>
             {% endif %}
