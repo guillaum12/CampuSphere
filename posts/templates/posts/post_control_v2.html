@@ -14,6 +14,7 @@
     <ul>
         <li>
             <a href="#"
+<<<<<<< HEAD
                data-bs-toggle="modal"
                data-bs-target="#shareModal{{ post.id }}"><i class="icon large share alternate"></i>Partager</a>
         </li>
@@ -59,4 +60,25 @@
     </li>
 {% endif %}
 </ul>
+=======
+               type="button"
+               data-bs-toggle="modal"
+               data-bs-target="#shareModal"
+               data-bs-whatever="{{ post.id }}"><i class="icon large share alternate"></i>Partager</a>
+        </li>
+        <li>{% include 'posts/report_v2.html' with post=post profile=profile %}</li>
+        {% if user == post.author.user or user.is_staff %}
+            <li>
+                <a href="{% url 'posts:post-update' post.pk %}">
+                    <i class="icon large edit"></i>Modifier
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'posts:post-delete' post.pk %}">
+                    <i class="icon large trash alternate outline"></i>Supprimer
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+>>>>>>> 3e1306f47a6ee330f9a0f330caa32600bef8559f
 </div>

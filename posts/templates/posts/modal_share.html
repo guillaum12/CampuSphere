@@ -1,42 +1,41 @@
 {% load static %}
-<div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+<div class="modal fade"
+     id="shareModal"
+     tabindex="-1"
+     aria-labelledby="shareModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5" id="shareModalLabel">Partager</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-
-            <div class="d-flex align-items-center justify-content-evenly">
-                <a href="{{ post.whatsapp_link }}"
-                   target="_blank"
-                   data-action="share/whatsapp/share">
-                    <img src="{% static 'posts/img/whatsapp.png' %}" alt="Whatsapp" class="img-fluid" width="40px">
-                </a>
-                
-                <script async 
-                src="https://telegram.org/js/telegram-widget.js?22" 
-                data-telegram-share-url="{{url}}" 
-                data-comment="Viens donner ton avis sur CampuSphère !" 
-                data-size="large"></script>
+            <div class="modal-header text-center">
+                <h1 class="modal-title fs-5 flex-fill text-center" id="shareModalLabel">Partager</h1>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
             </div>
-
-            {% comment %} <form>
-            <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Recipient:</label>
-                <input type="text" class="form-control" id="recipient-name">
+            <div class="modal-body">
+                <div class="d-flex align-items-center justify-content-evenly">
+                    <a href=""
+                       id="whatsapp_link"
+                       target="_blank"
+                       data-action="share/whatsapp/share">
+                        <img src="{% static 'posts/img/whatsapp.png' %}"
+                             alt="Whatsapp"
+                             class="img-fluid"
+                             width="40px">
+                    </a>
+                    <a href=""
+                       id="telegram_link"
+                       target="_blank"
+                       data-action="share/telegram/share">
+                        <img src="{% static 'posts/img/telegram.png' %}"
+                             alt="Telegram"
+                             class="img-fluid"
+                             width="65px">
+                    </a>
+                    
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="message-text" class="col-form-label">Message:</label>
-                <textarea class="form-control" id="message-text"></textarea>
-            </div>
-            </form> {% endcomment %}
-        </div>
-        {% comment %} <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Send message</button>
-        </div> {% endcomment %}
         </div>
     </div>
-    </div>
+</div>

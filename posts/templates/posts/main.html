@@ -35,6 +35,8 @@
                         {% include 'posts/post_preview.html' with post=post is_staff=is_staff request=request %}
                     {% endfor %}
                 </div>
+                {% include "posts/modal_share.html" %}
+                <script src="{% static "posts/js/modal_script.js" %}"></script>
                 <div>
                     {% include 'posts/pagination.html' with page_index=page_index nb_pages=nb_pages next_page_index=next_page_index previous_page_index=previous_page_index %}
                 </div>
