@@ -1,0 +1,66 @@
+{% load custom_filters %}
+{% load static %}
+<div class="ui fluid m-2 d-flex justify-content-center custom-post-card-parent">
+    <!-- Gérer les contrôles -->
+    <div class="card custom-post-card">
+        <div class="d-flex flex-row">
+            <div class="rounded-start"
+                 style="background-image:url('{% if post.theme.image %} {{ post.theme.image.url }} {% else %} {% get_media_prefix %}themes/generic_theme.jpg {% endif %}');
+                        background-size:auto 100%;
+                        background-position:center;
+                        flex:2;
+                        min-width:100px">
+                <!-- Image de la carte -->
+                <a href="{% url 'posts:one-post-view' post.id %}"
+                   class="d-block w-100 h-100">
+                    <!--<img src="{% if post.theme.image %} {{ post.theme.image.url }} {% else %} {% get_media_prefix %}themes/generic_theme.jpg {% endif %}"
+     class="img-fluid rounded-start"
+     alt="theme" />-->
+                </a>
+            </div>
+            <div style="flex:7;">
+                {% include 'posts/post_control_v2.html' with user=request.user post=post %}
+                <div class="card-body d-flex flex-column">
+                    <div class="flex-grow-1">
+                        <!-- En-tête de la carte -->
+                        <h5 class="card-title my-0">
+                            <a href="{% url 'posts:one-post-view' post.id %}">{{ post.title|safe }}</a>
+                        </h5>
+                        <p>
+                            <small>
+                                {% include 'posts/identity.html' with profile=post.author request=request %}
+                                ,
+                                <i class="fst-italic">il y a {{ post.created|timesince }}</i>
+                            </small>
+                        </p>
+                        <!-- Description de la carte -->
+                        {% if post.content != "" %}
+                            <p class="card-text">{{ post.content|shorten_text:"100,3"|safe }}</p>
+                        {% else %}
+                            <p class="card-text fst-italic">Aucune description n'a été rédigée...</p>
+                        {% endif %}
+                    </div>
+                    <!-- Boutons pour intéragir avec la carte (favori, réagir, voir le post complet) -->
+                    <div class="flex-grow-0 my-1">
+                        <hr />
+                        <div class="container">
+                            <!--"d-flex align-items-center justify-content-evenly mt-2">-->
+                            <div class="row">
+                                <div class="col-6 text-center d-flex justify-content-center align-items-center">
+                                    {% include 'posts/like.html' with post=post profile=profile %}
+                                </div>
+                                <div class="col-6 text-center d-flex justify-content-center align-items-center">
+                                    <a href="{% url 'posts:one-post-view' post.id %}"
+                                       class="d-flex flex-column align-items-center">
+                                        <i class="icon eye large d-block"></i>
+                                        <small class="mt-1" style="line-height: 1em">Voir le post complet</small>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -5,16 +5,12 @@
       id='{{ post.id }}'>
     {% csrf_token %}
     <input type="hidden" name="post_id" value={{ post.id }}>
-    <button type="submit"
-            style="border: none;
-                   background: none;
-                   padding: 0"
-            class="d-flex flex-column align-items-center">
+    <button type="submit" class="d-flex flex-column align-items-center btn">
         <!-- Cet id est utilisé dans like.js -->
         <i id='like_icon_{{ post.id }}'
-           class="star large {% if profile not in post.liked.all %}black{% else %}yellow{% endif %} icon d-block"></i>
+           class="star large {% if request.user.profile not in post.liked.all %}black{% else %}yellow{% endif %} icon d-block"></i>
         <small class="mt-1" style="line-height:1em;">
-            {% if profile not in post.liked.all %}
+            {% if request.user.profile not in post.liked.all %}
                 Ajouter aux favoris
             {% else %}
                 Favori
@@ -25,4 +21,3 @@
 -->
     </button>
 </form>
-<script src="{% static 'posts/js/like.js' %}"></script>

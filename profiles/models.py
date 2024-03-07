@@ -90,6 +90,11 @@ class Profile(models.Model):
 
         return total_liked
 
+    def get_nb_favorite_posts(self):
+        from posts.models import Like
+        favorites = Like.objects.filter(profile=self)
+        return len(favorites)
+
     ###############################
 
 

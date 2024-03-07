@@ -38,11 +38,15 @@
                 <div class='ui vertical fluid menu'>
                     <div class='item'>
                         Publications postées
-                        <div class='ui label'>{{ profile.posts.all.count }}</div>
+                        <span class="badge bg-secondary">{{ profile.posts.only_posts.all.count }}</span>
+                    </div>
+                    <div class='item'>
+                        Commentaires postés
+                        <span class="badge bg-secondary">{{ profile.posts.all.count|subtract:profile.posts.only_posts.all.count }}</span>
                     </div>
                     <div class='item'>
                         Favoris
-                        <div class='ui label'>{{ profile.get_votes_given_count }}</div>
+                        <span class="badge bg-secondary">{{ profile.get_nb_favorite_posts }}</span>
                     </div>
                     <!--
                     <div class='item'>
@@ -64,7 +68,7 @@
         <div class="p-2" style='flex:3;'>
             {% if profile.posts.only_posts %}
                 {% for post in profile.posts.only_posts %}
-                    {% include 'posts/post.html' with post=post is_staff=is_staff request=request %}
+                    {% include 'posts/post_preview_long.html' with post=post is_staff=is_staff request=request %}
                 {% endfor %}
             {% else %}
                 <h1>Vous n'avez encore rien posté.</h1>
@@ -72,3 +76,8 @@
         </div>
     </div>
 {% endblock content %}
+{% block scripts %}
+    {% load static %}
+    <script src="{% static 'posts/js/like.js' %}"></script>
+    <script src="{% static 'posts/js/report.js' %}"></script>
+{% endblock scripts %}

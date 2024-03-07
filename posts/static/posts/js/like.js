@@ -3,7 +3,6 @@ $('.like-form').submit(function(e){
   e.preventDefault()
 
   const post_id = $(this).attr('id')
-
   const url = $(this).attr('action')
 
   $.ajax({

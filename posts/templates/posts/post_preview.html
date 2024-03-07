@@ -36,8 +36,10 @@
                 <div class="container">
                     <!--"d-flex align-items-center justify-content-evenly mt-2">-->
                     <div class="row">
-                        <div class="col-6">{% include 'posts/like.html' with post=post profile=profile %}</div>
-                        <div class="col-6 text-center">
+                        <div class="col-6 text-center d-flex justify-content-center align-items-center">
+                            {% include 'posts/like.html' with post=post profile=profile %}
+                        </div>
+                        <div class="col-6 text-center d-flex justify-content-center align-items-center">
                             <a href="{% url 'posts:one-post-view' post.id %}"
                                class="d-flex flex-column align-items-center">
                                 <i class="icon eye large d-block"></i>

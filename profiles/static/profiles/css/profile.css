@@ -7,3 +7,131 @@
         max-width:200px;
     }
 }
+
+.custom-post-card {
+    position: relative;
+    color: black;
+    transition: 0.12s ease-in-out;
+    width: 100%;
+}
+
+.custom-post-card:hover {
+    box-shadow: 0 0 15px rgba(100, 100, 100, 0.6);
+}
+
+.custom-post-card .card-img-top {
+    height: 100px !important;
+}
+
+.custom-post-card .card-title {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.custom-post-card .card-body {
+    padding-top: 5px;
+}
+
+.custom-post-card hr {
+    margin: 0 0 0.5em 0;
+}
+
+.custom-post-card a {
+    color: black;
+}
+
+.custom-post-card i.icon {
+    margin:0;
+}
+
+.control-display-button {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 25px;
+    padding: 5px 0px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: var(--bs-card-inner-border-radius);
+    border: 0;
+    transition: 0.12s ease-in-out;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+}
+
+.control-display-button:hover {
+    background-color: rgba(0, 0, 0, 1);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.control-display-button[aria-expanded='true'] {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.control-display-button i.icon {
+    margin: 0;
+}
+
+.collapsePostViewControl {
+    position: absolute;
+    top: 4px;
+    right: calc(4px + 25px);
+    width: auto;
+    background: white;
+    border-radius: 5px 0 5px 5px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.collapsePostViewControl li button, .collapsePostViewControl li a {
+    margin: 0.5em 1.2em 0.5em 0.5em;
+    display: block;
+    color:black;
+    transition:color .1s;
+}
+
+.collapsePostViewControl li:hover button, .collapsePostViewControl li:hover a {
+    color:var(--bs-blue);
+}
+
+.collapsePostViewControl li i.icon {
+    margin-right: 0.3em;
+}
+
+.collapsePostViewControl li:not(:last-child)::after {
+    content: '';
+    width: 100%;
+    height: 1px;
+    display: block;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.report-form button[type="submit"]:hover, .report-form button[type="submit"].red{
+    color:red !important;
+}
+
+.breadcrumb a {
+    color: black;
+}
+
+/* Full post style */
+
+.custom-full-post-card .full-post-main-interactions button{
+    transition: color .1s;
+}
+
+.custom-full-post-card .full-post-main-interactions button:hover{
+    color:var(--bs-blue);
+}
+
+.custom-full-post-card .header>div:first-child {
+    flex:2;
+}
+
+.custom-full-post-card .header-content {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.6);
+}
+
+.custom-full-post-card .header>div:last-child {
+    flex:3;
+}
