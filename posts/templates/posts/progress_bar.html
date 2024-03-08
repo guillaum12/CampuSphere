@@ -4,18 +4,18 @@
     <link rel="stylesheet" href="{% static 'posts/css/progress_bar.css' %}">
 {% endblock extrahead %}
 <div id="progress_zone_{{ post.id }}"
+     class="px-2 flex-grow-1 my-auto"
      style="display:{% if post|user_post_power:user %}block{% else %}none{% endif %}">
-    <div class="progress-bar-container">
+    <div class="progress-bar-container mx-auto">
         <div class="progress-bar"
              id="progress_bar_{{ post.id }}"
              style="width: {{ post.progress|to_int }}%;
                     background: {{ post.get_color_progress }}"></div>
     </div>
     <div>
-        <br>
-        <p>
+        <p class="text-center">
             <span id="post_progress_{{ post.id }}">{{ post.progress }}</span>%
-            avec <span id="voter_number_{{ post.id }}">{{ post.voter_number }}</span> avis.
+            sur <span id="voter_number_{{ post.id }}">{{ post.voter_number }}</span> avis.
         </p>
     </div>
 </div>

@@ -3,91 +3,108 @@
 {% block extrahead %}
     <link rel="stylesheet" href="{% static 'posts/css/feedback.css' %}">
 {% endblock extrahead %}
-<form action="{% url 'posts:switch-power-view' %}"
-      method="POST"
-      class='power-form d-flex flex-column align-items-center'>
-    {% csrf_token %}
-    <input type="hidden" name="post_id" value={{ post.id }}>
-    <div class="feedback">
-        <label class="angry">
-            <input type="radio"
-                   value="0"
-                   name="feedback{{ post.id }}"
-                   {% if power == "0" %}checked{% endif %} />
-            <div>
-                <svg class="eye left">
-                    <use xlink:href="#eye">
-                </svg>
-                <svg class="eye right">
-                    <use xlink:href="#eye">
-                </svg>
-                <svg class="mouth">
-                    <use xlink:href="#mouth">
-                </svg>
+<div class="develop-vote-button position-relative mx-auto {% if power != -1 %}power-saved{% endif %}"
+     id="developVoteButton{{ post.id }}">
+    <button type="button"
+            class="w-100 h-100"
+            data-bs-toggle="collapse"
+            data-bs-target="#powerCollapse{{ post.id }}"
+            aria-expanded="false"
+            aria-controls="powerCollapse{{ post.id }}">
+        <img src="{% static 'posts/img/vote.png' %}"
+             alt="Voter"
+             width="34px"
+             height="34px">
+    </button>
+    <div class="collapse position-absolute power-collapse"
+         id="powerCollapse{{ post.id }}">
+        <form action="{% url 'posts:switch-power-view' %}"
+              method="POST"
+              class='power-form d-flex flex-column align-items-center'>
+            {% csrf_token %}
+            <input type="hidden" name="post_id" value={{ post.id }}>
+            <div class="feedback d-flex flex-column-reverse">
+                <label class="angry">
+                    <input type="radio"
+                           value="0"
+                           name="feedback{{ post.id }}"
+                           {% if power == "0" %}checked{% endif %} />
+                    <div>
+                        <svg class="eye left">
+                            <use xlink:href="#eye">
+                        </svg>
+                        <svg class="eye right">
+                            <use xlink:href="#eye">
+                        </svg>
+                        <svg class="mouth">
+                            <use xlink:href="#mouth">
+                        </svg>
+                    </div>
+                </label>
+                <label class="sad">
+                    <input type="radio"
+                           value="1"
+                           name="feedback{{ post.id }}"
+                           {% if power == "1" %}checked{% endif %} />
+                    <div>
+                        <svg class="eye left">
+                            <use xlink:href="#eye">
+                        </svg>
+                        <svg class="eye right">
+                            <use xlink:href="#eye">
+                        </svg>
+                        <svg class="mouth">
+                            <use xlink:href="#mouth">
+                        </svg>
+                    </div>
+                </label>
+                <label class="ok">
+                    <input type="radio"
+                           value="2"
+                           name="feedback{{ post.id }}"
+                           {% if power == "2" %}checked{% endif %} />
+                    <div></div>
+                </label>
+                <label class="good">
+                    <input type="radio"
+                           value="3"
+                           name="feedback{{ post.id }}"
+                           {% if power == "3" %}checked{% endif %} />
+                    <div>
+                        <svg class="eye left">
+                            <use xlink:href="#eye">
+                        </svg>
+                        <svg class="eye right">
+                            <use xlink:href="#eye">
+                        </svg>
+                        <svg class="mouth">
+                            <use xlink:href="#mouth">
+                        </svg>
+                    </div>
+                </label>
+                <label class="happy">
+                    <input type="radio"
+                           value="4"
+                           name="feedback{{ post.id }}"
+                           {% if power == "4" %}checked{% endif %} />
+                    <div>
+                        <svg class="eye left">
+                            <use xlink:href="#eye">
+                        </svg>
+                        <svg class="eye right">
+                            <use xlink:href="#eye">
+                        </svg>
+                    </div>
+                </label>
             </div>
-        </label>
-        <label class="sad">
-            <input type="radio"
-                   value="1"
-                   name="feedback{{ post.id }}"
-                   {% if power == "1" %}checked{% endif %} />
-            <div>
-                <svg class="eye left">
-                    <use xlink:href="#eye">
-                </svg>
-                <svg class="eye right">
-                    <use xlink:href="#eye">
-                </svg>
-                <svg class="mouth">
-                    <use xlink:href="#mouth">
-                </svg>
-            </div>
-        </label>
-        <label class="ok">
-            <input type="radio"
-                   value="2"
-                   name="feedback{{ post.id }}"
-                   {% if power == "2" %}checked{% endif %} />
-            <div></div>
-        </label>
-        <label class="good">
-            <input type="radio"
-                   value="3"
-                   name="feedback{{ post.id }}"
-                   {% if power == "3" %}checked{% endif %} />
-            <div>
-                <svg class="eye left">
-                    <use xlink:href="#eye">
-                </svg>
-                <svg class="eye right">
-                    <use xlink:href="#eye">
-                </svg>
-                <svg class="mouth">
-                    <use xlink:href="#mouth">
-                </svg>
-            </div>
-        </label>
-        <label class="happy">
-            <input type="radio"
-                   value="4"
-                   name="feedback{{ post.id }}"
-                   {% if power == "4" %}checked{% endif %} />
-            <div>
-                <svg class="eye left">
-                    <use xlink:href="#eye">
-                </svg>
-                <svg class="eye right">
-                    <use xlink:href="#eye">
-                </svg>
-            </div>
-        </label>
+            <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 4" id="eye">
+                <path d="M1,1 C1.83333333,2.16666667 2.66666667,2.75 3.5,2.75 C4.33333333,2.75 5.16666667,2.16666667 6,1"></path>
+                </symbol>
+                <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 7" id="mouth">
+                <path d="M1,5.5 C3.66666667,2.5 6.33333333,1 9,1 C11.6666667,1 14.3333333,2.5 17,5.5"></path>
+                </symbol>
+            </svg>
+        </form>
     </div>
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-        <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 4" id="eye">
-        <path d="M1,1 C1.83333333,2.16666667 2.66666667,2.75 3.5,2.75 C4.33333333,2.75 5.16666667,2.16666667 6,1"></path>
-        </symbol>
-        <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 7" id="mouth">
-        <path d="M1,5.5 C3.66666667,2.5 6.33333333,1 9,1 C11.6666667,1 14.3333333,2.5 17,5.5"></path>
-        </symbol>
-    </svg>
-</form>
+</div>

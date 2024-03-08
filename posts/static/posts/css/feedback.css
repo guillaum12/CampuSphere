@@ -14,17 +14,20 @@
   --hover: #454456;
   --hover-shadow-top: #59586b;
   margin: 0;
-  padding: 0;
+  padding: 7px;
   list-style: none;
   display: flex;
+  background-color:rgba(240,240,240,1);
+  border-radius:25px;
+  border:3px solid rgba(30,30,30,0.9);
 }
 .feedback label {
   position: relative;
   transition: transform 0.3s;
   cursor: pointer;
 }
-.feedback label:not(:last-child) {
-  margin-right: 20px;
+.feedback label:not(:first-child) {
+  margin-bottom: 10px;
 }
 .feedback label input {
   -webkit-appearance: none;
@@ -34,8 +37,8 @@
   border: none;
   display: block;
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   left: 0;
   top: 0;
   margin: 0;
@@ -47,17 +50,17 @@
   -webkit-tap-highlight-color: transparent;
 }
 .feedback label div {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   position: relative;
   transform: perspective(240px) translateZ(4px);
 }
 .feedback label div svg, .feedback label div:before, .feedback label div:after {
   display: block;
   position: absolute;
-  left: var(--l, 9px);
-  top: var(--t, 13px);
-  width: var(--w, 8px);
+  left: var(--l, 7px);
+  top: var(--t, 10px);
+  width: var(--w, 6px);
   height: var(--h, 1px);
   transform: rotate(var(--r, 0deg)) scale(var(--sc, 1)) translateZ(0);
 }
@@ -71,19 +74,19 @@
 }
 .feedback label div svg.eye {
   --s: var(--e, var(--normal-eye));
-  --t: 17px;
-  --w: 7px;
-  --h: 4px;
+  --t: 13px;
+  --w: 6px;
+  --h: 3px;
 }
 .feedback label div svg.eye.right {
-  --l: 23px;
+  --l: 17px;
 }
 .feedback label div svg.mouth {
   --s: var(--m, var(--normal-mouth));
-  --l: 11px;
-  --t: 23px;
-  --w: 18px;
-  --h: 7px;
+  --l: 9px;
+  --t: 17px;
+  --w: 14px;
+  --h: 6px;
 }
 .feedback label div:before, .feedback label div:after {
   content: "";
@@ -102,7 +105,7 @@
   --r: 20deg;
 }
 .feedback label.angry div:after {
-  --l: 23px;
+  --l: 18px;
   --r: -20deg;
 }
 .feedback label.angry div svg.eye {
@@ -134,19 +137,19 @@
 .feedback label.sad div:before, .feedback label.sad div:after {
   --b: var(--active-tear);
   --sc: 0;
-  --w: 5px;
-  --h: 5px;
-  --t: 15px;
+  --w: 4px;
+  --h: 4px;
+  --t: 11px;
   --br: 50%;
 }
 .feedback label.sad div:after {
-  --l: 25px;
+  --l: 19px;
 }
 .feedback label.sad div svg.eye {
-  --t: 16px;
+  --t: 12px;
 }
 .feedback label.sad div svg.mouth {
-  --t: 24px;
+  --t: 18px;
   stroke-dasharray: 9.5;
   stroke-dashoffset: 33.25;
 }
@@ -163,17 +166,17 @@
   --step-2-rz: -6deg;
 }
 .feedback label.ok div:before {
-  --l: 12px;
-  --t: 17px;
-  --h: 4px;
-  --w: 4px;
+  --l: 9px;
+  --t: 12px;
+  --h: 3px;
+  --w: 3px;
   --br: 50%;
-  box-shadow: 12px 0 0 var(--e, var(--normal-eye));
+  box-shadow: 9px 0 0 var(--e, var(--normal-eye));
 }
 .feedback label.ok div:after {
-  --l: 13px;
-  --t: 26px;
-  --w: 14px;
+  --l: 10.5px;
+  --t: 20px;
+  --w: 9px;
   --h: 2px;
   --br: 1px;
   --b: var(--m, var(--normal-mouth));
@@ -196,26 +199,26 @@
 }
 .feedback label.good div:before {
   --b: var(--m, var(--normal-mouth));
-  --w: 5px;
-  --h: 5px;
+  --w: 4px;
+  --h: 4px;
   --br: 50%;
-  --t: 22px;
+  --t: 17px;
   --zi: 0;
   opacity: 0.5;
-  box-shadow: 16px 0 0 var(--b);
+  box-shadow: 12px 0 0 var(--b);
   filter: blur(2px);
 }
 .feedback label.good div:after {
   --sc: 0;
 }
 .feedback label.good div svg.eye {
-  --t: 15px;
+  --t: 9px;
   --sc: -1;
   stroke-dasharray: 4.55;
   stroke-dashoffset: 8.15;
 }
 .feedback label.good div svg.mouth {
-  --t: 22px;
+  --t: 14px;
   --sc: -1;
   stroke-dasharray: 13.3;
   stroke-dashoffset: 23.75;
@@ -237,14 +240,14 @@
 }
 .feedback label.happy div:after {
   --b: var(--m, var(--normal-mouth));
-  --l: 11px;
-  --t: 23px;
-  --w: 18px;
-  --h: 8px;
-  --br: 0 0 8px 8px;
+  --l: 8.5px;
+  --t: 18px;
+  --w: 13px;
+  --h: 6px;
+  --br: 0 0 6px 6px;
 }
 .feedback label.happy div svg.eye {
-  --t: 14px;
+  --t: 11px;
   --sc: -1;
 }
 .feedback label.happy input:checked + div:after {
@@ -358,4 +361,30 @@
   45% {
     box-shadow: inset 3px -3px 4px var(--active-shadow), inset 0 8px 10px var(--active-shadow-angry);
   }
+}
+
+.develop-vote-button{
+  border-radius:50%;
+  width:50px;
+  height:50px;
+  background:rgba(30,30,30,0.9);
+  transition:background-color .2s;
+}
+
+.develop-vote-button:hover{
+  background:rgba(0, 90, 150) !important;
+}
+
+.develop-vote-button.power-saved{
+  background:rgba(25, 190, 50);
+}
+
+.develop-vote-button button{
+  all:unset;
+  padding:8px;
+}
+
+.power-collapse{
+  z-index:2;
+  transform:translateY(calc(-50% - 25px));
 }
