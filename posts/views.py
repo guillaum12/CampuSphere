@@ -129,10 +129,18 @@ def show_post(request, pk):
     theme = Post.objects.get(pk=pk).theme
     theme_path = get_theme_path_from_theme(request, theme)
 
+    # Valeur actuelle de la note donnée
+    profile = get_request_user_profile(request.user)
+    try:
+        power = profile.power_set.get(post=Post.objects.get(pk=pk)).power
+    except:
+        power = -1
+
     context = {
         "post": Post.objects.get(pk=pk),
         "profile": get_request_user_profile(request.user),
         "theme_path": theme_path,
+        "power": power,
     }
 
     return render(request, "posts/show_post.html", context)

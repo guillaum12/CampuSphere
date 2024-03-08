@@ -183,22 +183,30 @@ def report_unreport_post(profile, post_id, post_obj):
 
 
 def power_post(profile, post_id, post_obj, power_amount):
-
     # Add / remove target profile
     # and create power_added variable
-    if profile in post_obj.powered.all():
-        # post_obj.powered.remove(profile)
-        power_added = False
-    else:
-        post_obj.powered.add(profile)
-        power_added = True
+    # if profile in post_obj.powered.all():
+    # post_obj.powered.remove(profile)
+    # power_added = False
+    # else:
+    # post_obj.powered.add(profile)
+    # power_added = True
 
-    # Get Power object if post already powered, create Power object if not
     power, created = Power.objects.get_or_create(profile=profile, post_id=post_id)
+    if created:
+        post_obj.powered.add(profile)
+        post_obj.save()
 
-    power.power = power_amount
-    power.save()
-    post_obj.save()
+    # On vérifie si l'utilisateur a déjà donné la même note à cette proposition
+    if not created and power.power == power_amount:
+        power_added = False
+        post_obj.powered.remove(profile)
+        power.delete()
+        post_obj.save()
+    else:
+        power_added = True
+        power.power = power_amount
+        power.save()
 
     # power_added is used for the power.js script
     return power_added

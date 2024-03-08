@@ -34,8 +34,12 @@
                 <!-- Boutons pour intéragir avec la carte (favori, réagir, voir le post complet) -->
                 <div class="container full-post-main-interactions">
                     <div class="row">
-                        <div class="col-6">{% include 'posts/like.html' with post=post profile=profile %}</div>
-                        <div class="col-6">
+                        <div class="col-4">{% include 'posts/like.html' with post=post profile=profile %}</div>
+                        <div class="col-4">
+                            {% include "posts/feedback.html" %}
+                            {% include "posts/progress_bar.html" %}
+                        </div>
+                        <div class="col-4">
                             <div class="d-flex justify-content-center">
                                 <button class="btn d-flex flex-column align-items-center"
                                         type="button"

@@ -359,23 +359,3 @@
     box-shadow: inset 3px -3px 4px var(--active-shadow), inset 0 8px 10px var(--active-shadow-angry);
   }
 }
-test {
-  box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-}
-
-test {
-  box-sizing: inherit;
-}
-test:before, test:after {
-  box-sizing: inherit;
-}
-
-test {
-  min-height: 100vh;
-  display: flex;
-  font-family: "Inter", Arial;
-  justify-content: center;
-  align-items: center;
-  background: #181820;
-}

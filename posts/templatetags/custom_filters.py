@@ -55,3 +55,9 @@ def times(number):
 @register.filter
 def subtract(value, arg):
     return value - arg
+
+
+@register.filter
+def to_int(value):
+    # Remplace les virgules en points
+    return int(value)
