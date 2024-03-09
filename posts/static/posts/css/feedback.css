@@ -20,6 +20,7 @@
   background-color:rgba(240,240,240,1);
   border-radius:25px;
   border:3px solid rgba(30,30,30,0.9);
+  box-shadow:0 0 4px rgba(50, 50, 50, 0.6) inset;
 }
 .feedback label {
   position: relative;

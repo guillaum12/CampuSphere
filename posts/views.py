@@ -271,6 +271,17 @@ def power(request):
         power_amount = request.POST.get("power_amount")
         power_added = power_post(profile, post_id, post_obj, power_amount)
 
+        # Création du toast
+        if power_added:
+            message = "Votre vote a bien été pris en compte !"
+        else:
+            message = "Votre vote a bien été retiré."
+
+        toast_html = render_to_string(
+            "main/toast.html", {"id": 'success-hide-site-explanations-' + str(int(time() * 1e3 % 1e6)),
+                                "success": True,
+                                "message": message})
+
         # Return JSON response for AJAX script in power.js
         return JsonResponse(
             {
@@ -278,6 +289,7 @@ def power(request):
                 "voter_number": post_obj.voter_number,
                 "power_added": power_added,
                 "post_color": post_obj.get_color_progress,
+                "toast_html": toast_html,
             },
         )
 

@@ -44,11 +44,25 @@ $(document).on('click', '.feedback input[type="radio"]', function (e) {
             }
             // On ferme le collapse pour le vote
             var powerCollapse = new bootstrap.Collapse($("#powerCollapse" + post_id))
-            console.log(powerCollapse)
             powerCollapse.hide()
+            
+            // Ajout du toast
+            let toast = response['toast_html'];
+            $('#toasts-container').append(toast);
         },
         error: function(response) {
             console.log('error', response)
         }
     });
+});
+
+// Détecter le clic en dehors de la zone feedback pour la fermer
+$(document).click(function(event) {
+    openedPowerCollapse = $('.power-collapse.show')
+    closestOpenedPowerCollapse = $(event.target).closest('.power-collapse.show')
+    if(openedPowerCollapse.length && !closestOpenedPowerCollapse.length) {
+        //Le clic s'est produit en dehors de l'élément power-collapse alors qu'il est ouvert
+        var powerCollapse = new bootstrap.Collapse(openedPowerCollapse)
+        powerCollapse.hide()
+    } 
 });
