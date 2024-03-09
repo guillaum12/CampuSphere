@@ -33,9 +33,6 @@
                     <i class="icon comment"></i><small class="fw-bold d-none d-md-inline">Répondre</small>
                 </button>
                 {% if request.user == comment.author.user or request.user.is_staff %}
-                    <button class="btn">
-                        <i class="icon edit"></i><small class="fw-bold d-none d-md-inline">Éditer</small>
-                    </button>
                     <a class="btn" href="{% url 'posts:post-delete' comment.pk %}">
                         <i class="icon trash alternate outline"></i><small class="fw-bold d-none d-md-inline">Supprimer</small>
                     </a>
