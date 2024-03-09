@@ -1,0 +1,26 @@
+{% load custom_filters %}
+<form action="{% url 'posts:switch-like-comment-view' %}"
+      class="like-comment-form d-inline-block"
+      id="likeCommentForm{{ comment.id }}">
+    <input type="hidden" name="comment-id" value="{{ comment.id }}" />
+    <label class="like-comment-button" for="likeButton{{ comment.id }}">
+        <button class="btn">
+            <input type="radio"
+                   name="like-button"
+                   id="likeButton{{ comment.id }}"
+                   value="1" />
+            <i class="icon thumbs up {% if not comment|user_post_power:user or comment|user_post_power:user != "1" %}outline{% endif %}"></i>
+            <span class="likes-count">{{ comment.comment_like_number }}</span>
+        </button>
+    </label>
+    <label class="dislike-comment-button" for="dislikeButton{{ comment.id }}">
+        <button class="btn">
+            <input type="radio"
+                   name="like-button"
+                   id="dislikeButton{{ comment.id }}"
+                   value="0" />
+            <i class="icon thumbs down {% if not comment|user_post_power:user or comment|user_post_power:user != "0" %}outline{% endif %}"></i>
+            <span class="dislikes-count">{{ comment.comment_dislike_number }}</span>
+        </button>
+    </label>
+</form>

@@ -11,3 +11,21 @@
     border-left:1.5px solid rgba(0, 0, 0, 0.25);
     margin-left:calc(1em - 1.5px / 2);
 }
+
+.like-comment-form input[type='radio']{
+    all:unset;
+}
+
+.like-comment-form label{
+    cursor:pointer;
+}
+
+i.icon.thumbs.up:not(.outline){
+    color:rgb(70, 180, 70);
+    text-shadow:0 0 2px rgba(70, 180, 70, 0.3);
+}
+
+i.icon.thumbs.down:not(.outline){
+    color:rgb(220, 70, 70);
+    text-shadow:0 0 2px rgba(220, 70, 70, 0.3);
+}

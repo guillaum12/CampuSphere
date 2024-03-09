@@ -103,7 +103,7 @@ class Post(models.Model):
 
     # A comment is now seen as a response to a post
     in_response_to = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
-  
+
     @property
     def comments(self):
         return Post.objects.filter(in_response_to=self).order_by('-created')
@@ -115,6 +115,22 @@ class Post(models.Model):
     @property
     def report_number(self):
         return self.reported.all().count()
+
+    @property
+    def comment_like_number(self):
+        # Seulement pour les commentaires
+        if not self.is_post:
+            # On compte le nombre de power reçu qui valent "1"
+            power_like_objects = Power.objects.filter(post=self, power='1')
+            return len(power_like_objects)
+
+    @property
+    def comment_dislike_number(self):
+        # Seulement pour les commentaires
+        if not self.is_post:
+            # On compte le nombre de power reçu qui valent "0"
+            power_dislike_objects = Power.objects.filter(post=self, power='0')
+            return len(power_dislike_objects)
 
     objects = PostManager()
 

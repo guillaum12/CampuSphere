@@ -25,6 +25,7 @@ from .views_utils import (
     find_post_to_show,
     report_unreport_post,
     never_display_explanations,
+    like_unlike_comment,
 )
 
 
@@ -138,7 +139,7 @@ def show_post(request, pk):
 
     context = {
         "post": Post.objects.get(pk=pk),
-        "profile": get_request_user_profile(request.user),
+        "profile": profile,
         "theme_path": theme_path,
         "power": power,
     }
@@ -183,6 +184,29 @@ def switch_like(request):
         profile = get_request_user_profile(request.user)
 
         like_added = like_unlike_post(profile, post_id, post_obj)
+    else:
+        like_added = False
+    # Return JSON response for AJAX script in like.js
+    return JsonResponse(
+        {"like_added": like_added},
+    )
+
+
+@login_required
+def switch_like_comment(request):
+    """
+    Adds/removes like to a post.
+    View url: /posts/like_comment/
+    """
+    if request.method == "POST":
+        comm_id, comm_obj = get_post_id_and_post_obj(request)
+        profile = get_request_user_profile(request.user)
+        like_value = request.POST.get("like_status")
+        if int(like_value) in [0, 1]:
+            like_added = like_unlike_comment(
+                profile, comm_id, comm_obj, like_value)
+        else:
+            like_added = False
     else:
         like_added = False
     # Return JSON response for AJAX script in like.js

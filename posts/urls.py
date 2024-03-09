@@ -12,6 +12,7 @@ from .views import (
     switch_report,
     feedback,
     hide_site_explanations,
+    switch_like_comment,
 )
 
 app_name = "posts"
@@ -23,6 +24,7 @@ urlpatterns = [
     path("never_display_explanations/", hide_site_explanations, name="never-display-explanations"),
     path("comment/", comment_view, name="comment-view"),
     path("like/", switch_like, name="switch-like-view"),
+    path("like_comment/", switch_like_comment, name="switch-like-comment-view"),
     path("power/", power, name="switch-power-view"),
     path("feedback/", feedback, name="feedback-view"),
     path("report/", switch_report, name="switch-report-view"),

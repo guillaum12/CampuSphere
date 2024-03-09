@@ -23,12 +23,7 @@
         <div class="comment-content-noreply">
             <div class="mb-2">{{ comment.content|linebreaks|safe }}</div>
             <div>
-                <button class="btn" type="button">
-                    <i class="icon thumbs up outline"></i>
-                </button>
-                <button class="btn" type="button">
-                    <i class="icon thumbs down outline"></i>
-                </button>
+                {% include 'posts/like_comment.html' %}
                 <button class="btn btn-reply"
                         type="button"
                         data-bs-toggle="collapse"

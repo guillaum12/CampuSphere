@@ -183,15 +183,6 @@ def report_unreport_post(profile, post_id, post_obj):
 
 
 def power_post(profile, post_id, post_obj, power_amount):
-    # Add / remove target profile
-    # and create power_added variable
-    # if profile in post_obj.powered.all():
-    # post_obj.powered.remove(profile)
-    # power_added = False
-    # else:
-    # post_obj.powered.add(profile)
-    # power_added = True
-
     power, created = Power.objects.get_or_create(profile=profile, post_id=post_id)
     if created:
         post_obj.powered.add(profile)
@@ -206,6 +197,29 @@ def power_post(profile, post_id, post_obj, power_amount):
     else:
         power_added = True
         power.power = power_amount
+        power.save()
+
+    # power_added is used for the power.js script
+    return power_added
+
+
+def like_unlike_comment(profile, comm_id, comm_obj, like_value):
+    power, created = Power.objects.get_or_create(profile=profile, post_id=comm_id)
+    if created:
+        print("like créé")
+        comm_obj.powered.add(profile)
+        comm_obj.save()
+    # On vérifie si l'utilisateur a déjà donné la même note à cette proposition
+    if not created and power.power == like_value:
+        print("same note")
+        power_added = False
+        comm_obj.powered.remove(profile)
+        power.delete()
+        comm_obj.save()
+    else:
+        print("new different note")
+        power_added = True
+        power.power = like_value
         power.save()
 
     # power_added is used for the power.js script
