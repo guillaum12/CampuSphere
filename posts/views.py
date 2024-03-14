@@ -400,6 +400,15 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         profile = get_request_user_profile(self.request.user)
+        post = self.object
+
+        if not post.can_be_modified:
+            messages.add_message(
+                self.request,
+                messages.ERROR,
+                "Vous n'êtes plus autorisé à modifier ce post.",
+            )
+            return HttpResponseRedirect(self.success_url)
 
         if form.instance.author != profile:
             messages.add_message(

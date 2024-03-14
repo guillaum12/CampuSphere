@@ -2,14 +2,11 @@ import datetime
 from email.policy import default
 from django.core.validators import FileExtensionValidator
 from django.db import models
-
 from profiles.models import Profile
 from profiles.views_utils import get_request_user_profile
-
 from .models_utils import get_related_posts_queryset
 import colorsys
-from urllib.parse import quote
-from convention.settings import BASE_URL
+from django.utils.timezone import localtime
 
 
 class Feedback(models.Model):
@@ -183,15 +180,9 @@ class Post(models.Model):
         return color_hex
 
     @property
-    def whatsapp_link(self):
-        # On renvoit le lien d'un post à partager sur Whatsapp
-        wa_url = "https://api.whatsapp.com/send?text="
-
-        link_to_post = BASE_URL + "posts/" + str(self.id) + "/show/"
-
-        texte_explicatif = "Viens donner ton avis ! "
-
-        return wa_url + quote(texte_explicatif) + link_to_post
+    def can_be_modified(self):
+        TEMPS_MODIFICATION_POSSIBLE = 5 * 60     # 5 minutes
+        return (localtime() - self.created).seconds < TEMPS_MODIFICATION_POSSIBLE
 
     class Meta:
         ordering = ("-created",)

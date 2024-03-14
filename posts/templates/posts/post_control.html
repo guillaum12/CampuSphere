@@ -20,11 +20,13 @@
         </li>
         <li>{% include 'posts/report.html' with post=post profile=profile %}</li>
         {% if user == post.author.user or user.is_staff %}
+            {% if post.can_be_modified %}
             <li>
                 <a href="{% url 'posts:post-update' post.pk %}">
                     <i class="icon large edit"></i>Modifier
                 </a>
             </li>
+            {% endif %}
             <li>
                 <a href="{% url 'posts:post-delete' post.pk %}">
                     <i class="icon large trash alternate outline"></i>Supprimer
