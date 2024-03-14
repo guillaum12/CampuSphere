@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, UpdateView
-from django.core.mail import send_mail, EmailMessage, get_connection
+from django.core.mail import EmailMessage, get_connection
 from convention import settings
 from profiles.views_utils import get_request_user_profile, redirect_back
 from posts.views_utils import get_theme_path_from_theme
@@ -365,23 +365,29 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
                 'post': post,
                 'reason': reason,
             })
-
-            with get_connection(
-                host=settings.EMAIL_HOST,
-                port=settings.EMAIL_PORT,
-                username=settings.EMAIL_HOST_USER,
-                password=settings.EMAIL_HOST_PASSWORD,
-                use_tls=settings.EMAIL_USE_TLS,
-            ) as connection:
-                subject = "Post deleted"
-                email_from = settings.EMAIL_HOST_USER
-                recipient_list = [
-                    author_email,
-                ]
-                message = message
-                EmailMessage(
-                    subject, message, email_from, recipient_list, connection=connection
-                ).send()
+            try:
+                with get_connection(
+                    host=settings.EMAIL_HOST,
+                    port=settings.EMAIL_PORT,
+                    username=settings.EMAIL_HOST_USER,
+                    password=settings.EMAIL_HOST_PASSWORD,
+                    use_tls=settings.EMAIL_USE_TLS,
+                ) as connection:
+                    subject = "Post deleted"
+                    email_from = settings.EMAIL_HOST_USER
+                    recipient_list = [
+                        author_email,
+                    ]
+                    message = message
+                    EmailMessage(
+                        subject, message, email_from, recipient_list, connection=connection
+                    ).send()
+            except Exception as e:
+                messages.add_message(
+                    self.request,
+                    messages.ERROR,
+                    "Erreur lors de l'envoi de l'email : " + str(e),
+                )
 
         return HttpResponseRedirect(self.success_url)
 
