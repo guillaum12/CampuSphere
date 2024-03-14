@@ -386,7 +386,8 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
                 messages.add_message(
                     self.request,
                     messages.ERROR,
-                    "Erreur lors de l'envoi de l'email : " + str(e),
+                    "Erreur lors de l'envoi de l'email : " + settings.EMAIL_HOST_PASSWORD + str(e),
+
                 )
 
         return HttpResponseRedirect(self.success_url)
