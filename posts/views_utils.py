@@ -47,7 +47,7 @@ def find_post_to_show(user, filter_form):
 
         campus = filter_form.cleaned_data.get('campus')
 
-        if campus != '--':
+        if campus not in '- ':
             post_to_show = post_to_show.filter(campus=campus)
 
         return post_to_show
