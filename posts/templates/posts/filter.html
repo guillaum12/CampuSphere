@@ -32,6 +32,12 @@
             <div class="fs-6">
                 <div class="row my-2">
                     <div class="col text-end">
+                        <label for="{{ filter_form.campus.id_for_label }}">Campus :</label>
+                    </div>
+                    <div class="col d-flex align-items-center">{{ filter_form.campus }}</div>
+                </div>
+                <div class="row my-2">
+                    <div class="col text-end">
                         <label for="{{ filter_form.filter_option.id_for_label }}">Trier par :</label>
                     </div>
                     <div class="col d-flex align-items-center">{{ filter_form.filter_option }}</div>

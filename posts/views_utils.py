@@ -45,6 +45,11 @@ def find_post_to_show(user, filter_form):
             theme_obj = Choice.objects.get(theme_name=theme)
             post_to_show = [post for post in post_to_show if post.theme == theme_obj]
 
+        campus = filter_form.cleaned_data.get('campus')
+
+        if campus != '--':
+            post_to_show = post_to_show.filter(campus=campus)
+
         return post_to_show
 
 

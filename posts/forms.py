@@ -28,6 +28,7 @@ class PostFilterForm(forms.Form):
     except sqlite3.OperationalError:
         print('Table Choice does not exist')
 
+    campus = forms.ChoiceField(choices=Post.CAMPUS_CHOICES, required=False)
     new_posts = forms.BooleanField(required=False, label='New Posts')
 
 
@@ -37,7 +38,7 @@ class PostCreateModelForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ("title", "content", "theme", "image")
+        fields = ("title", "content", "campus", "theme", "image")
 
 
 class CommentCreateModelForm(forms.ModelForm):

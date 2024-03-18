@@ -84,6 +84,10 @@ class Post(models.Model):
     is_post = models.BooleanField(default=True)
 
     theme = models.ForeignKey(Choice, on_delete=models.SET_NULL, null=True, blank=True)
+    # Campus parmis Saclay, Rennes et Metz
+    CAMPUS_CHOICES = [('Saclay', 'Saclay'), ('Rennes', 'Rennes'), ('Metz', 'Metz'), ('--', '--')]
+    campus = models.CharField(max_length=10, choices=CAMPUS_CHOICES, default='Saclay')
+
     image = models.ImageField(
         blank=True,
         upload_to="posts",
