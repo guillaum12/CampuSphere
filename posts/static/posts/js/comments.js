@@ -25,7 +25,9 @@ $(document).on('submit', '.comment-form', function(e){
         if ("comment_html" in response){
             let comment_html = response['comment_html'];
             textarea.value = "";
-            $('#custom-comment-' + post_id).find('.comment-replies:first').prepend(comment_html);
+            if ($('#custom-comment-' + post_id).find('.comment-replies').length > 0){
+                $('#custom-comment-' + post_id).find('.comment-replies:first').prepend(comment_html);
+            }
         }
         // Ajout du toast
         let toast = response['toast_html'];

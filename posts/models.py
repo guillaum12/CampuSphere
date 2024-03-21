@@ -111,7 +111,12 @@ class Post(models.Model):
 
     @property
     def number_comments(self):
-        return len(Post.objects.filter(in_response_to=self))
+        if len(Post.objects.filter(in_response_to=self)) == 0:
+            return 0
+        res = len(Post.objects.filter(in_response_to=self))
+        for comment in Post.objects.filter(in_response_to=self):
+            res += comment.number_comments
+        return res
 
     @property
     def report_number(self):

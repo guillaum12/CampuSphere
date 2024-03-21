@@ -96,6 +96,7 @@ def add_comment_if_submitted(request, profile):
             comment_html = render_to_string(
                 "posts/single_comment.html",
                 {"comment": Post.objects.get(id=comment_id),
+                 "user": profile.user,
                  "post": Post.objects.get(id=parent_proposition.id),
                  "csrf_token": csrf_token,
                  "request": request}

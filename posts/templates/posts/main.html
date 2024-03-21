@@ -6,6 +6,7 @@
 {% endblock title %}
 {% block extrahead %}
     <link rel="stylesheet" href="{% static 'posts/css/posts.css' %}">
+    <link rel="stylesheet" href="{% static 'posts/css/comments.css' %}">
 {% endblock extrahead %}
 {% block content %}
     {% include 'messages.html' %}
@@ -30,7 +31,7 @@
             {% endif %}
             {% endcomment %}
             {% if post_to_show %}
-                <div class="ui fluid cards d-flex g-4 flex-wrap justify-content-center my-3">
+                <div class="ui fluid cards d-flex g-4 flex-column justify-content-center my-3">
                     {% for post in post_to_show %}
                         {% include 'posts/post_preview.html' with post=post is_staff=is_staff request=request %}
                     {% endfor %}
@@ -53,4 +54,8 @@
     <script src="{% static 'posts/js/like.js' %}"></script>
     <script src="{% static 'posts/js/report.js' %}"></script>
     <script src="{% static 'posts/js/site_explanations.js' %}"></script>
+    <script src="{% static 'posts/js/collapse_description.js' %}"></script>
+    <script src="{% static 'posts/js/comments.js' %}"></script>
+    <script src="{% static 'posts/js/like_comment.js' %}"></script>
+    <script src="{% static 'posts/js/feedback.js' %}"></script>
 {% endblock scripts %}

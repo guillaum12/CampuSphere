@@ -1,0 +1,17 @@
+{% load static %}
+<form action="{% url 'posts:switch-like-view' %}"
+      method="POST"
+      class='like-header-form d-flex flex-column align-items-center'
+      id='{{ post.id }}'>
+    {% csrf_token %}
+    <input type="hidden" name="post_id" value={{ post.id }}>
+    <button type="submit"
+            class="d-flex flex-column align-items-center btn favorite-preview-post-button">
+        <!-- Cet id est utilisé dans like.js -->
+        <i id='like_icon_{{ post.id }}'
+           class="star large {% if request.user.profile not in post.liked.all %}white{% else %}yellow{% endif %} icon d-block"></i>
+        <!--
+        <p style="display: inline-block;" class="like-count{{ post.id }}">{{ post.liked.all.count }}</p>
+-->
+    </button>
+</form>

@@ -1,0 +1,14 @@
+<div id="custom-comment-{{ post.id }}">
+    <div class="mb-2 text-center">
+        {% if post.comments %}
+            {% if post.number_comments == 1 %}
+                <a href="{% url 'posts:one-post-view' post.id %}">Lire le commentaire  <i class="icon angle right"></i></a>
+            {% else %}
+                <a href="{% url 'posts:one-post-view' post.id %}">Lire les {{ post.number_comments }} commentaires <i class="icon angle right"></i></a>
+            {% endif %}
+        {% else %}
+            <p>Aucun commentaire</p>
+        {% endif %}
+    </div>
+</div>
+<div class="px-1">{% include 'posts/comment_form.html' with post=post %}</div>
