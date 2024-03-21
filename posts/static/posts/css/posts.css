@@ -1,14 +1,13 @@
 .custom-post-card-parent {
     flex: 1;
-    max-width: 330px;
-    min-width: 300px;
 }
 
 .custom-post-card {
     position: relative;
     color: black;
     transition: 0.12s ease-in-out;
-    width: 100%;
+    width: min(100%,700Px);
+    box-shadow: 0 0 5px rgba(100, 100, 100, 0.6);
 }
 
 .custom-post-card:hover {
@@ -17,7 +16,7 @@
 }
 
 .custom-post-card .card-img-top {
-    height: 100px !important;
+    height: 70px !important;
 }
 
 .custom-post-card .card-title {
@@ -39,6 +38,14 @@
 
 .custom-post-card i.icon {
     margin:0;
+}
+
+.favorite-preview-post-button {
+    position: absolute;
+    top: .5rem;
+    left: 0;
+    font-size:1.3rem;
+    text-shadow:0 0 30px black, 0 0 30px black;
 }
 
 .control-display-button {
@@ -142,4 +149,8 @@
 
 .custom-full-post-card .header>div:last-child {
     flex:3;
+}
+
+.description-preview-post-short p, .description-preview-post-full p{
+    margin-bottom: 0;
 }

@@ -3,19 +3,16 @@
 <div class="ui fluid m-2 d-flex justify-content-center custom-post-card-parent">
     <div class="card custom-post-card">
         <!-- Gérer les contrôles -->
+        {% include 'posts/like_header_post.html' with post=post profile=profile %}
         {% include 'posts/post_control.html' with user=request.user post=post %}
         <!-- Image de la carte -->
-        <a href="{% url 'posts:one-post-view' post.id %}">
-            <img src="{% if post.theme.image %} {{ post.theme.image.url }} {% else %} {% get_media_prefix %}themes/generic_theme.jpg {% endif %}"
-                 class="card-img-top"
-                 alt="theme" />
-        </a>
+        <img src="{% if post.theme.image %} {{ post.theme.image.url }} {% else %} {% get_media_prefix %}themes/generic_theme.jpg {% endif %}"
+             class="card-img-top"
+             alt="theme" />
         <div class="card-body d-flex flex-column">
             <div class="flex-grow-1">
                 <!-- En-tête de la carte -->
-                <h5 class="card-title my-0">
-                    <a href="{% url 'posts:one-post-view' post.id %}">{{ post.title|safe }}</a>
-                </h5>
+                <h5 class="card-title my-0">{{ post.title|safe }}</h5>
                 <p>
                     <small>
                         {% include 'posts/identity.html' with profile=post.author request=request %}
@@ -25,29 +22,40 @@
                 </p>
                 <!-- Description de la carte -->
                 {% if post.content != "" %}
-                    <p class="card-text">{{ post.content|shorten_text:"100,3"|safe }}</p>
+                    <div class="card-text description-preview-post-full {% if post.content|shorten_text:"110,1"|striptags|length < post.content|striptags|length %}collapse multi-collapse-{{ post.id }}{% endif %}"
+                         id="multiCollapse{{ post.id }}-full">{{ post.content|safe }}</div>
+                    {% if post.content|shorten_text:"55,2"|striptags|length < post.content|striptags|length %}
+                        <div class="card-text description-preview-post-short collapse multi-collapse-{{ post.id }}"
+                             id="multiCollapse{{ post.id }}-short">{{ post.content|shorten_text:"110,1"|safe }}</div>
+                        <button class="fst-italic display-full-description-preview-post"
+                                id="display-full-description-preview-post-{{ post.id }}"
+                                data-bs-toggle="collapse"
+                                data-bs-target=".multi-collapse-{{ post.id }}"
+                                aria-expanded="false"
+                                aria-controls="multiCollapse{{ post.id }}-short multiCollapse{{ post.id }}-full"
+                                style="border:0;
+                                       background:none;
+                                       font-family:inherit">
+                            <small>Afficher plus</small>
+                            <i class="icon angle down small"></i>
+                        </button>
+                    {% endif %}
                 {% else %}
                     <p class="card-text fst-italic">Aucune description n'a été rédigée...</p>
                 {% endif %}
             </div>
+            <!-- Commentaires de la carte -->
+            <div class="py-2"
+                 style="background-color:rgb(240, 240, 240);
+                        border:1px solid rgb(200, 200, 200);
+                        border-width:1px 0px 1px 0px">
+                {% include 'posts/short_comment_section.html' with post=post request=request %}
+            </div>
             <!-- Boutons pour intéragir avec la carte (favori, réagir, voir le post complet) -->
-            <div class="flex-grow-0 my-1">
-                <hr />
-                <div class="container">
-                    <!--"d-flex align-items-center justify-content-evenly mt-2">-->
-                    <div class="row">
-                        <div class="col-6 text-center d-flex justify-content-center align-items-center">
-                            {% include 'posts/like.html' with post=post profile=profile %}
-                        </div>
-                        <div class="col-6 text-center d-flex justify-content-center align-items-center">
-                            <a href="{% url 'posts:one-post-view' post.id %}"
-                               class="d-flex flex-column align-items-center">
-                                <i class="icon eye large d-block"></i>
-                                <small class="mt-1" style="line-height: 1em">Voir le post complet</small>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            <div class="mx-auto mt-3 d-flex justify-content-center flex-column flex-sm-row justify-content-center"
+                 style="width:min(100%,300px)">
+                {% include "posts/progress_bar.html" %}
+                {% include "posts/feedback.html" %}
             </div>
         </div>
     </div>

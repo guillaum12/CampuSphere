@@ -84,6 +84,6 @@ def connexion(request):
     # On vérifie le statut de la variable display_site_explanation du profile
     profile = Profile.objects.get(user=user)
     if profile.display_site_explanation:
-        return redirect(request, settings.LOGIN_REDIRECT_URL + "?display_site_explanations=True")
+        return redirect(settings.LOGIN_REDIRECT_URL + "?display_site_explanations=True")
 
-    return redirect(request, settings.LOGIN_REDIRECT_URL)
+    return redirect(settings.LOGIN_REDIRECT_URL)
