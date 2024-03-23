@@ -45,17 +45,17 @@
                 {% endif %}
             </div>
             <!-- Commentaires de la carte -->
-            <div class="py-2"
+            <div class="my-3 py-2"
                  style="background-color:rgb(240, 240, 240);
                         border:1px solid rgb(200, 200, 200);
                         border-width:1px 0px 1px 0px">
                 {% include 'posts/short_comment_section.html' with post=post request=request %}
             </div>
             <!-- Boutons pour intéragir avec la carte (favori, réagir, voir le post complet) -->
-            <div class="mx-auto mt-3 d-flex justify-content-center flex-column flex-sm-row justify-content-center"
+            <div class="mx-auto d-flex justify-content-center flex-column flex-sm-row justify-content-center"
                  style="width:min(100%,300px)">
                 {% include "posts/progress_bar.html" %}
-                {% include "posts/feedback.html" %}
+                {% include "posts/feedback.html" with power=post|get_power_from_user:user %}
             </div>
         </div>
     </div>
