@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block title %}
+    Sondage {{ survey.title }}
+{% endblock title %}
+{% block extrahead %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>
+    <link rel="stylesheet"
+          href="{% static 'swipe_survey/css/card-survey.css' %}">
+{% endblock extrahead %}
+{% block content %}
+    <div class="survey-container">
+        {% include "swipe_survey/survey_home.html" %}
+        {% for question in survey.get_questions %}
+            {% include "swipe_survey/survey_question.html" with question=question %}
+        {% endfor %}
+        {% include "swipe_survey/survey_end.html" %}
+    </div>
+{% endblock content %}
+{% block scripts %}
+    {% load static %}
+    <script src="{% static 'swipe_survey/js/swipe.js' %}"></script>
+    <script src="{% static 'swipe_survey/js/survey-processing.js' %}"></script>
+{% endblock scripts %}

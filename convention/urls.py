@@ -19,6 +19,7 @@ urlpatterns = [
     path("charte/", charte, name="charte"),
     path("profiles/", include("profiles.urls")),
     path("posts/", include("posts.urls")),
+    path("swipe_survey/", include("swipe_survey.urls")),
     path("authentication/", include("authentication.urls")),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
