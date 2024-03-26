@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     # Apps
     "profiles",
+    "swipe_survey",
     "posts",
     # Django All-Auth
     "allauth",

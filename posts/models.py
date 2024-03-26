@@ -73,6 +73,12 @@ class PostManager(models.Manager):
         all_posts = Post.objects.filter(is_post=True)
         return sorted(all_posts, key=lambda post: post.voter_number, reverse=True)
 
+    def get_power_from_user(self, user):
+        profile = get_request_user_profile(user)
+        power_objects = Power.objects.filter(profile=profile, post=self)
+
+        return power_objects
+
 
 class Post(models.Model):
     """

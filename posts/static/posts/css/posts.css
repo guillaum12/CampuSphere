@@ -12,7 +12,6 @@
 
 .custom-post-card:hover {
     box-shadow: 0 0 15px rgba(100, 100, 100, 0.6);
-    transform: scale(1.03);
 }
 
 .custom-post-card .card-img-top {
@@ -118,6 +117,10 @@
 }
 
 /* Full post style */
+
+.custom-full-post-card:hover{
+    z-index:11;
+}
 
 .custom-full-post-card .full-post-main-interactions button{
     transition: color .1s;

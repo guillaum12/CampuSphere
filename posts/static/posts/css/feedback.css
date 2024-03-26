@@ -386,6 +386,6 @@
 }
 
 .power-collapse{
-  z-index:2;
+  z-index:5;
   transform:translateY(calc(-50% - 25px));
 }

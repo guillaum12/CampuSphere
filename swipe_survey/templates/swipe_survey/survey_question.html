@@ -1,0 +1,16 @@
+{% extends "swipe_survey/survey_card.html" %}
+{% load static %}
+{% block card_classes %}order-{{ question.position }}{% endblock %}
+{% block color_card %}rgb(140,200,100){% endblock %}
+{% block survey_title %}
+    <h2>{{ survey.title }}</h2>
+    <h3>Question {{ question.position }}/{{ survey.number_of_questions }}</h3>
+{% endblock %}
+{% block survey_body %}
+    <div class="d-flex flex-column flex-grow-1">
+        <div class="text-center fw-bold fs-5 flex-grow-1 d-flex justify-content-center flex-column">
+            <div>{{ question.question }}</div>
+        </div>
+    </div>
+{% endblock %}
+{% block survey_footer %}{% endblock %}

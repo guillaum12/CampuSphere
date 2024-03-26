@@ -1,0 +1,13 @@
+<div class="card survey-card d-flex flex-column {% block card_classes %}{% endblock %}"
+     id="{% block card_id %}{% endblock %}"
+     style="background-color:{% block color_card %}{% endblock %}">
+    <div class="survey-card-title">
+        {% block survey_title %}{% endblock %}
+    </div>
+    <div class="survey-card-body flex-grow-1 d-flex flex-column justify-content-around p-4">
+        {% block survey_body %}{% endblock %}
+    </div>
+    <div class="survey-card-footer d-flex justify-content-around">
+        {% block survey_footer %}{% endblock %}
+    </div>
+</div>

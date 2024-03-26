@@ -1,0 +1,10 @@
+{% extends "swipe_survey/survey_card.html" %}
+{% load static %}
+{% block card_classes %}order-{{ survey.number_of_questions|add:1 }}{% endblock %}
+{% block color_card %}rgb(225,165,215){% endblock %}
+{% block survey_title %}
+    <h2>{{ survey.title }}</h2>
+    <h3>C'est déjà fini !</h3>
+{% endblock %}
+{% block survey_body %}{% endblock %}
+{% block survey_footer %}{% endblock %}

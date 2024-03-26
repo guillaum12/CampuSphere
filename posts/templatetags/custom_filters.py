@@ -1,7 +1,7 @@
 from django import template
 from django.utils.safestring import mark_safe
 from django.template.defaultfilters import truncatechars_html, striptags
-from posts.models import Power  # Import your model
+from posts.models import Power, PostManager  # Import your model
 from profiles.models import Profile
 
 register = template.Library()
@@ -56,3 +56,11 @@ def subtract(value, arg):
 def to_int(value):
     # Remplace les virgules en points
     return int(value)
+
+
+@register.filter
+def get_power_from_user(self, user):
+    power = PostManager.get_power_from_user(self, user)
+    if len(power) == 0:
+        return -1
+    return power[0].power

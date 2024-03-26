@@ -1,0 +1,26 @@
+{% extends "swipe_survey/survey_card.html" %}
+{% load static %}
+{% block card_classes %}order-0 current{% endblock %}
+{% block card_id %}card_home{{ survey.survey_id }}{% endblock %}
+{% block color_card %}rgb(120,180,255){% endblock %}
+{% block survey_title %}
+    <h2>{{ survey.title }}</h2>
+    <h3>par {{ survey.author }}</h3>
+{% endblock %}
+{% block survey_body %}
+    <div>Nombre de questions : {{ survey.number_of_questions }}</div>
+    <div class="d-flex flex-column flex-grow-1">
+        <p>Descriptif du sondage :</p>
+        <div class="text-center fw-bold fs-5 flex-grow-1 d-flex justify-content-center flex-column">
+            <div>{{ survey.description|safe }}</div>
+        </div>
+    </div>
+    <div class="text-end">
+        {% if survey.is_open %}
+            Temps restant pour répondre : {{ survey.date_close|timeuntil }}
+        {% else %}
+            <div class="text-center">Ce sondage est fermé</div>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block survey_footer %}{% endblock %}
