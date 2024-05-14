@@ -13,12 +13,14 @@ from .views import (
     feedback,
     hide_site_explanations,
     switch_like_comment,
+    petitions,
 )
 
 app_name = "posts"
 
 urlpatterns = [
     path("", show_first_posts, name="main-post-view"),
+    path("petitions/", petitions, name="petitions-view"),
     path("<int:page_index>", show_selected_posts, name="following-post-view"),
     path("<pk>/show/", show_post, name="one-post-view"),
     path("never_display_explanations/", hide_site_explanations, name="never-display-explanations"),

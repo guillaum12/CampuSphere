@@ -22,3 +22,5 @@ package-lock.json
 
 # VS Code config
 .vscode/
+
+test.py

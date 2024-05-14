@@ -102,6 +102,14 @@ def show_selected_posts(request, page_index):
 
     return render(request, "posts/main.html", context)
 
+@login_required
+def petitions(request):
+    """
+    Shows the petition page.
+    View url: /posts/petitions/
+    """
+    return render(request, "posts/petitions.html")
+
 
 @login_required
 def feedback(request):
