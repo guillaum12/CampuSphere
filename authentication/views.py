@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 import requests
 from django.contrib.auth import get_user_model, login
 from allauth.account.models import EmailAddress
+from linkcs import make_linkcs_request
 from profiles.models import Profile
 from django.contrib import messages
 import convention.settings as settings
@@ -9,6 +10,9 @@ from urllib.parse import urlparse, parse_qs
 
 
 def registration(request):
+    
+    scope = "default linkcs-asso:read linkcs-user:read" # Les scopes nécessaires pour votre requête
+
 
     return redirect("https://auth.viarezo.fr/oauth/authorize/?" + "&" +
                     "redirect_uri=" + settings.BASE_URL + 'authentication/connexion/' + "&" +
@@ -16,7 +20,7 @@ def registration(request):
                     "response_type=" + "code" + "&" +
                     "state=" + "MeLlamoLaplayaDeHoy" + "&" +
                     "grant_type=" + "authorization_code" + "&" +
-                    "scope=" + "default")
+                    "scope=" + scope)
 
 
 def connexion(request):
@@ -46,13 +50,18 @@ def connexion(request):
     }).json()
 
     access_token = server_response["access_token"]
+    
 
     user_infos = requests.get("https://auth.viarezo.fr/api/user/show/me",
                               headers={"Authorization": "Bearer "
                                        + access_token}).json()
-
+    
     username = user_infos['login']
-
+    
+    data = make_linkcs_request(username, access_token)
+    
+    print(data)
+        
     User = get_user_model()
     existing_user = User.objects.filter(username=username).first()
 

@@ -26,6 +26,8 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=200, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     is_banned = models.BooleanField(default=False)
+    
+    promo = models.CharField(max_length=10, blank=True)
 
     CATEGORIES = [
         ('etudiant', 'Étudiant/e'),
@@ -98,71 +100,9 @@ class Profile(models.Model):
     ###############################
 
 
-# Relationship Model
-
-
-class RelationshipManager(models.Manager):
-    def invitations_received(self, receiver):
-        qs = Relationship.objects.filter(receiver=receiver, status="sent")
-        return qs
-
-    def invitations_sent(self, sender):
-        qs = Relationship.objects.filter(sender=sender, status="sent")
-        return qs
-
-
-STATUS_CHOICES = (
-    ("sent", "sent"),
-    ("accepted", "accepted"),
-)
-
-
-class Relationship(models.Model):
-    """
-    This model is used to send/receive friend requests
-    """
-
-    sender = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="sender")
-    receiver = models.ForeignKey(
-        Profile,
-        on_delete=models.CASCADE,
-        related_name="receiver",
-    )
-    status = models.CharField(max_length=8, choices=STATUS_CHOICES)
-
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
-
-    objects = RelationshipManager()
+class Association(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=200)
 
     def __str__(self):
-        return f"{self.sender} - {self.receiver} - {self.status}"
-
-
-# Message Model
-
-
-class Message(models.Model):
-    """
-    This model is used in chat for messages (obviously)
-    """
-
-    sender = models.ForeignKey(
-        Profile,
-        on_delete=models.CASCADE,
-        related_name="message_sender",
-    )
-    receiver = models.ForeignKey(
-        Profile,
-        on_delete=models.CASCADE,
-        related_name="message_receiver",
-    )
-    content = models.TextField(max_length=200)
-
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        if len(str(self.content)) > 50:
-            return f"{self.sender} - {str(self.content)[:50].strip()}.."
-        return f"{self.sender} - {str(self.content)}"
+        return self.name

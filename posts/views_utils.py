@@ -31,6 +31,9 @@ def find_post_to_show(user, filter_form):
 
         elif filter_option == 'favorite':
             post_to_show = Post.objects.get_all_favorite_posts(user=user)
+            
+        else:
+            post_to_show = Post.objects.order_by_score_pondere()
 
         # Filter by new posts
         new_posts = filter_form.cleaned_data.get('new_posts')

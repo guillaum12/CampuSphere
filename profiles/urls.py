@@ -1,7 +1,6 @@
 from django.urls import path
 
 from .views import (
-    ChatMessageView,
     MessengerListView,
     ProfileDetailView,
     ProfileListView,
@@ -28,7 +27,6 @@ urlpatterns = [
     path("toggle_ban/<int:profile_id>/", toggle_ban_view, name="toggle-ban-view"),
     path("users/<slug>/", ProfileDetailView.as_view(), name="profile-detail-view"),
     path("messenger/", MessengerListView.as_view(), name="messenger-list-view"),
-    path("chat/<slug>/", ChatMessageView.as_view(), name="chat-message-view"),
     path("search/", search_profiles, name="search-profiles-view"),
     path("my_friends/", my_friends_view, name="my-friends-view"),
     path("received_invites/", received_invites_view, name="received-invites-view"),

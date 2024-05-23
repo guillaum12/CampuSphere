@@ -60,9 +60,15 @@ class PostManager(models.Manager):
     def order_by_report_number(self):
         return self.get_queryset().annotate(report_count=models.Count('reported')).order_by('-report_count')
 
+
+    def order_by_score_pondere(self):
+        all_posts = Post.objects.filter(is_post=True)
+        return sorted(all_posts, key=lambda post: post.score_pondere, reverse=True)
+
     def order_by_progress(self):
         all_posts = Post.objects.filter(is_post=True)
         return sorted(all_posts, key=lambda post: post.progress, reverse=True)
+     
 
     def get_all_favorite_posts(self, user):
         profile = get_request_user_profile(user)
@@ -199,6 +205,16 @@ class Post(models.Model):
         TEMPS_MODIFICATION_POSSIBLE = 5 * 60     # 5 minutes
         return (localtime() - self.created).seconds < TEMPS_MODIFICATION_POSSIBLE
 
+    @property
+    def n_days_created(self):
+        return (localtime() - self.created).days
+
+    @property
+    def score_pondere(self):
+        PONDERATION_NOUVEAUTE_COOL = 20
+        
+        return PONDERATION_NOUVEAUTE_COOL/(self.n_days_created+1) + self.voter_number - self.report_number*2
+    
     class Meta:
         ordering = ("-created",)
 

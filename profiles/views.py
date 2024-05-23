@@ -7,21 +7,14 @@ from django.views.generic import DetailView, ListView
 
 from posts.forms import CommentCreateModelForm
 from posts.models import Post
-from posts.views_utils import add_comment_if_submitted
 
-from .forms import MessageModelForm
-from .models import Message, Profile, Relationship
+from .models import Profile
 from .views_utils import (
     check_if_friends,
     follow_unfollow,
     get_friends_of_user,
     get_profile_by_pk,
-    get_profile_form_by_request_method,
-    get_received_invites,
-    get_received_messages,
-    get_relationship_users,
     get_request_user_profile,
-    get_sent_invites,
     redirect_back,
 )
 
@@ -348,69 +341,5 @@ class MessengerListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
 
         context["profiles"] = self.get_queryset()
-
-        return context
-
-
-class ChatMessageView(LoginRequiredMixin, ListView):
-    """
-    Shows messages between request's user and target user.
-    View url: /profiles/chat/<slug>/
-    """
-
-    model = Message
-    template_name = "profiles/chat.html"
-    form_class = MessageModelForm
-
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.sender = Profile.objects.get(user=self.request.user)
-            instance.receiver = self.get_object()
-            instance.save()
-
-        return redirect_back(self.request)
-
-    def get_object(self):
-        slug = self.kwargs.get("slug")
-        profile = Profile.objects.get(slug=slug)
-        return profile
-
-    def get_queryset(self):
-        profile = Profile.objects.get(user=self.request.user)
-
-        sent = Message.objects.filter(
-            sender=profile,
-            receiver=self.get_object(),
-        )
-        received = Message.objects.filter(
-            sender=self.get_object(),
-            receiver=profile,
-        )
-
-        messages = sent | received
-        ordered_messages = list(
-            messages.order_by("-created").values_list("content", flat=True),
-        )
-
-        return ordered_messages
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        # Used to check which messages are received and which are sent
-        context["received"] = get_received_messages(
-            self.get_object(),
-            Profile.objects.get(user=self.request.user),
-        )
-        context["are_friends"] = check_if_friends(
-            self.get_object(),
-            self.request.user,
-        )
-        context["profile"] = self.get_object()
-        context["form"] = self.form_class
-        context["qs"] = self.get_queryset()
 
         return context

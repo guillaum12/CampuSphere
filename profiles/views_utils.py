@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 
 from .forms import ProfileModelForm
-from .models import Message, Profile, Relationship
+from .models import Profile
 
 
 def get_request_user_profile(request_user):
@@ -43,17 +43,6 @@ def get_profile_by_pk(request):
     return profile
 
 
-def get_received_invites(profile):
-    qs = Relationship.objects.invitations_received(profile)
-    results = list(map(lambda x: x.sender, qs))
-    return results
-
-
-def get_sent_invites(profile):
-    qs = Relationship.objects.invitations_sent(profile)
-    results = list(map(lambda x: x.receiver, qs))
-    return results
-
 
 def follow_unfollow(my_profile, profile):
     """
@@ -72,22 +61,3 @@ def follow_unfollow(my_profile, profile):
 def redirect_back(request):
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
-
-def get_relationship_users(profile):
-    relship_sent = Relationship.objects.filter(sender=profile, status="sent")
-    relship_received = Relationship.objects.filter(
-        receiver=profile,
-        status="sent",
-    )
-
-    # Users that request's user sent friendship invite to
-    invited_users = [i.receiver.user for i in relship_sent]
-    # Users who sent friendship invite to request's user
-    incoming_invite_users = [i.sender.user for i in relship_received]
-
-    return invited_users, incoming_invite_users
-
-
-def get_received_messages(sender, receiver):
-    messages = Message.objects.filter(sender=sender, receiver=receiver)
-    return messages.values_list("content", flat=True)
