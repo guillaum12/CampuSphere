@@ -1,12 +1,43 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 import requests
 from django.contrib.auth import get_user_model, login
-from allauth.account.models import EmailAddress
-from linkcs import make_linkcs_request
 from profiles.models import Profile
 from django.contrib import messages
 import convention.settings as settings
 from urllib.parse import urlparse, parse_qs
+
+
+
+def make_linkcs_request(username, access_token):
+
+    url = 'https://api.linkcs.fr/v1/graphql/'
+    headers = {'Authorization': "Bearer {}".format(access_token)}
+
+    # La requête GraphQL
+    query = """user(login:"2022machabergu") {
+        firstName
+        lastName
+        promotion
+        roles {
+            label
+            sector {
+                name
+                isBureau
+                composition {
+                    association {
+                        id
+                        name
+                    }
+                }
+            }
+        }
+    }"""
+
+
+    request = requests.get("{url}?query={{{query}}}".format(url=url, query=query), headers=headers).json()
+    
+    return request['data']
+    
 
 
 def registration(request):
