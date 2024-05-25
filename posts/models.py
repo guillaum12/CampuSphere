@@ -1,5 +1,3 @@
-import datetime
-from email.policy import default
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from profiles.models import Association, Profile
@@ -18,7 +16,7 @@ class Feedback(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.author} - {str(self.content)}"
+        return f"{str(self.content)}"
 
 
 class Choice(models.Model):
