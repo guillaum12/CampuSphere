@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 import requests
 from django.contrib.auth import get_user_model, login
-from profiles.models import Profile
+from profiles.models import Association, Profile
 from django.contrib import messages
 import convention.settings as settings
 from urllib.parse import urlparse, parse_qs
@@ -27,6 +27,7 @@ def make_linkcs_request(username, access_token):
                     association {
                         id
                         name
+                        type
                     }
                 }
             }
@@ -91,7 +92,21 @@ def connexion(request):
     
     data = make_linkcs_request(username, access_token)
     
-    print(data)
+    promotion = data['user']['promotion']
+    roles = data['user']['roles']
+    
+    asso_objects = []
+    
+    for role in roles:
+        json_asso = role['sector']['composition']['association']
+        association_id = json_asso['id']
+        association_name = json_asso['name']
+
+        if json_asso['type'] != "ASSOCIATION": continue
+        
+        asso_object, _ = Association.objects.get_or_create(id=association_id, name=association_name)
+        asso_objects.append(asso_object)
+        
         
     User = get_user_model()
     existing_user = User.objects.filter(username=username).first()
@@ -100,6 +115,13 @@ def connexion(request):
         login(request, existing_user, backend='allauth.account.auth_backends.AuthenticationBackend')
         # On vérifie le statut de la variable display_site_explanation du profile
         profile = Profile.objects.get(user=existing_user)
+        
+        # On met à jour la promotion de l'utilisateur
+        profile.promotion = promotion
+        profile.assos.set(asso_objects)
+        
+        profile.save()
+        
         if profile.display_site_explanation:
             return redirect(settings.LOGIN_REDIRECT_URL + "?display_site_explanations=True")
 
@@ -110,6 +132,7 @@ def connexion(request):
         'username': user_infos['login'],
         'email': user_infos['email'],
         'password': 'example_password',
+        'promotion': promotion,
     }
 
     # Create the user

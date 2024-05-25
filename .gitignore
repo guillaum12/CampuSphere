@@ -9,8 +9,6 @@ env
 database.sqlite3
 
 mi.sh
-
-linkcs.py
 selenium_test.py
 
 # Prettier config
@@ -24,3 +22,4 @@ package-lock.json
 .vscode/
 
 test.py
+bdd.json

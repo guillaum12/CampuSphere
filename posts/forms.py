@@ -1,15 +1,13 @@
 import sqlite3
-from sre_parse import CATEGORIES
-from unicodedata import category
-from zlib import MAX_WBITS
 from django import forms
-from .models import Choice, Post
-from ckeditor.fields import RichTextField
-from ckeditor.widgets import CKEditorWidget
 
+from profiles.views_utils import get_request_user_profile
+from .models import Choice, Post
+from ckeditor.widgets import CKEditorWidget
 
 class PostFilterForm(forms.Form):
     FILTER_CHOICES = [
+        ('--', 'Les plus pertinents'),
         ('recent', 'Les plus récents'),
         ('favorite', 'Mes favoris'),
         ('votedpercentage', 'Meilleures notes'),
@@ -30,7 +28,15 @@ class PostFilterForm(forms.Form):
 
     campus = forms.ChoiceField(choices=Post.CAMPUS_CHOICES, required=False, initial='--')
     new_posts = forms.BooleanField(required=False, label='New Posts')
-
+    
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        
+        profile = get_request_user_profile(user)
+        associations_choices = [(0, "--")] + [(a.id, a.name) for a in profile.assos.all()]
+        
+        self.fields['associations'] = forms.ChoiceField(choices=associations_choices, required=False)
 
 class PostCreateModelForm(forms.ModelForm):
     title = forms.CharField(max_length=150, widget=forms.Textarea(attrs={"rows": 1}))

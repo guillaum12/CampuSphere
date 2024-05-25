@@ -47,8 +47,11 @@ def show_selected_posts(request, page_index):
     Shows all posts considering the filters.
     View url: /posts/
     """
+    
+    user = request.user
+    profile = get_request_user_profile(user)
     # qs = Post.objects.get_related_posts(user=request.user)
-    filter_form = PostFilterForm(request.GET)
+    filter_form = PostFilterForm(request.GET, user=user)
 
     nb_post_per_page = 10
 

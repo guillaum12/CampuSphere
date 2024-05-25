@@ -1,14 +1,20 @@
-from unicodedata import category
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.shortcuts import reverse
 
 from .models_utils import get_likes_received_count, get_list_of_profiles_by_user
-# from posts.models import Power
+
+
+class Association(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
 
 # Profile Model
-
 
 class ProfileManager(models.Manager):
     def get_my_friends_profiles(self, user):
@@ -28,6 +34,7 @@ class Profile(models.Model):
     is_banned = models.BooleanField(default=False)
     
     promo = models.CharField(max_length=10, blank=True)
+    assos = models.ManyToManyField(Association, blank=True)
 
     CATEGORIES = [
         ('etudiant', 'Étudiant/e'),
@@ -96,13 +103,3 @@ class Profile(models.Model):
         from posts.models import Like
         favorites = Like.objects.filter(profile=self)
         return len(favorites)
-
-    ###############################
-
-
-class Association(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.name
