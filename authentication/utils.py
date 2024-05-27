@@ -30,14 +30,22 @@ def generate_pseudo():
     "Roucoul", "Sauterelle", "Suricate", "Tamanoir", "Tapir", "Tarsier", "Tortue marine"
     ]
 
-    couleurs = [
-    "Marron", "Gris", "Noir", "Blanc", "Beige", "Argent", "Vert", "Jaune", "Rouge", "Bleu",
-    "Orange", "Rose", "Violet", "Turquoise", "Écarlate", "Indigo", "Cyan", "Or", "Sable", "Bordeaux"
+    adjectifs = [
+    "Fidèle", "Agile", "Fort", "Calme", "Paisible", "Rapide", "Sauvage", "Féroce", "Amical", "Loyal",
+    "Vif", "Svelte", "Majestueux", "Imposant", "Gracieux", "Intelligent", "Rusé", "Courageux", "Noble", "Puissant",
+    "Mignon", "Petit", "Grand", "Furtif", "Silencieux", "Élégant", "Libre", "Indépendant", "Solitaire", "Joueur",
+    "Curieux", "Observateur", "Sagace", "Tenace", "Inébranlable", "Audacieux", "Doux", "Chaleureux", "Affectueux", "Protecteur",
+    "Impressionnant", "Mystérieux", "Envoûtant", "Incroyable", "Magnifique", "Superbe", "Extraordinaire", "Efficace", "Productif", "Méfiant",
+    "Alerté", "Docile", "Fidèle", "Héroïque", "Innocent", "Sage", "Affectionné", "Attachant", "Bienveillant", "Clairvoyant",
+    "Déterminé", "Énergique", "Fringant", "Gentil", "Habile", "Intrépide", "Jovial", "Loyal", "Malin", "Noble",
+    "Obéissant", "Patient", "Qualifié", "Robuste", "Sociable", "Téméraire", "Utile", "Vaillant", "Zélé", "Brillant",
+    "Délicat", "Équilibré", "Fortuné", "Généreux", "Harmonieux", "Inventif", "Joyeux", "Keen", "Lumineux", "Merveilleux",
+    "Opiniâtre", "Persévérant", "Rigoureux", "Stupéfiant", "Talentueux", "Valeureux", "Zen", "Affable", "Célèbre", "Diligent"
     ]
     
-    nombre = random.randint(0, 100)
+    nombre = random.randint(0, 10)
     
-    return f"{random.choice(animals)} {random.choice(couleurs)} {nombre}"
+    return f"{random.choice(animals)} {random.choice(adjectifs)}"
 
 
 if __name__ == "__main__":
