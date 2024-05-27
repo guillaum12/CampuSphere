@@ -131,8 +131,6 @@ def connexion(request):
     user_data = {
         'username': user_infos['login'],
         'email': user_infos['email'],
-        'password': 'example_password',
-        'promotion': promotion,
     }
 
     # Create the user
@@ -146,6 +144,9 @@ def connexion(request):
 
     # On vérifie le statut de la variable display_site_explanation du profile
     profile = Profile.objects.get(user=user)
+    profile.promotion = promotion
+    profile.save()
+    
     if profile.display_site_explanation:
         return redirect(settings.LOGIN_REDIRECT_URL + "?display_site_explanations=True")
 
