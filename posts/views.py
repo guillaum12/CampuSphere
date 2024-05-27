@@ -8,8 +8,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, UpdateView
-from django.core.mail import EmailMessage, get_connection
-from convention import settings
+from convention.utils import send_email
 from profiles.views_utils import get_request_user_profile, redirect_back
 from posts.views_utils import get_theme_path_from_theme
 from django.template.loader import render_to_string
@@ -26,6 +25,7 @@ from .views_utils import (
     report_unreport_post,
     never_display_explanations,
     like_unlike_comment,
+    send_mail_when_commented,
 )
 
 
@@ -69,8 +69,8 @@ def show_selected_posts(request, page_index):
         if add_post_if_submitted(request, profile):
             return redirect_back(request)
 
-        if add_comment_if_submitted(request, profile):
-            return redirect_back(request)
+        # if add_comment_if_submitted(request, profile):
+        #     return redirect_back(request)
     else:
         messages.add_message(
             request,
@@ -168,13 +168,30 @@ def comment_view(request):
     View url: /posts/comment/
     """
     if request.method == "POST":
-        profile = get_request_user_profile(request.user)
+        commentator_profile = get_request_user_profile(request.user)
+        
+        # Retrieve the post_id from the form data
+        post_id = request.POST.get('post_id', None)
+        parent_post = Post.objects.get(id=post_id)
+        
+        # Récupération du post parent initial (proposition)
+        parent_proposition = parent_post
+        while parent_proposition.in_response_to:
+            parent_proposition = parent_proposition.in_response_to
+        
+        comment_content = request.POST.get('content')
+        
         # Rendu du nouveau commentaire
-        comment_html = add_comment_if_submitted(request, profile)
+        comment_html = add_comment_if_submitted(request, parent_post, parent_proposition, commentator_profile, comment_content)
         # Rendu du toast de succès
         toast_html = render_to_string(
             "main/toast.html", {"id": 'success-new-comment-' + str(int(time() * 1e3 % 1e6)), "success": True, "message": "Commentaire posté avec succès ! Merci pour votre contribution."})
 
+        # Envoi de mail à l'auteur du post/commentaire commenté
+        #if parent_post.author != commentator_profile:
+        
+        send_mail_when_commented(parent_post, parent_proposition, comment_content)
+        
         if comment_html:
             return JsonResponse({'comment_html': comment_html, 'toast_html': toast_html})
 
@@ -371,35 +388,13 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         if self.request.user.is_staff:
             reason = self.request.POST.get("reason")
 
-            message = render_to_string("posts/email_deleted_post.html", {
+            message = render_to_string("posts/email_templates/email_deleted_post.html", {
                 'author': author,
                 'post': post,
                 'reason': reason,
             })
-            try:
-                with get_connection(
-                    host=settings.EMAIL_HOST,
-                    port=settings.EMAIL_PORT,
-                    username=settings.EMAIL_HOST_USER,
-                    password=settings.EMAIL_HOST_PASSWORD,
-                    use_tls=settings.EMAIL_USE_TLS,
-                ) as connection:
-                    subject = "Post deleted"
-                    email_from = settings.EMAIL_HOST_USER
-                    recipient_list = [
-                        author_email,
-                    ]
-                    message = message
-                    EmailMessage(
-                        subject, message, email_from, recipient_list, connection=connection
-                    ).send()
-            except Exception as e:
-                messages.add_message(
-                    self.request,
-                    messages.ERROR,
-                    "Erreur lors de l'envoi de l'email : " + str(e),
-
-                )
+            
+        send_email(self.request, "Post deleted", message, author_email)
 
         return HttpResponseRedirect(self.success_url)
 

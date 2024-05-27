@@ -1,4 +1,6 @@
 from urllib import request
+
+from convention.utils import send_email
 from .forms import CommentCreateModelForm, PostCreateModelForm
 from .models import Like, Post, Power, Report, Choice
 from profiles.views_utils import get_request_user_profile
@@ -72,41 +74,44 @@ def add_post_if_submitted(request, profile):
             return True
 
 
-def add_comment_if_submitted(request, profile):
-    if request.method == "POST":
-        # Retrieve the post_id from the form data
-        post_id = request.POST.get('post_id', None)
-        parent_post = Post.objects.get(id=post_id)
+def add_comment_if_submitted(request, parent_post, parent_proposition, profile, content):
+    new_comment = Post()
+    new_comment.author = profile
+    new_comment.is_post = False
+    new_comment.content = content
 
-        # Récupération du post parent initial (proposition)
-        parent_proposition = parent_post
-        while parent_proposition.in_response_to:
-            parent_proposition = parent_proposition.in_response_to
+    new_comment.in_response_to = parent_post
 
-        new_comment = Post()
-        new_comment.author = profile
-        new_comment.is_post = False
-        new_comment.content = request.POST.get('content')
+    new_comment.save()
 
-        new_comment.in_response_to = parent_post
+    comment_id = new_comment.id
+    csrf_token = get_token(request)
 
-        new_comment.save()
+    if comment_id:
+        comment_html = render_to_string(
+            "posts/single_comment.html",
+            {"comment": Post.objects.get(id=comment_id),
+                "user": profile.user,
+                "post": Post.objects.get(id=parent_proposition.id),
+                "csrf_token": csrf_token,
+                "request": request}
+        )
+        return comment_html
 
-        comment_id = new_comment.id
-        csrf_token = get_token(request)
 
-        if comment_id:
-            comment_html = render_to_string(
-                "posts/single_comment.html",
-                {"comment": Post.objects.get(id=comment_id),
-                 "user": profile.user,
-                 "post": Post.objects.get(id=parent_proposition.id),
-                 "csrf_token": csrf_token,
-                 "request": request}
-            )
-            return comment_html
+def send_mail_when_commented(parent_post, parent_proposition, comment_content):
+        
+    post_author = parent_post.author
+    post_author_email = post_author.user.email
 
-    return None
+    message = render_to_string("posts/email_templates/email_new_comment.html", {
+        'comment_content': comment_content,
+        'parent_post': parent_post,
+        'parent_proposition': parent_proposition,
+        
+    })
+    
+    send_email(request, "Nouveau commentaire", message, post_author_email)
 
 
 def get_post_id_and_post_obj(request):

@@ -1,0 +1,9 @@
+{% autoescape off %}
+    Hello,
+
+    Un nouveau commentaire a été posté sur ta proposition "{{ parent_post.title }}" : {{comment_content}}
+
+    Pour le consulter, clique sur le lien suivant : {{ parent_proposition.get_absolute_url }}
+    
+    L'équipe CampuSphère
+{% endautoescape %}

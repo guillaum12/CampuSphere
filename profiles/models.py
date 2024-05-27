@@ -32,6 +32,7 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=200, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     is_banned = models.BooleanField(default=False)
+    pseudo = models.CharField(max_length=200, blank=True)
     
     promo = models.CharField(max_length=10, blank=True)
     assos = models.ManyToManyField(Association, blank=True)
@@ -47,7 +48,6 @@ class Profile(models.Model):
 
     bio = models.TextField(default="No Bio..", max_length=300, blank=True)
     email = models.EmailField(max_length=200, blank=True)
-    country = models.CharField(max_length=200, blank=True)
     avatar = models.ImageField(
         default="avatar.png",
         upload_to="avatars/",

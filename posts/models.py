@@ -1,5 +1,7 @@
 from django.core.validators import FileExtensionValidator
 from django.db import models
+from django.urls import reverse
+from convention import settings
 from profiles.models import Association, Profile
 from profiles.views_utils import get_request_user_profile
 from .models_utils import get_related_posts_queryset
@@ -214,6 +216,11 @@ class Post(models.Model):
         PONDERATION_NOUVEAUTE_COOL = 100
         
         return PONDERATION_NOUVEAUTE_COOL/(self.n_days_created+1) + self.voter_number - self.report_number*2
+    
+    @property
+    def get_absolute_url(self):
+        relative_url = reverse("posts:one-post-view", kwargs={"pk": self.pk})[1:] # On enlève le premier "/"
+        return settings.BASE_URL + relative_url    
     
     class Meta:
         ordering = ("-created",)
