@@ -23,10 +23,8 @@ Voici comment déployer le site : [Mise en ligne](documentation/miseEnLigne/Depl
 
 ## Contributeurs à contacter au besoin :
 
- - Guillaume Machabert - guillaume.machabert@raidcs.com
- - Augustin 
- - Thibault
- - Théo
+ - Guillaume Machabert - guillaume.machabert@student-cs.fr
+ - Alexandre Faure - alexandre.faure@student-cs.fr
 
 
 ## Pour plus tard
