@@ -1,6 +1,7 @@
 from django.shortcuts import redirect
 import requests
 from django.contrib.auth import get_user_model, login
+from authentication.utils import generate_pseudo
 from profiles.models import Association, Profile
 from django.contrib import messages
 import convention.settings as settings
@@ -119,6 +120,8 @@ def connexion(request):
         # On met à jour la promotion de l'utilisateur
         profile.promotion = promotion
         profile.assos.set(asso_objects)
+        if not profile.pseudo:
+            profile.pseudo = generate_pseudo()
         
         profile.save()
         
@@ -145,6 +148,7 @@ def connexion(request):
     # On vérifie le statut de la variable display_site_explanation du profile
     profile = Profile.objects.get(user=user)
     profile.promotion = promotion
+    profile.pseudo = generate_pseudo()
     profile.save()
     
     if profile.display_site_explanation:

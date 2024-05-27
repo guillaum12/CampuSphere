@@ -80,6 +80,13 @@ class Profile(models.Model):
             "profiles:profile-detail-view",
             kwargs={"slug": self.slug},
         )
+        
+
+    def get_display_name(self):
+        if self.pseudo:
+            return self.pseudo
+        
+        return self.get_category_display()
 
     def save(self, *args, **kwargs):
         self.slug = str(self.user)
