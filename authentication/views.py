@@ -7,33 +7,33 @@ import convention.settings as settings
 from urllib.parse import urlparse, parse_qs
 
 
-
 def make_linkcs_request(username, access_token):
 
     url = 'https://api.linkcs.fr/v1/graphql/'
     headers = {'Authorization': "Bearer {}".format(access_token)}
 
     # La requête GraphQL
-    query = """user(login:"2022machabergu") {
-        firstName
-        lastName
-        promotion
-        roles {
-            label
-            sector {
-                name
-                isBureau
-                composition {
-                    association {
-                        id
-                        name
-                        type
-                    }
-                }
-            }
-        }
-    }"""
-
+    query = f"""
+        user(login:"{username}") {{
+            firstName
+            lastName
+            promotion
+            roles {{
+                label
+                sector {{
+                    name
+                    isBureau
+                    composition {{
+                        association {{
+                            id
+                            name
+                            type
+                        }}
+                    }}
+                }}
+            }}
+        }}
+        """
 
     request = requests.get("{url}?query={{{query}}}".format(url=url, query=query), headers=headers).json()
     
