@@ -394,7 +394,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
                 'reason': reason,
             })
             
-        send_email(self.request, "Post deleted", message, author_email)
+            send_email(self.request, "Proposition supprimée", message, author_email)
 
         return HttpResponseRedirect(self.success_url)
 

@@ -104,6 +104,8 @@ def send_mail_when_commented(parent_post, parent_proposition, comment_content):
     post_author = parent_post.author
     post_author_email = post_author.user.email
 
+    user_profile = get_request_user_profile(request.user)
+    
     message = render_to_string("posts/email_templates/email_new_comment.html", {
         'comment_content': comment_content,
         'parent_post': parent_post,
@@ -111,7 +113,8 @@ def send_mail_when_commented(parent_post, parent_proposition, comment_content):
         
     })
     
-    send_email(request, "Nouveau commentaire", message, post_author_email)
+    if post_author != user_profile:
+        send_email(request, "Nouveau commentaire", message, post_author_email)
 
 
 def get_post_id_and_post_obj(request):

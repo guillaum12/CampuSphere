@@ -3,8 +3,6 @@ from convention import settings
 from django.contrib import messages
 
 def send_email(request, subject, message, recipient_mail):
-    
-    print(settings.EMAIL_HOST_PASSWORD)
     try:
         with get_connection(
             host=settings.EMAIL_HOST,
