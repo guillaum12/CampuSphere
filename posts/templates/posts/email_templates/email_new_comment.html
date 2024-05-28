@@ -1,9 +1,12 @@
 {% autoescape off %}
-    Hello,
+    Hello, <br><br>
 
-    Un nouveau commentaire a été posté sur ta proposition "{{ parent_post.title }}" : {{comment_content}}
+    Un nouveau commentaire a été posté sur ta proposition "{{ parent_post.title }}" : <b>{{comment_content}}</b> <br><br>
 
-    Pour le consulter, clique sur le lien suivant : {{ parent_proposition.get_absolute_url }}
+    Pour le consulter, clique sur ce <a href="{{ parent_proposition.get_absolute_url }}"> lien. </a>  <br><br>
     
-    L'équipe CampuSphère
+    L'équipe CampuSphère <br><br>
+
+    <img src="cid:image1" width="100px" alt="Image" />
+
 {% endautoescape %}

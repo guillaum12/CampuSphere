@@ -188,9 +188,8 @@ def comment_view(request):
             "main/toast.html", {"id": 'success-new-comment-' + str(int(time() * 1e3 % 1e6)), "success": True, "message": "Commentaire posté avec succès ! Merci pour votre contribution."})
 
         # Envoi de mail à l'auteur du post/commentaire commenté
-        #if parent_post.author != commentator_profile:
-        
-        send_mail_when_commented(parent_post, parent_proposition, comment_content)
+        if parent_post.author != commentator_profile: 
+            send_mail_when_commented(request, parent_post, parent_proposition, comment_content)
         
         if comment_html:
             return JsonResponse({'comment_html': comment_html, 'toast_html': toast_html})

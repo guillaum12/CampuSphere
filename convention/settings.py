@@ -177,7 +177,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'campusphere.centralesupelec@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 
-
 # CKEditor
 
 CKEDITOR_UPLOAD_PATH = 'static/ckeditor/'

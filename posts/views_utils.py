@@ -99,7 +99,7 @@ def add_comment_if_submitted(request, parent_post, parent_proposition, profile, 
         return comment_html
 
 
-def send_mail_when_commented(parent_post, parent_proposition, comment_content):
+def send_mail_when_commented(request, parent_post, parent_proposition, comment_content):
         
     post_author = parent_post.author
     post_author_email = post_author.user.email
@@ -113,8 +113,8 @@ def send_mail_when_commented(parent_post, parent_proposition, comment_content):
         
     })
     
-    if post_author != user_profile:
-        send_email(request, "Nouveau commentaire", message, post_author_email)
+    #if post_author != user_profile:
+    send_email(request, "Nouveau commentaire", message, post_author_email)
 
 
 def get_post_id_and_post_obj(request):

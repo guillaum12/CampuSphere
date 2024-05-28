@@ -1,6 +1,9 @@
-from django.core.mail import EmailMessage, get_connection
+from django.core.mail import EmailMessage, get_connection, EmailMultiAlternatives
 from convention import settings
 from django.contrib import messages
+from django.utils.html import strip_tags
+from email.mime.image import MIMEImage
+
 
 def send_email(request, subject, message, recipient_mail):
     try:
@@ -17,9 +20,25 @@ def send_email(request, subject, message, recipient_mail):
                 recipient_mail,
             ]
             message = message
-            EmailMessage(
-                subject, message, email_from, recipient_list, connection=connection
-            ).send()
+            # Créez l'email avec le sujet, le message HTML et le texte brut
+            email = EmailMultiAlternatives(
+                subject, 
+                strip_tags(message), 
+                email_from, 
+                recipient_list, 
+                connection=connection
+            )
+            email.attach_alternative(message, "text/html")
+            
+            # Attachez l'image avec un Content-ID
+            with open('static/img/logo_complet.png', 'rb') as img:
+                mime_image = MIMEImage(img.read())
+                mime_image.add_header('Content-ID', '<image1>')
+                mime_image.add_header('Content-Disposition', 'inline')
+                email.attach(mime_image)
+            
+            # Envoyez l'email
+            email.send()
     except Exception as e:
         print(e)
         messages.add_message(
