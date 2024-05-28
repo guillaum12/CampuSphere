@@ -3,6 +3,8 @@ from convention import settings
 from django.contrib import messages
 
 def send_email(request, subject, message, recipient_mail):
+    
+    print(settings.EMAIL_HOST_PASSWORD)
     try:
         with get_connection(
             host=settings.EMAIL_HOST,
@@ -21,6 +23,7 @@ def send_email(request, subject, message, recipient_mail):
                 subject, message, email_from, recipient_list, connection=connection
             ).send()
     except Exception as e:
+        print(e)
         messages.add_message(
             request,
             messages.ERROR,
