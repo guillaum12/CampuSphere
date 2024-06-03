@@ -6,13 +6,20 @@
         {% include 'posts/like_header_post.html' with post=post profile=profile %}
         {% include 'posts/post_control.html' with user=request.user post=post %}
         <!-- Image de la carte -->
+        <a href="{% url 'posts:one-post-view' post.id %}">
+
         <img src="{% if post.theme.image %} {{ post.theme.image.url }} {% else %} {% get_media_prefix %}themes/generic_theme.jpg {% endif %}"
              class="card-img-top"
+             href="{% url 'posts:one-post-view' post.id %}"
              alt="theme" />
+        
+        </a>
         <div class="card-body d-flex flex-column">
             <div class="flex-grow-1">
                 <!-- En-tête de la carte -->
-                <h5 class="card-title my-0">{{ post.title|safe }}</h5>
+                <a href="{% url 'posts:one-post-view' post.id %}">
+                    <h5 class="card-title my-0">{{ post.title|safe }}</h5>
+                </a>
                 <p>
                     <small>
                         {% include 'posts/identity.html' with profile=post.author request=request %}
