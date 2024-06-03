@@ -118,7 +118,7 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     # A comment is now seen as a response to a post
-    in_response_to = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
+    in_response_to = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
 
     @property
     def comments(self):
