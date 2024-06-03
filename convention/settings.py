@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "ckeditor",
+    # API
+    "rest_framework",
 ]
 
 SITE_ID = 1

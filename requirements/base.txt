@@ -13,4 +13,6 @@ django-allauth # https://github.com/pennersr/django-allauth
 psycopg2-binary # https://github.com/psycopg/psycopg2
 
 django-ckeditor
+djangorestframework
+
 
