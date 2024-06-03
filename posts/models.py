@@ -94,6 +94,7 @@ class Post(models.Model):
     title = models.TextField(max_length=100, blank=True)
     content = models.TextField(max_length=1000, blank=True)
     is_post = models.BooleanField(default=True)
+    is_troll = models.BooleanField(default=False)
 
     theme = models.ForeignKey(Choice, on_delete=models.SET_NULL, null=True, blank=True)
     # Campus parmis Saclay, Rennes et Metz
@@ -215,7 +216,7 @@ class Post(models.Model):
     def score_pondere(self):
         PONDERATION_NOUVEAUTE_COOL = 100
         
-        return PONDERATION_NOUVEAUTE_COOL/(self.n_days_created+1) + self.voter_number - self.report_number*2
+        return PONDERATION_NOUVEAUTE_COOL/(self.n_days_created+1) + self.voter_number - self.report_number*2 - 200*(self.is_troll)
     
     @property
     def get_absolute_url(self):

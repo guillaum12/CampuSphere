@@ -1,7 +1,16 @@
 {% autoescape off %}
     Hello, <br><br>
 
-    Un nouveau commentaire a été posté sur ta proposition "{{ parent_post.title }}" : <b>{{comment_content}}</b> <br><br>
+    Un nouveau commentaire a été posté à propos de la proposition : 
+    {% if parent_post.title %}
+    "{{ parent_post.title }}" 
+    {% else %}
+    "{{ parent_post.content }}"
+    {% endif %}
+    
+    <br><br>
+    
+    <b>{{comment_content}}</b> <br><br>
 
     Pour le consulter, clique sur ce <a href="{{ parent_proposition.get_absolute_url }}"> lien. </a>  <br><br>
     
