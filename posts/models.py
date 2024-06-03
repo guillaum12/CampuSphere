@@ -152,6 +152,10 @@ class Post(models.Model):
     objects = PostManager()
 
     def __str__(self):
+        
+        if self.is_post:
+            return f"{str(self.title)}"
+        
         if len(str(self.content)) > 50:
             return f"{str(self.content)[:50].strip()}.."
         return f"{str(self.content)}"

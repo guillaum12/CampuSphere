@@ -11,8 +11,8 @@ admin.site.register(Feedback)
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'is_post', 'is_troll')
-    list_filter = ('is_post', 'is_troll')
+    list_display = ('__str__', 'is_post', 'is_troll', 'theme')
+    list_filter = ('is_post', 'is_troll', 'theme')
     actions = ['make_troll']
 
     def make_troll(self, request, queryset):

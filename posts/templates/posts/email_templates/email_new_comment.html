@@ -1,12 +1,9 @@
 {% autoescape off %}
     Hello, <br><br>
 
-    Un nouveau commentaire a été posté à propos de la proposition : 
-    {% if parent_post.title %}
-    "{{ parent_post.title }}" 
-    {% else %}
-    "{{ parent_post.content }}"
-    {% endif %}
+    Un nouveau commentaire a été posté à propos de la proposition : <br><br>
+    
+    "{{ parent_post }}"
     
     <br><br>
     
