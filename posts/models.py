@@ -121,10 +121,6 @@ class Post(models.Model):
     in_response_to = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
 
     @property
-    def comments(self):
-        return Post.objects.filter(in_response_to=self).order_by('-created')
-
-    @property
     def number_comments(self):
         if len(Post.objects.filter(in_response_to=self)) == 0:
             return 0
@@ -214,14 +210,26 @@ class Post(models.Model):
 
     @property
     def score_pondere(self):
-        PONDERATION_NOUVEAUTE_COOL = 100
         
-        return PONDERATION_NOUVEAUTE_COOL/(self.n_days_created+1) + self.voter_number - self.report_number*2 - 200*(self.is_troll)
+        if self.is_post:
+            PONDERATION_NOUVEAUTE_COOL = 200
+            return PONDERATION_NOUVEAUTE_COOL/(self.n_days_created+1) + self.voter_number - 300*(self.is_troll)
+
+        # Si c'est un commentaire 
+        PONDERATION_NOUVEAUTE_COOL = 5
+        return PONDERATION_NOUVEAUTE_COOL/(self.n_days_created+1) + self.comment_like_number - 10*(self.is_troll)
+    
     
     @property
     def get_absolute_url(self):
         relative_url = reverse("posts:one-post-view", kwargs={"pk": self.pk})[1:] # On enlève le premier "/"
-        return settings.BASE_URL + relative_url    
+        return settings.BASE_URL + relative_url
+    
+    @property
+    def comments(self):
+        # On récupère les commentaires en réponse à ce post trié par score_pondere
+        response_comments = Post.objects.filter(in_response_to=self)
+        return sorted(response_comments, key=lambda post: post.score_pondere, reverse=True)
     
     class Meta:
         ordering = ("-created",)
