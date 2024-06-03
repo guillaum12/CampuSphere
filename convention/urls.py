@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.shortcuts import redirect
 
-from .views import home_view, charte
+from .views import home_view, charte, statistics
 
 
 def redirect_to_signup(request):
@@ -16,6 +16,7 @@ urlpatterns = [
     path("auth/signup/", redirect_to_signup),  # Redirection vers "account_signup"
     path("auth/", include("allauth.urls")),
     path("", home_view, name="home-view"),
+    path("statistiques/", statistics, name="statistics"),
     path("charte/", charte, name="charte"),
     path("profiles/", include("profiles.urls")),
     path("posts/", include("posts.urls")),

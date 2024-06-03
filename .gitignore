@@ -5,6 +5,7 @@ __pycache__
 .pytest_cache
 media/avatars
 media/posts
+media/graphs
 env
 database.sqlite3
 
