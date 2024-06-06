@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, UpdateView
+from convention import settings
 from convention.utils import send_email
 from profiles.views_utils import get_request_user_profile, redirect_back
 from posts.views_utils import get_theme_path_from_theme
@@ -122,6 +123,20 @@ def feedback(request):
         profile = get_request_user_profile(request.user)
         Feedback.objects.create(author=profile, content=feedback)
 
+        email_for_feedback = settings.EMAIL_HOST_USER
+        
+        feedback_message_admin = render_to_string("posts/email_templates/email_feedback_admin.html", {
+            'feedback': feedback,
+        })
+        
+        feedback_message_user = render_to_string("posts/email_templates/email_feedback_user.html")
+        
+        # Mail pour les admins
+        send_email(request, "Nouveau feedback", feedback_message_admin, email_for_feedback)
+        
+        # Mail pour l'utilisateur
+        send_email(request, "Merci pour ton retour !", feedback_message_user, profile.user.email)
+        
         messages.add_message(
             request,
             messages.SUCCESS,

@@ -33,7 +33,7 @@ def send_email(request, subject, message, recipient_mail):
             # Attachez l'image avec un Content-ID
             with open('static/img/logo_complet.png', 'rb') as img:
                 mime_image = MIMEImage(img.read())
-                mime_image.add_header('Content-ID', '<image1>')
+                mime_image.add_header('Content-ID', '<logo>')
                 mime_image.add_header('Content-Disposition', 'inline')
                 email.attach(mime_image)
             
@@ -45,5 +45,4 @@ def send_email(request, subject, message, recipient_mail):
             request,
             messages.ERROR,
             "Erreur lors de l'envoi de l'email : " + str(e),
-
         )

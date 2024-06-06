@@ -19,7 +19,7 @@
                      src='{{ profile.avatar.url }}'>
             </div>
             <div class="p-3 flex-fill">
-                <h1>{% include 'posts/identity.html' with profile=profile request=request without_avatar=True %}</h1>
+                <h1>{{profile.pseudo}}</h1>
                 {% if request.user.is_staff %}
                     {% if profile.category == "etudiant" %}
                         <a href="https://linkcs.fr/user/{{ profile }}" target="_blank">LinkCS</a>

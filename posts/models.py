@@ -16,9 +16,18 @@ class Feedback(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="feedbacks")
     content = models.TextField(max_length=1000, blank=True)
     created = models.DateTimeField(auto_now_add=True)
+    treated = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{str(self.content)}"
+                
+        if self.treated:
+            suffix = "[Traité]"
+        else:
+            suffix = "[Non traité]"
+            
+        created_date = localtime(self.created).strftime("%d/%m/%Y")
+            
+        return f"{suffix} {str(self.content)} ({created_date})"
 
 
 class Choice(models.Model):
